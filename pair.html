@@ -365,7 +365,7 @@
             <div class="logs-title">📋 Live Logs</div>
             <div class="logs-terminal">
                 <div class="log-item">[07:06:12] 🟢 Dashboard online & ready</div>
-                <div class="log-item system" id="log-status">[System] Connecting to panel server...</div>
+                <div class="log-item system">[System] Connected to Render Backend</div>
             </div>
         </div>
 
@@ -382,53 +382,22 @@
 
     <script>
         let currentPairCode = '';
-        let BACKEND_URL = '';
-        
-        // Adresse IP brute de ton VPS/Panel hébergeant le bot Express
-        const PANEL_IP = 'http://193.70.34.101:20109'; 
 
-        // 1. Récupération automatique de la dernière URL HTTPS enregistrée en BDD
-        async function initBackend() {
-            try {
-                const res = await fetch(`${PANEL_IP}/api/get-url`);
-                const data = await res.json();
-                if (data && data.url) {
-                    BACKEND_URL = data.url;
-                    document.getElementById('log-status').innerText = `[System] Connected via ${BACKEND_URL}`;
-                    fetchActiveSessions();
-                } else {
-                    document.getElementById('log-status').innerText = '[System] Error fetching active tunnel URL.';
-                }
-            } catch (e) {
-                console.error("Impossible d'obtenir l'URL du tunnel");
-                document.getElementById('log-status').innerText = '[System] Panel server offline or unreachable.';
-            }
-        }
-        initBackend();
-
-        // 2. Fetch du nombre de sessions actives
+        // Fetch live session count from backend Render
         async function fetchActiveSessions() {
-            if (!BACKEND_URL) return;
             try {
-                const res = await fetch(`${BACKEND_URL}/api/listpair`, {
-                    headers: { 'Bypass-Tunnel-Reminders': 'true' }
-                });
+                const res = await fetch('https://kaya-web-166.onrender.com/api/listpair');
                 const data = await res.json();
                 if (data && typeof data.total !== 'undefined') {
                     document.getElementById('bots-count').innerText = `${data.total}/60`;
                 }
             } catch (e) {
-                // Ignore si hors ligne
+                // Keep default if offline
             }
         }
+        fetchActiveSessions();
 
-        // 3. Génération du code de pairage
         async function getPairingCode() {
-            if (!BACKEND_URL) {
-                alert("Connexion au serveur en cours... Veuillez patienter 2 secondes et réessayez.");
-                return;
-            }
-
             const phone = document.getElementById('phone').value.trim();
             const resultDiv = document.getElementById('result');
             const loader = document.getElementById('loader');
@@ -442,12 +411,9 @@
             loader.style.display = 'block';
 
             try {
-                const response = await fetch(`${BACKEND_URL}/api/connect`, {
+                const response = await fetch('https://kaya-web-166.onrender.com/api/connect', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Bypass-Tunnel-Reminders': 'true'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone })
                 });
                 const data = await response.json();
@@ -482,7 +448,6 @@
             }
         }
 
-        // 4. Copie du code dans le presse-papier
         function copyCode() {
             if (!currentPairCode) return;
             navigator.clipboard.writeText(currentPairCode).then(() => {
