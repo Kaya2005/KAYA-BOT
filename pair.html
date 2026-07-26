@@ -365,7 +365,7 @@
             <div class="logs-title">📋 Live Logs</div>
             <div class="logs-terminal">
                 <div class="log-item">[07:06:12] 🟢 Dashboard online & ready</div>
-                <div class="log-item system">[System] Connected to Panel Server (193.70.34.101:20109)</div>
+                <div class="log-item system">[System] Connected via Secure Localtunnel HTTPS</div>
             </div>
         </div>
 
@@ -382,11 +382,14 @@
 
     <script>
         let currentPairCode = '';
+        const BACKEND_URL = 'https://spotty-plums-switch.loca.lt';
 
         // Fetch live session count from Panel Backend
         async function fetchActiveSessions() {
             try {
-                const res = await fetch('http://193.70.34.101:20109/api/listpair');
+                const res = await fetch(`${BACKEND_URL}/api/listpair`, {
+                    headers: { 'Bypass-Tunnel-Reminders': 'true' }
+                });
                 const data = await res.json();
                 if (data && typeof data.total !== 'undefined') {
                     document.getElementById('bots-count').innerText = `${data.total}/60`;
@@ -411,9 +414,12 @@
             loader.style.display = 'block';
 
             try {
-                const response = await fetch('http://193.70.34.101:20109/api/connect', {
+                const response = await fetch(`${BACKEND_URL}/api/connect`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Bypass-Tunnel-Reminders': 'true'
+                    },
                     body: JSON.stringify({ phone })
                 });
                 const data = await response.json();
