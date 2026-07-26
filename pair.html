@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAYA-MD | Advanced Pairing Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #040706;
+            --card-bg: #0b1310;
+            --card-border: #14241d;
+            --accent-gold: #f59e0b;
+            --accent-gold-hover: #d97706;
+            --accent-glow: rgba(245, 158, 11, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #4ade80;
+            --error: #ef4444;
+            --telegram: #229ed9;
+            --whatsapp: #25d366;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at top, rgba(245, 158, 11, 0.04) 0%, transparent 70%);
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Active Bots Stat Card */
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Main Connect Card */
+        .main-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        .edition-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Form Inputs & Buttons */
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: #040706;
+            color: #fff;
+            font-size: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .btn-connect {
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-hover));
+            color: #000;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-refresh {
+            background: #101c17;
+            color: var(--text-muted);
+            border: 1px solid var(--card-border);
+            padding: 12px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-refresh:hover {
+            background: #172b22;
+            color: var(--text-main);
+        }
+
+        /* Result & Compact Code Display */
+        #result {
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .code-wrapper {
+            background: #040706;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 10px;
+        }
+
+        .code-container {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            margin-bottom: 12px;
+        }
+
+        .code-char {
+            background: #0b1310;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: var(--success);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            width: 28px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            box-shadow: 0 0 8px rgba(74, 222, 128, 0.1);
+        }
+
+        .code-char.dash {
+            border: none;
+            color: var(--accent-gold);
+            width: 12px;
+            font-size: 20px;
+        }
+
+        .btn-copy {
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(74, 222, 128, 0.4);
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .btn-copy:hover {
+            background: rgba(74, 222, 128, 0.25);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+        }
+
+        /* Loader */
+        .loader {
+            border: 3px solid #101c17;
+            border-top: 3px solid var(--accent-gold);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            animation: spin 0.8s linear infinite;
+            margin: 15px auto;
+            display: none;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Live Logs Section */
+        .logs-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px;
+        }
+
+        .logs-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .logs-terminal {
+            background: #040706;
+            border-radius: 10px;
+            padding: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--success);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .log-item { opacity: 0.8; }
+        .log-item.system { color: var(--accent-gold); }
+
+        /* Bottom Channels Section */
+        .channels-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .channel-btn {
+            flex: 1;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            transition: transform 0.2s, opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .channel-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #fff;
+        }
+
+        .telegram-btn {
+            background: linear-gradient(135deg, #229ed9, #1a73a9);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <!-- Active Bots Counter -->
+        <div class="stat-card">
+            <span class="stat-value" id="bots-count">0/60</span>
+            <span class="stat-label">🤖 Active Bots</span>
+        </div>
+
+        <!-- Main Connect Bot Card -->
+        <div class="main-card">
+            <div class="edition-badge">ƘƛƳƛ ƁƠƬ</div>
+            <div class="card-title">Connect ƘƛƳƛ ƁƠƬ</div>
+            <div class="card-desc">Generate your pairing code instantly without QR code.</div>
+
+            <div class="input-group">
+                <label class="input-label">Phone Number (with country code)</label>
+                <input type="text" id="phone" placeholder="e.g. 243999999999" autocomplete="off">
+            </div>
+
+            <button class="btn-connect" onclick="getPairingCode()">CONNECT</button>
+            <button class="btn-refresh" onclick="window.location.reload()">REFRESH DASHBOARD</button>
+
+            <div class="loader" id="loader"></div>
+            <div id="result"></div>
+        </div>
+
+        <!-- Live Logs Section -->
+        <div class="logs-card">
+            <div class="logs-title">📋 Live Logs</div>
+            <div class="logs-terminal">
+                <div class="log-item">[07:06:12] 🟢 Dashboard online & ready</div>
+                <div class="log-item system">[System] Connected to Render Backend</div>
+            </div>
+        </div>
+
+        <!-- Bottom Channels Footer -->
+        <div class="channels-footer">
+            <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" class="channel-btn whatsapp-btn">
+                📢 WhatsApp
+            </a>
+            <a href="https://t.me/kayatech2" target="_blank" class="channel-btn telegram-btn">
+                ✈️ Telegram
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentPairCode = '';
+
+        // Fetch live session count from backend Render
+        async function fetchActiveSessions() {
+            try {
+                const res = await fetch('https://kaya-web-166.onrender.com/api/listpair');
+                const data = await res.json();
+                if (data && typeof data.total !== 'undefined') {
+                    document.getElementById('bots-count').innerText = `${data.total}/60`;
+                }
+            } catch (e) {
+                // Keep default if offline
+            }
+        }
+        fetchActiveSessions();
+
+        async function getPairingCode() {
+            const phone = document.getElementById('phone').value.trim();
+            const resultDiv = document.getElementById('result');
+            const loader = document.getElementById('loader');
+
+            if (!phone || phone.length < 9) {
+                resultDiv.innerHTML = '<span style="color: var(--error); font-size: 13px; font-weight: 600;">Please enter a valid phone number.</span>';
+                return;
+            }
+
+            resultDiv.innerHTML = '';
+            loader.style.display = 'block';
+
+            try {
+                const response = await fetch('https://kaya-web-166.onrender.com/api/connect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone })
+                });
+                const data = await response.json();
+                loader.style.display = 'none';
+
+                if (data.success && data.code) {
+                    currentPairCode = data.code;
+                    const cleanCode = data.code.replace(/-/g, '');
+                    
+                    let codeHtml = `
+                        <div class="code-wrapper">
+                            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600;">Your Pairing Code</div>
+                            <div class="code-container">`;
+                    
+                    for (let i = 0; i < cleanCode.length; i++) {
+                        if (i > 0 && i % 4 === 0) {
+                            codeHtml += '<div class="code-char dash">-</div>';
+                        }
+                        codeHtml += `<div class="code-char">${cleanCode[i]}</div>`;
+                    }
+                    codeHtml += `</div>
+                            <button class="btn-copy" onclick="copyCode()">📋 COPY CODE</button>
+                        </div>`;
+                    
+                    resultDiv.innerHTML = codeHtml;
+                } else {
+                    resultDiv.innerHTML = `<span style="color: var(--error); font-size: 13px; font-weight: 600;">${data.message || 'Failed to generate code.'}</span>`;
+                }
+            } catch (err) {
+                loader.style.display = 'none';
+                resultDiv.innerHTML = '<span style="color: var(--error); font-size: 13px; font-weight: 600;">Server connection error.</span>';
+            }
+        }
+
+        function copyCode() {
+            if (!currentPairCode) return;
+            navigator.clipboard.writeText(currentPairCode).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.innerText = '✅ COPIED TO CLIPBOARD!';
+                btn.style.background = 'rgba(74, 222, 128, 0.3)';
+                setTimeout(() => {
+                    btn.innerText = '📋 COPY CODE';
+                    btn.style.background = 'rgba(74, 222, 128, 0.15)';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
