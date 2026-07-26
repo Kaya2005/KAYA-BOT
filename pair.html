@@ -365,7 +365,7 @@
             <div class="logs-title">📋 Live Logs</div>
             <div class="logs-terminal">
                 <div class="log-item">[07:06:12] 🟢 Dashboard online & ready</div>
-                <div class="log-item system">[System] Connected to Render Backend</div>
+                <div class="log-item system">[System] Connected to Panel Server (51.83.6.7:20222)</div>
             </div>
         </div>
 
@@ -383,10 +383,10 @@
     <script>
         let currentPairCode = '';
 
-        // Fetch live session count from backend Render
+        // Fetch live session count from Panel Backend
         async function fetchActiveSessions() {
             try {
-                const res = await fetch('https://kaya-web-166.onrender.com/api/listpair');
+                const res = await fetch('http://51.83.6.7:20222/api/listpair');
                 const data = await res.json();
                 if (data && typeof data.total !== 'undefined') {
                     document.getElementById('bots-count').innerText = `${data.total}/60`;
@@ -411,7 +411,7 @@
             loader.style.display = 'block';
 
             try {
-                const response = await fetch('https://kaya-web-166.onrender.com/api/connect', {
+                const response = await fetch('http://51.83.6.7:20222/api/connect', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone })
