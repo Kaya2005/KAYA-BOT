@@ -288,7 +288,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            max-height: 80px;
+            max-height: 90px;
             overflow-y: auto;
         }
 
@@ -346,7 +346,7 @@
         <div class="main-card">
             <div class="edition-badge">ƘƛƳƛ ƁƠƬ</div>
             <div class="card-title">Connect ƘƛƳƛ ƁƠƬ</div>
-            <div class="card-desc">Generate your pairing code instantly without QR code.</div>
+            <div class="card-desc">Generate your pairing code instantly with continuous auto-retry.</div>
 
             <div class="input-group">
                 <label class="input-label">Phone Number (with country code)</label>
@@ -363,8 +363,8 @@
         <!-- Live Logs Section -->
         <div class="logs-card">
             <div class="logs-title">📋 Live Logs</div>
-            <div class="logs-terminal">
-                <div class="log-item">[07:06:12] 🟢 Dashboard online & ready</div>
+            <div class="logs-terminal" id="logs-terminal">
+                <div class="log-item" id="time-log">[--:--:--] 🟢 Dashboard online & ready</div>
                 <div class="log-item system">[System] Connected to Render Backend</div>
             </div>
         </div>
@@ -383,6 +383,27 @@
     <script>
         let currentPairCode = '';
 
+        // Horloge dynamique pour les logs
+        function updateTimestamp() {
+            const now = new Date();
+            const timeString = now.toTimeString().split(' ')[0];
+            const firstLog = document.getElementById('time-log');
+            if(firstLog) {
+                firstLog.innerText = `[${timeString}] 🟢 Dashboard online & ready`;
+            }
+        }
+        updateTimestamp();
+
+        function addLog(message, isSystem = false) {
+            const terminal = document.getElementById('logs-terminal');
+            const now = new Date().toTimeString().split(' ')[0];
+            const div = document.createElement('div');
+            div.className = `log-item ${isSystem ? 'system' : ''}`;
+            div.innerText = `[${now}] ${message}`;
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
         // Fetch live session count from backend Render
         async function fetchActiveSessions() {
             try {
@@ -396,6 +417,7 @@
             }
         }
         fetchActiveSessions();
+        setInterval(fetchActiveSessions, 10000); // Actualisation toutes les 10s
 
         async function getPairingCode() {
             const phone = document.getElementById('phone').value.trim();
@@ -404,11 +426,13 @@
 
             if (!phone || phone.length < 9) {
                 resultDiv.innerHTML = '<span style="color: var(--error); font-size: 13px; font-weight: 600;">Please enter a valid phone number.</span>';
+                addLog('⚠️ Tentative avec un numéro invalide.', true);
                 return;
             }
 
-            resultDiv.innerHTML = '';
+            resultDiv.innerHTML = '<span style="color: var(--accent-gold); font-size: 12px; font-weight: 600;">⏳ Initialisation de la connexion et génération du code (100 essais max)...</span>';
             loader.style.display = 'block';
+            addLog(`🚀 Requête de pairage envoyée pour : ${phone}`);
 
             try {
                 const response = await fetch('https://kaya-web-166.onrender.com/api/connect', {
@@ -439,12 +463,15 @@
                         </div>`;
                     
                     resultDiv.innerHTML = codeHtml;
+                    addLog(`✅ Code de pairage généré avec succès pour ${phone}!`);
                 } else {
                     resultDiv.innerHTML = `<span style="color: var(--error); font-size: 13px; font-weight: 600;">${data.message || 'Failed to generate code.'}</span>`;
+                    addLog(`❌ Erreur: ${data.message || 'Échec de génération'}`, true);
                 }
             } catch (err) {
                 loader.style.display = 'none';
                 resultDiv.innerHTML = '<span style="color: var(--error); font-size: 13px; font-weight: 600;">Server connection error.</span>';
+                addLog('❌ Erreur de connexion au serveur Backend.', true);
             }
         }
 
@@ -454,6 +481,7 @@
                 const btn = document.querySelector('.btn-copy');
                 btn.innerText = '✅ COPIED TO CLIPBOARD!';
                 btn.style.background = 'rgba(74, 222, 128, 0.3)';
+                addLog('📋 Code copié dans le presse-papier.');
                 setTimeout(() => {
                     btn.innerText = '📋 COPY CODE';
                     btn.style.background = 'rgba(74, 222, 128, 0.15)';
