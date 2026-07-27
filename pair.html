@@ -382,6 +382,7 @@
 
     <script>
         let currentPairCode = '';
+        let pollingInterval = null;
 
         // Horloge dynamique pour les logs
         function updateTimestamp() {
@@ -419,6 +420,51 @@
         fetchActiveSessions();
         setInterval(fetchActiveSessions, 10000); // Actualisation toutes les 10s
 
+        // Surveillance en boucle active (Polling) de la génération des codes
+        function startPollingStatus(phone) {
+            if (pollingInterval) clearInterval(pollingInterval);
+
+            pollingInterval = setInterval(async () => {
+                try {
+                    const res = await fetch(`https://kaya-web-166.onrender.com/api/pairing-status?phone=${phone}`);
+                    const data = await res.json();
+
+                    if (data && data.success && data.code) {
+                        if (data.code !== currentPairCode) {
+                            currentPairCode = data.code;
+                            renderCode(data.code, data.attempt);
+                            addLog(`🔄 [Boucle Tentative ${data.attempt || '?'}/100] Nouveau code généré : ${data.code}`);
+                        }
+                    }
+                } catch (e) {
+                    // Erreur silencieuse de polling
+                }
+            }, 3000);
+        }
+
+        function renderCode(code, attemptNum = null) {
+            const resultDiv = document.getElementById('result');
+            const cleanCode = code.replace(/-/g, '');
+            const attemptText = attemptNum ? ` (Essai ${attemptNum}/100)` : '';
+            
+            let codeHtml = `
+                <div class="code-wrapper">
+                    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600;">Your Pairing Code${attemptText}</div>
+                    <div class="code-container">`;
+            
+            for (let i = 0; i < cleanCode.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    codeHtml += '<div class="code-char dash">-</div>';
+                }
+                codeHtml += `<div class="code-char">${cleanCode[i]}</div>`;
+            }
+            codeHtml += `</div>
+                    <button class="btn-copy" onclick="copyCode()">📋 COPY CODE</button>
+                </div>`;
+            
+            resultDiv.innerHTML = codeHtml;
+        }
+
         async function getPairingCode() {
             const phone = document.getElementById('phone').value.trim();
             const resultDiv = document.getElementById('result');
@@ -430,7 +476,7 @@
                 return;
             }
 
-            resultDiv.innerHTML = '<span style="color: var(--accent-gold); font-size: 12px; font-weight: 600;">⏳ Initialisation de la connexion et génération du code (100 essais max)...</span>';
+            resultDiv.innerHTML = '<span style="color: var(--accent-gold); font-size: 12px; font-weight: 600;">⏳ Initialisation de la connexion et boucle active (100 essais max)...</span>';
             loader.style.display = 'block';
             addLog(`🚀 Requête de pairage envoyée pour : ${phone}`);
 
@@ -445,25 +491,11 @@
 
                 if (data.success && data.code) {
                     currentPairCode = data.code;
-                    const cleanCode = data.code.replace(/-/g, '');
+                    renderCode(data.code, data.attempt);
+                    addLog(`✅ Code de pairage initial généré avec succès pour ${phone}! L'auto-loop est actif.`);
                     
-                    let codeHtml = `
-                        <div class="code-wrapper">
-                            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600;">Your Pairing Code</div>
-                            <div class="code-container">`;
-                    
-                    for (let i = 0; i < cleanCode.length; i++) {
-                        if (i > 0 && i % 4 === 0) {
-                            codeHtml += '<div class="code-char dash">-</div>';
-                        }
-                        codeHtml += `<div class="code-char">${cleanCode[i]}</div>`;
-                    }
-                    codeHtml += `</div>
-                            <button class="btn-copy" onclick="copyCode()">📋 COPY CODE</button>
-                        </div>`;
-                    
-                    resultDiv.innerHTML = codeHtml;
-                    addLog(`✅ Code de pairage généré avec succès pour ${phone}!`);
+                    // Lancer la surveillance en arrière-plan pour les prochains essais de la boucle
+                    startPollingStatus(phone);
                 } else {
                     resultDiv.innerHTML = `<span style="color: var(--error); font-size: 13px; font-weight: 600;">${data.message || 'Failed to generate code.'}</span>`;
                     addLog(`❌ Erreur: ${data.message || 'Échec de génération'}`, true);
