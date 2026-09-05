@@ -3,640 +3,1298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAYA-BOT | Advanced Pairing Dashboard</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <title>KAYA-BOT | Pairing Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
+
         :root {
-            --bg-color: #040706;
-            --card-bg: #0b1310;
-            --card-border: #14241d;
-            --accent-gold: #f59e0b;
-            --accent-gold-hover: #d97706;
-            --accent-glow: rgba(245, 158, 11, 0.25);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --success: #4ade80;
-            --error: #ef4444;
-            --telegram: #229ed9;
+            --bg: #030605;
+            --card: #08100d;
+            --card-light: #0c1712;
+            --border: #15261e;
+
+            --gold: #f59e0b;
+            --gold-dark: #d97706;
+            --gold-glow: rgba(245, 158, 11, 0.22);
+
+            --green: #4ade80;
+            --green-glow: rgba(74, 222, 128, 0.15);
+
+            --red: #ef4444;
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+
             --whatsapp: #25d366;
+            --telegram: #229ed9;
         }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
         body {
+            min-height: 100vh;
+
             font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(245, 158, 11, 0.10),
+                    transparent 45%
+                ),
+                radial-gradient(
+                    circle at 0% 100%,
+                    rgba(74, 222, 128, 0.04),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            padding: 18px 14px 30px;
+
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            background-image: radial-gradient(
-                circle at top,
-                rgba(245, 158, 11, 0.04) 0%,
-                transparent 70%
-            );
         }
+
+
+        /* =====================================================
+           DASHBOARD
+        ===================================================== */
 
         .dashboard {
             width: 100%;
-            max-width: 440px;
+            max-width: 470px;
+
             display: flex;
             flex-direction: column;
-            gap: 16px;
+
+            gap: 14px;
         }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .brand {
+            text-align: center;
+            padding: 6px 0 2px;
+        }
+
+
+        .brand-title {
+            font-size: 13px;
+            font-weight: 700;
+
+            letter-spacing: 4px;
+
+            color: var(--gold);
+
+            text-transform: uppercase;
+        }
+
+
+        .brand-subtitle {
+            margin-top: 4px;
+
+            font-size: 10px;
+
+            letter-spacing: 1.5px;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+        }
+
+
+        /* =====================================================
+           ACTIVE BOTS
+        ===================================================== */
 
         .stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(12, 23, 18, 0.98),
+                    rgba(5, 12, 9, 0.98)
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            padding: 20px 18px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.45),
+                inset 0 1px rgba(255,255,255,0.02);
         }
+
+
+        .stat-icon {
+            font-size: 17px;
+            margin-bottom: 2px;
+        }
+
 
         .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent-gold);
             font-family: 'JetBrains Mono', monospace;
-            text-shadow: 0 0 15px var(--accent-glow);
+
+            font-size: 38px;
+            line-height: 1.1;
+
+            font-weight: 700;
+
+            color: var(--gold);
+
+            text-shadow:
+                0 0 20px var(--gold-glow);
         }
+
 
         .stat-label {
-            font-size: 11px;
+            margin-top: 5px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            color: var(--muted);
+
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            font-weight: 600;
         }
+
+
+        .online-dot {
+            display: inline-block;
+
+            width: 7px;
+            height: 7px;
+
+            margin-right: 5px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow:
+                0 0 10px var(--green);
+        }
+
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
 
         .main-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 18px;
-            padding: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(10, 20, 15, 0.98),
+                    rgba(5, 11, 8, 0.98)
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 22px 18px;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.55);
         }
+
+
+        /* =====================================================
+           BADGE
+        ===================================================== */
 
         .edition-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            color: var(--accent-gold);
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 6px 11px;
+
+            margin-bottom: 14px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(245, 158, 11, 0.08);
+
+            border:
+                1px solid rgba(245, 158, 11, 0.30);
+
+            color: var(--gold);
+
+            font-family: 'JetBrains Mono', monospace;
+
             font-size: 10px;
+
             font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 6px;
+
             letter-spacing: 1px;
+
+            box-shadow:
+                0 0 15px rgba(245,158,11,0.05);
         }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
 
         .card-title {
-            font-size: 22px;
+            font-size: 27px;
+
+            line-height: 1.15;
+
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 4px;
+
+            margin-bottom: 8px;
+
+            color: var(--text);
         }
+
 
         .card-desc {
-            color: var(--text-muted);
+            color: var(--muted);
+
             font-size: 13px;
-            margin-bottom: 20px;
-            line-height: 1.4;
+
+            line-height: 1.6;
+
+            margin-bottom: 23px;
+
+            max-width: 350px;
         }
+
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
 
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
+
         .input-label {
-            display: block;
-            font-size: 11px;
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 8px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.4px;
+
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            font-weight: 600;
         }
+
+
+        .input-label::before {
+            content: "☎";
+
+            color: var(--gold);
+
+            font-size: 13px;
+        }
+
 
         input {
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid var(--card-border);
-            background: #040706;
+
+            height: 56px;
+
+            padding: 0 16px;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--border);
+
+            background:
+                rgba(2, 6, 4, 0.95);
+
             color: #fff;
-            font-size: 16px;
+
             font-family: 'JetBrains Mono', monospace;
+
+            font-size: 17px;
+
+            font-weight: 600;
+
             text-align: center;
+
             outline: none;
-            transition: all 0.2s ease;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                transform 0.2s;
         }
+
+
+        input::placeholder {
+            color: #53645b;
+
+            font-size: 13px;
+        }
+
 
         input:focus {
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 12px var(--accent-glow);
-        }
+            border-color: var(--gold);
 
-        .btn-connect {
-            background: linear-gradient(
-                135deg,
-                var(--accent-gold),
-                var(--accent-gold-hover)
-            );
-            color: #000;
-            border: none;
-            padding: 14px;
-            width: 100%;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-glow);
-            transition: all 0.2s;
-            margin-bottom: 10px;
-        }
+            box-shadow:
+                0 0 0 3px rgba(245,158,11,0.08),
+                0 0 20px var(--gold-glow);
 
-        .btn-connect:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
         }
 
-        .btn-refresh {
-            background: #101c17;
-            color: var(--text-muted);
-            border: 1px solid var(--card-border);
-            padding: 12px;
-            width: 100%;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
 
-        .btn-refresh:hover {
-            background: #172b22;
-            color: var(--text-main);
-        }
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
 
-        #result {
-            margin-top: 16px;
-            text-align: center;
-        }
-
-        .code-wrapper {
-            background: #040706;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 10px;
-        }
-
-        .code-container {
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            margin-bottom: 12px;
-        }
-
-        .code-char {
-            background: #0b1310;
-            border: 1px solid rgba(74, 222, 128, 0.3);
-            color: var(--success);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 16px;
-            font-weight: 700;
-            width: 28px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            box-shadow: 0 0 8px rgba(74, 222, 128, 0.1);
-        }
-
-        .code-char.dash {
-            border: none;
-            color: var(--accent-gold);
-            width: 12px;
-            font-size: 20px;
-        }
-
-        .btn-copy {
-            background: rgba(74, 222, 128, 0.15);
-            color: var(--success);
-            border: 1px solid rgba(74, 222, 128, 0.4);
-            padding: 10px;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
+        button {
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        .btn-copy:hover {
-            background: rgba(74, 222, 128, 0.25);
-            box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+
+        .btn-connect {
+            width: 100%;
+
+            height: 56px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbbf24,
+                    var(--gold-dark)
+                );
+
+            color: #080808;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px var(--gold-glow);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                filter 0.2s;
         }
+
+
+        .btn-connect:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(245,158,11,0.35);
+
+            filter: brightness(1.05);
+        }
+
+
+        .btn-connect:active {
+            transform: scale(0.98);
+        }
+
+
+        .btn-refresh {
+            width: 100%;
+
+            height: 48px;
+
+            margin-top: 10px;
+
+            border-radius: 13px;
+
+            border: 1px solid var(--border);
+
+            background:
+                rgba(16, 28, 23, 0.8);
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .btn-refresh:hover {
+            background: var(--card-light);
+
+            color: var(--text);
+
+            border-color: #20372b;
+        }
+
+
+        /* =====================================================
+           LOADER
+        ===================================================== */
 
         .loader {
-            border: 3px solid #101c17;
-            border-top: 3px solid var(--accent-gold);
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            animation: spin 0.8s linear infinite;
-            margin: 15px auto;
+            width: 30px;
+            height: 30px;
+
+            margin: 20px auto 5px;
+
             display: none;
+
+            border-radius: 50%;
+
+            border: 3px solid #14221b;
+
+            border-top-color: var(--gold);
+
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
 
-            100% {
+        @keyframes spin {
+            to {
                 transform: rotate(360deg);
             }
         }
 
-        .logs-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+
+        /* =====================================================
+           RESULT
+        ===================================================== */
+
+        #result {
+            margin-top: 17px;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           PAIRING CODE
+        ===================================================== */
+
+        .code-wrapper {
+            padding: 17px 12px 13px;
+
             border-radius: 16px;
+
+            border: 1px solid rgba(74,222,128,0.12);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(2,7,4,0.95),
+                    rgba(5,13,9,0.95)
+                );
+
+            box-shadow:
+                inset 0 1px rgba(255,255,255,0.02);
+        }
+
+
+        .code-title {
+            margin-bottom: 13px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+        }
+
+
+        .code-container {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-bottom: 14px;
+
+            overflow: hidden;
+        }
+
+
+        .code-char {
+            width: 30px;
+            height: 39px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 7px;
+
+            border:
+                1px solid rgba(74,222,128,0.35);
+
+            background:
+                rgba(8,20,13,0.95);
+
+            color: var(--green);
+
+            font-family: 'JetBrains Mono', monospace;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 0 10px rgba(74,222,128,0.06);
+        }
+
+
+        .code-char.dash {
+            width: 10px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--gold);
+
+            font-size: 19px;
+
+            box-shadow: none;
+        }
+
+
+        .btn-copy {
+            width: 100%;
+
+            height: 43px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid rgba(74,222,128,0.35);
+
+            background:
+                rgba(74,222,128,0.10);
+
+            color: var(--green);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .btn-copy:hover {
+            background:
+                rgba(74,222,128,0.18);
+
+            box-shadow:
+                0 0 18px rgba(74,222,128,0.10);
+        }
+
+
+        /* =====================================================
+           LOGS
+        ===================================================== */
+
+        .logs-card {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(10,20,15,0.98),
+                    rgba(5,11,8,0.98)
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: 19px;
+
             padding: 16px;
         }
 
-        .logs-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 600;
+
+        .logs-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 10px;
         }
+
+
+        .logs-title {
+            color: var(--muted);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .live {
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            color: var(--green);
+
+            text-transform: uppercase;
+        }
+
+
+        .live::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow:
+                0 0 8px var(--green);
+        }
+
 
         .logs-terminal {
-            background: #040706;
-            border-radius: 10px;
-            padding: 10px;
+            padding: 12px;
+
+            min-height: 67px;
+
+            border-radius: 12px;
+
+            background:
+                #020604;
+
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--success);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            max-height: 80px;
-            overflow-y: auto;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+
+            overflow-x: auto;
         }
+
 
         .log-item {
+            color: var(--green);
+
             opacity: 0.8;
+
+            white-space: nowrap;
         }
+
 
         .log-item.system {
-            color: var(--accent-gold);
-        }
+            color: var(--gold);
 
-        .channels-footer {
-            display: flex;
-            gap: 10px;
-        }
-
-        .channel-btn {
-            flex: 1;
-            font-weight: 700;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 13px;
-            transition: transform 0.2s, opacity 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .channel-btn:hover {
-            transform: translateY(-2px);
             opacity: 0.9;
         }
 
-        .whatsapp-btn {
-            background: linear-gradient(135deg, #25d366, #128c7e);
-            color: #fff;
+
+        /* =====================================================
+           CHANNELS
+        ===================================================== */
+
+        .channels-footer {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
         }
 
-        .telegram-btn {
-            background: linear-gradient(135deg, #229ed9, #1a73a9);
-            color: #fff;
+
+        .channel-btn {
+            min-height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            color: white;
+
+            box-shadow:
+                0 6px 18px rgba(0,0,0,0.3);
+
+            transition: 0.2s;
         }
+
+
+        .channel-btn:hover {
+            transform: translateY(-2px);
+
+            opacity: 0.92;
+        }
+
+
+        .whatsapp-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    #25d366,
+                    #128c7e
+                );
+        }
+
+
+        .telegram-btn {
+            background:
+                linear-gradient(
+                    135deg,
+                    #229ed9,
+                    #1a73a9
+                );
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            body {
+                padding: 12px 10px 25px;
+            }
+
+            .main-card {
+                padding: 19px 14px;
+            }
+
+            .card-title {
+                font-size: 24px;
+            }
+
+            .code-char {
+                width: 27px;
+                height: 36px;
+            }
+
+            .code-container {
+                gap: 3px;
+            }
+
+            .code-char.dash {
+                width: 8px;
+            }
+        }
+
+
+        /* =====================================================
+           DESKTOP
+        ===================================================== */
+
+        @media (min-width: 700px) {
+
+            body {
+                padding-top: 35px;
+            }
+
+            .dashboard {
+                max-width: 470px;
+            }
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <div class="dashboard">
+<div class="dashboard">
 
-        <div class="stat-card">
-            <span class="stat-value" id="bots-count">0/60</span>
-            <span class="stat-label">🤖 Active Bots</span>
+
+    <!-- =====================================================
+         BRAND
+    ====================================================== -->
+
+    <div class="brand">
+
+        <div class="brand-title">
+            KAYA-BOT
         </div>
 
-        <div class="main-card">
+        <div class="brand-subtitle">
+            Advanced WhatsApp Pairing System
+        </div>
 
-            <div class="edition-badge">
-                ƘƛƳƛ ƁƠƬ
-            </div>
+    </div>
 
-            <div class="card-title">
-                Connect ƘƛƳƛ ƁƠƬ
-            </div>
 
-            <div class="card-desc">
-                Generate your pairing code instantly without QR code.
-            </div>
+    <!-- =====================================================
+         ACTIVE BOTS
+    ====================================================== -->
 
-            <div class="input-group">
+    <div class="stat-card">
 
-                <label class="input-label">
-                    Phone Number (with country code)
-                </label>
+        <div class="stat-icon">
+            🤖
+        </div>
 
-                <input
-                    type="text"
-                    id="phone"
-                    placeholder="e.g. 243999999999"
-                    autocomplete="off"
-                >
+        <div
+            class="stat-value"
+            id="bots-count"
+        >
+            0/60
+        </div>
 
-            </div>
+        <div class="stat-label">
+            <span class="online-dot"></span>
+            Active Bots
+        </div>
 
-            <button
-                class="btn-connect"
-                onclick="getPairingCode()"
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CARD
+    ====================================================== -->
+
+    <div class="main-card">
+
+
+        <div class="edition-badge">
+            ƘƛƳƛ ƁƠƬ
+        </div>
+
+
+        <div class="card-title">
+            Connect KAYA BOT
+        </div>
+
+
+        <div class="card-desc">
+            Generate your WhatsApp pairing code instantly
+            without using a QR code.
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="input-group">
+
+            <label class="input-label">
+                Phone Number
+            </label>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="243999999999"
+                autocomplete="off"
+                inputmode="numeric"
             >
-                CONNECT
-            </button>
-
-            <button
-                class="btn-refresh"
-                onclick="window.location.reload()"
-            >
-                REFRESH DASHBOARD
-            </button>
-
-            <div
-                class="loader"
-                id="loader"
-            ></div>
-
-            <div id="result"></div>
 
         </div>
 
-        <div class="logs-card">
+
+        <!-- CONNECT -->
+
+        <button
+            class="btn-connect"
+            id="connectBtn"
+            onclick="getPairingCode()"
+        >
+            ⚡ CONNECT BOT
+        </button>
+
+
+        <!-- REFRESH -->
+
+        <button
+            class="btn-refresh"
+            onclick="window.location.reload()"
+        >
+            ↻ REFRESH DASHBOARD
+        </button>
+
+
+        <!-- LOADER -->
+
+        <div
+            class="loader"
+            id="loader"
+        ></div>
+
+
+        <!-- RESULT -->
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         LOGS
+    ====================================================== -->
+
+    <div class="logs-card">
+
+        <div class="logs-header">
 
             <div class="logs-title">
                 📋 Live Logs
             </div>
 
-            <div class="logs-terminal">
-
-                <div class="log-item">
-                    [07:06:12] 🟢 Dashboard online & ready
-                </div>
-
-                <div class="log-item system">
-                    [System] Connected to Railway Backend
-                </div>
-
+            <div class="live">
+                Online
             </div>
 
         </div>
 
-        <div class="channels-footer">
 
-            <a
-                href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j"
-                target="_blank"
-                class="channel-btn whatsapp-btn"
-            >
-                📢 WhatsApp
-            </a>
+        <div class="logs-terminal">
 
-            <a
-                href="https://t.me/kayatech2"
-                target="_blank"
-                class="channel-btn telegram-btn"
-            >
-                ✈️ Telegram
-            </a>
+            <div class="log-item">
+                [SYSTEM] 🟢 Dashboard online & ready
+            </div>
+
+            <div class="log-item system">
+                [RAILWAY] Backend connection established
+            </div>
 
         </div>
 
     </div>
 
-    <script>
 
-        
+    <!-- =====================================================
+         CHANNELS
+    ====================================================== -->
 
-        const BACKEND_URL =
-            'https://kaya-web-production.up.railway.app';
+    <div class="channels-footer">
 
-        let currentPairCode = '';
+        <a
+            href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j"
+            target="_blank"
+            rel="noopener"
+            class="channel-btn whatsapp-btn"
+        >
+            📢 WhatsApp
+        </a>
 
 
+        <a
+            href="https://t.me/kayatech2"
+            target="_blank"
+            rel="noopener"
+            class="channel-btn telegram-btn"
+        >
+            ✈️ Telegram
+        </a>
 
-        async function fetchActiveSessions() {
+    </div>
 
-            try {
 
-                const res = await fetch(
+</div>
+
+
+<script>
+
+    /* =====================================================
+       RAILWAY BACKEND
+    ===================================================== */
+
+    const BACKEND_URL =
+        'https://kaya-web-production.up.railway.app';
+
+
+    let currentPairCode = '';
+
+
+    /* =====================================================
+       ACTIVE SESSIONS
+    ===================================================== */
+
+    async function fetchActiveSessions() {
+
+        try {
+
+            const response =
+                await fetch(
                     `${BACKEND_URL}/api/listpair`
                 );
 
-                const data = await res.json();
+            if (!response.ok) {
+                throw new Error('Backend unavailable');
+            }
 
-                if (
-                    data &&
-                    typeof data.total !== 'undefined'
-                ) {
+            const data =
+                await response.json();
 
-                    document.getElementById(
-                        'bots-count'
-                    ).innerText =
-                        `${data.total}/60`;
 
-                }
+            if (
+                data &&
+                typeof data.total !== 'undefined'
+            ) {
 
-            } catch (e) {
-
-                console.log(
-                    'Impossible de contacter Railway.'
-                );
+                document.getElementById(
+                    'bots-count'
+                ).innerText =
+                    `${data.total}/60`;
 
             }
+
+        } catch (error) {
+
+            console.log(
+                'Railway backend unavailable.'
+            );
+
+        }
+
+    }
+
+
+    fetchActiveSessions();
+
+
+    /* =====================================================
+       GENERATE PAIRING CODE
+    ===================================================== */
+
+    async function getPairingCode() {
+
+        const phoneInput =
+            document.getElementById('phone');
+
+        const resultDiv =
+            document.getElementById('result');
+
+        const loader =
+            document.getElementById('loader');
+
+        const connectBtn =
+            document.getElementById('connectBtn');
+
+
+        const phone =
+            phoneInput.value
+                .trim()
+                .replace(/\s+/g, '');
+
+
+        /* ================================================
+           VALIDATION
+        ================================================= */
+
+        if (
+            !phone ||
+            phone.length < 9 ||
+            !/^[0-9]+$/.test(phone)
+        ) {
+
+            resultDiv.innerHTML = `
+
+                <div style="
+                    color: var(--red);
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 10px;
+                ">
+                    ❌ Please enter a valid phone number.
+                </div>
+
+            `;
+
+            return;
         }
 
 
-        fetchActiveSessions();
+        /* ================================================
+           LOADING
+        ================================================= */
+
+        resultDiv.innerHTML = '';
+
+        loader.style.display = 'block';
+
+        connectBtn.disabled = true;
+
+        connectBtn.style.opacity = '0.6';
+
+        connectBtn.innerText =
+            '⏳ GENERATING CODE...';
 
 
-        // ==========================================
-        // 🔐 OBTENIR LE CODE DE PAIRAGE
-        // ==========================================
+        try {
 
-        async function getPairingCode() {
+            const response =
+                await fetch(
+                    `${BACKEND_URL}/api/connect`,
+                    {
+                        method: 'POST',
 
-            const phone =
-                document
-                    .getElementById('phone')
-                    .value
-                    .trim();
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
 
-            const resultDiv =
-                document.getElementById('result');
+                        body: JSON.stringify({
+                            phone: phone
+                        })
+                    }
+                );
 
-            const loader =
-                document.getElementById('loader');
+
+            const data =
+                await response.json();
 
 
-            // Vérification du numéro
+            loader.style.display = 'none';
+
+            connectBtn.disabled = false;
+
+            connectBtn.style.opacity = '1';
+
+            connectBtn.innerText =
+                '⚡ CONNECT BOT';
+
+
+            /* ==========================================
+               SUCCESS
+            ========================================== */
 
             if (
-                !phone ||
-                phone.length < 9
+                data.success &&
+                data.code
             ) {
 
-                resultDiv.innerHTML = `
-                    <span style="
-                        color: var(--error);
-                        font-size: 13px;
-                        font-weight: 600;
-                    ">
-                        Please enter a valid phone number.
-                    </span>
+                currentPairCode =
+                    data.code;
+
+
+                const cleanCode =
+                    data.code
+                        .replace(/-/g, '')
+                        .trim();
+
+
+                let codeHtml = `
+
+                    <div class="code-wrapper">
+
+                        <div class="code-title">
+                            Your Pairing Code
+                        </div>
+
+                        <div class="code-container">
                 `;
 
-                return;
-            }
 
-
-            resultDiv.innerHTML = '';
-
-            loader.style.display = 'block';
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${BACKEND_URL}/api/connect`,
-                        {
-                            method: 'POST',
-
-                            headers: {
-                                'Content-Type':
-                                    'application/json'
-                            },
-
-                            body: JSON.stringify({
-                                phone: phone
-                            })
-                        }
-                    );
-
-
-                const data =
-                    await response.json();
-
-
-                loader.style.display = 'none';
-
-
-                // ==================================
-                // ✅ CODE REÇU
-                // ==================================
-
-                if (
-                    data.success &&
-                    data.code
+                for (
+                    let i = 0;
+                    i < cleanCode.length;
+                    i++
                 ) {
 
-                    currentPairCode =
-                        data.code;
-
-                    const cleanCode =
-                        data.code.replace(
-                            /-/g,
-                            ''
-                        );
-
-
-                    let codeHtml = `
-
-                        <div class="code-wrapper">
-
-                            <div style="
-                                font-size: 11px;
-                                text-transform: uppercase;
-                                letter-spacing: 1px;
-                                color: var(--text-muted);
-                                margin-bottom: 8px;
-                                font-weight: 600;
-                            ">
-                                Your Pairing Code
-                            </div>
-
-                            <div class="code-container">
-                    `;
-
-
-                    // Affichage caractère par caractère
-
-                    for (
-                        let i = 0;
-                        i < cleanCode.length;
-                        i++
+                    if (
+                        i > 0 &&
+                        i % 4 === 0
                     ) {
 
-                        if (
-                            i > 0 &&
-                            i % 4 === 0
-                        ) {
-
-                            codeHtml += `
-                                <div class="code-char dash">
-                                    -
-                                </div>
-                            `;
-                        }
-
-
                         codeHtml += `
-                            <div class="code-char">
-                                ${cleanCode[i]}
+                            <div class="code-char dash">
+                                -
                             </div>
                         `;
 
@@ -645,69 +1303,56 @@
 
                     codeHtml += `
 
-                            </div>
-
-                            <button
-                                class="btn-copy"
-                                onclick="copyCode()"
-                            >
-                                📋 COPY CODE
-                            </button>
-
+                        <div class="code-char">
+                            ${cleanCode[i]}
                         </div>
 
                     `;
 
-
-                    resultDiv.innerHTML =
-                        codeHtml;
-
                 }
 
 
-                // ==================================
-                // ❌ ERREUR
-                // ==================================
+                codeHtml += `
 
-                else {
+                        </div>
 
-                    resultDiv.innerHTML = `
+                        <button
+                            class="btn-copy"
+                            onclick="copyCode()"
+                        >
+                            📋 COPY PAIRING CODE
+                        </button>
 
-                        <span style="
-                            color: var(--error);
-                            font-size: 13px;
-                            font-weight: 600;
-                        ">
-                            ${
-                                data.message ||
-                                'Failed to generate code.'
-                            }
-                        </span>
+                    </div>
 
-                    `;
+                `;
 
-                }
 
-            } catch (err) {
+                resultDiv.innerHTML =
+                    codeHtml;
 
-                loader.style.display = 'none';
+            }
 
-                console.error(
-                    'Railway error:',
-                    err
-                );
 
+            /* ==========================================
+               ERROR
+            ========================================== */
+
+            else {
 
                 resultDiv.innerHTML = `
 
-                    <span style="
-                        color: var(--error);
-                        font-size: 13px;
-                        font-weight: 600;
+                    <div style="
+                        color: var(--red);
+                        font-size: 12px;
+                        font-weight: 700;
+                        padding: 10px;
                     ">
-                        Server connection error.
-                        Check Railway backend.
-                    </span>
+                        ❌ ${
+                            data.message ||
+                            'Failed to generate pairing code.'
+                        }
+                    </div>
 
                 `;
 
@@ -716,56 +1361,147 @@
         }
 
 
-        // ==========================================
-        // 📋 COPIER LE CODE
-        // ==========================================
+        /* ================================================
+           CONNECTION ERROR
+        ================================================= */
 
-        function copyCode() {
+        catch (error) {
 
-            if (!currentPairCode)
-                return;
-
-
-            navigator.clipboard
-                .writeText(currentPairCode)
-                .then(() => {
-
-                    const btn =
-                        document.querySelector(
-                            '.btn-copy'
-                        );
+            console.error(
+                'Railway error:',
+                error
+            );
 
 
-                    btn.innerText =
-                        '✅ COPIED TO CLIPBOARD!';
+            loader.style.display = 'none';
 
-                    btn.style.background =
-                        'rgba(74, 222, 128, 0.3)';
+            connectBtn.disabled = false;
+
+            connectBtn.style.opacity = '1';
+
+            connectBtn.innerText =
+                '⚡ CONNECT BOT';
 
 
-                    setTimeout(() => {
+            resultDiv.innerHTML = `
 
-                        btn.innerText =
-                            '📋 COPY CODE';
+                <div style="
+                    color: var(--red);
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 10px;
+                ">
+                    ❌ Server connection error.
+                    Please try again.
+                </div>
 
-                        btn.style.background =
-                            'rgba(74, 222, 128, 0.15)';
-
-                    }, 2000);
-
-                })
-
-                .catch(() => {
-
-                    alert(
-                        'Unable to copy the code.'
-                    );
-
-                });
+            `;
 
         }
 
-    </script>
+    }
+
+
+    /* =====================================================
+       COPY CODE
+    ===================================================== */
+
+    async function copyCode() {
+
+        if (!currentPairCode)
+            return;
+
+
+        const btn =
+            document.querySelector('.btn-copy');
+
+
+        try {
+
+            await navigator.clipboard
+                .writeText(currentPairCode);
+
+
+            btn.innerText =
+                '✅ CODE COPIED!';
+
+
+            btn.style.background =
+                'rgba(74,222,128,0.25)';
+
+
+            setTimeout(() => {
+
+                btn.innerText =
+                    '📋 COPY PAIRING CODE';
+
+                btn.style.background =
+                    'rgba(74,222,128,0.10)';
+
+            }, 2000);
+
+
+        } catch (error) {
+
+            /* Fallback */
+
+            const textarea =
+                document.createElement('textarea');
+
+            textarea.value =
+                currentPairCode;
+
+            document.body.appendChild(
+                textarea
+            );
+
+            textarea.select();
+
+            document.execCommand(
+                'copy'
+            );
+
+            textarea.remove();
+
+
+            btn.innerText =
+                '✅ CODE COPIED!';
+
+
+            setTimeout(() => {
+
+                btn.innerText =
+                    '📋 COPY PAIRING CODE';
+
+            }, 2000);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENTER = CONNECT
+    ===================================================== */
+
+    document
+        .getElementById('phone')
+        .addEventListener(
+            'keydown',
+            function(event) {
+
+                if (
+                    event.key === 'Enter'
+                ) {
+
+                    getPairingCode();
+
+                }
+
+            }
+        );
+
+</script>
 
 </body>
 </html>
