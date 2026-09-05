@@ -572,7 +572,7 @@ button {
 
 
 /* =====================================================
-   LOGS
+   LOGS / ACTIVE SESSIONS COUNTER
 ===================================================== */
 
 .logs-card {
@@ -949,6 +949,14 @@ button {
     </div>
 
 
+    <!-- ACTIVE SESSIONS COUNTER CARD -->
+
+    <div class="logs-card" style="text-align: center;">
+        <div class="logs-title">🤖 Active Bot Sessions</div>
+        <div id="activeCount" style="font-size: 16px; font-weight: bold; color: var(--green); margin-top: 6px;">Loading...</div>
+    </div>
+
+
     <!-- LOGS -->
 
     <div class="logs-card">
@@ -1020,6 +1028,29 @@ const BACKEND_URL =
     'https://kaya-web-production.up.railway.app';
 
 let currentPairCode = '';
+
+
+/* =====================================================
+   FETCH ACTIVE SESSIONS COUNT
+===================================================== */
+
+async function fetchActiveSessions() {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/online-count`);
+        const data = await response.json();
+        
+        if (data.success) {
+            document.getElementById('activeCount').innerText = `${data.totalConnected} Connected Bot(s)`;
+        } else {
+            document.getElementById('activeCount').innerText = '0 Connected Bot(s)';
+        }
+    } catch (e) {
+        document.getElementById('activeCount').innerText = 'Unavailable';
+    }
+}
+
+// Fetch on page load
+fetchActiveSessions();
 
 
 /* =====================================================
@@ -1196,6 +1227,8 @@ async function getPairingCode() {
             resultDiv.innerHTML =
                 codeHtml;
 
+            // Refresh count after successful connection request
+            fetchActiveSessions();
         }
 
 
