@@ -1,900 +1,937 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>KAYA-BOT | Pairing Dashboard</title>
+<title>KAYA-BOT | Pairing Dashboard</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <style>
+<style>
 
-        /* =====================================================
-           VARIABLES
-        ===================================================== */
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-        :root {
-            --bg: #030605;
-            --card: #08100d;
-            --card-light: #0c1712;
-            --border: #15261e;
+:root {
+    --bg: #030605;
+    --card: #08100d;
+    --card2: #0a1511;
+    --input: #020604;
 
-            --gold: #f59e0b;
-            --gold-dark: #d97706;
-            --gold-glow: rgba(245, 158, 11, 0.22);
+    --border: rgba(42, 68, 55, 0.55);
+    --border-soft: rgba(42, 68, 55, 0.35);
 
-            --green: #4ade80;
-            --green-glow: rgba(74, 222, 128, 0.15);
+    --gold: #f59e0b;
+    --gold-light: #fbbf24;
+    --gold-dark: #d97706;
+    --gold-glow: rgba(245,158,11,.18);
 
-            --red: #ef4444;
+    --green: #4ade80;
+    --green-glow: rgba(74,222,128,.12);
 
-            --text: #f8fafc;
-            --muted: #94a3b8;
+    --red: #ef4444;
 
-            --whatsapp: #25d366;
-            --telegram: #229ed9;
-        }
+    --text: #f8fafc;
+    --muted: #94a3b8;
 
+    --whatsapp: #25d366;
+    --telegram: #229ed9;
+}
 
-        /* =====================================================
-           RESET
-        ===================================================== */
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* =====================================================
+   RESET
+===================================================== */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
+body {
+    min-height: 100vh;
 
-        body {
-            min-height: 100vh;
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--text);
 
-            font-family: 'Space Grotesk', sans-serif;
+    background:
+        radial-gradient(
+            circle at 50% -15%,
+            rgba(245,158,11,.07),
+            transparent 40%
+        ),
+        var(--bg);
 
-            color: var(--text);
+    padding: 14px;
 
-            background:
-                radial-gradient(
-                    circle at 50% -10%,
-                    rgba(245, 158, 11, 0.10),
-                    transparent 45%
-                ),
-                radial-gradient(
-                    circle at 0% 100%,
-                    rgba(74, 222, 128, 0.04),
-                    transparent 35%
-                ),
-                var(--bg);
+    display: flex;
+    justify-content: center;
+}
 
-            padding: 18px 14px 30px;
 
-            display: flex;
-            justify-content: center;
-        }
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
+.dashboard {
+    width: 100%;
+    max-width: 460px;
 
-        /* =====================================================
-           DASHBOARD
-        ===================================================== */
+    display: flex;
+    flex-direction: column;
 
-        .dashboard {
-            width: 100%;
-            max-width: 470px;
+    gap: 10px;
+}
 
-            display: flex;
-            flex-direction: column;
 
-            gap: 14px;
-        }
+/* =====================================================
+   BRAND
+===================================================== */
 
+.brand {
+    text-align: center;
+    padding: 3px 0 4px;
+}
 
-        /* =====================================================
-           HEADER
-        ===================================================== */
+.brand-title {
+    font-size: 13px;
+    font-weight: 700;
 
-        .brand {
-            text-align: center;
-            padding: 6px 0 2px;
-        }
+    letter-spacing: 3px;
+    color: var(--gold);
 
+    text-transform: uppercase;
+}
 
-        .brand-title {
-            font-size: 13px;
-            font-weight: 700;
+.brand-subtitle {
+    margin-top: 3px;
 
-            letter-spacing: 4px;
+    font-size: 9px;
+    letter-spacing: 1.2px;
 
-            color: var(--gold);
+    color: var(--muted);
 
-            text-transform: uppercase;
-        }
+    text-transform: uppercase;
+}
 
 
-        .brand-subtitle {
-            margin-top: 4px;
+/* =====================================================
+   ACTIVE BOTS
+===================================================== */
 
-            font-size: 10px;
+.stat-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,20,15,.98),
+            rgba(5,11,8,.98)
+        );
 
-            letter-spacing: 1.5px;
+    border: 1px solid var(--border-soft);
 
-            color: var(--muted);
+    border-radius: 12px;
 
-            text-transform: uppercase;
-        }
+    padding: 13px 15px;
 
+    text-align: center;
 
-        /* =====================================================
-           ACTIVE BOTS
-        ===================================================== */
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.28);
+}
 
-        .stat-card {
-            position: relative;
+.stat-icon {
+    font-size: 15px;
+    line-height: 1;
+    margin-bottom: 3px;
+}
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(12, 23, 18, 0.98),
-                    rgba(5, 12, 9, 0.98)
-                );
+.stat-value {
+    font-family: 'JetBrains Mono', monospace;
 
-            border: 1px solid var(--border);
+    font-size: clamp(27px, 8vw, 36px);
 
-            border-radius: 20px;
+    line-height: 1;
 
-            padding: 20px 18px;
+    font-weight: 700;
 
-            text-align: center;
+    color: var(--gold);
 
-            box-shadow:
-                0 15px 40px rgba(0, 0, 0, 0.45),
-                inset 0 1px rgba(255,255,255,0.02);
-        }
+    text-shadow:
+        0 0 15px var(--gold-glow);
+}
 
+.stat-label {
+    margin-top: 5px;
 
-        .stat-icon {
-            font-size: 17px;
-            margin-bottom: 2px;
-        }
+    font-size: 9px;
 
+    font-weight: 700;
 
-        .stat-value {
-            font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1.5px;
 
-            font-size: 38px;
-            line-height: 1.1;
+    color: var(--muted);
 
-            font-weight: 700;
+    text-transform: uppercase;
+}
 
-            color: var(--gold);
+.online-dot {
+    display: inline-block;
 
-            text-shadow:
-                0 0 20px var(--gold-glow);
-        }
+    width: 6px;
+    height: 6px;
 
+    margin-right: 4px;
 
-        .stat-label {
-            margin-top: 5px;
+    border-radius: 50%;
 
-            font-size: 10px;
+    background: var(--green);
 
-            font-weight: 700;
+    box-shadow:
+        0 0 7px var(--green);
+}
 
-            letter-spacing: 2px;
 
-            color: var(--muted);
+/* =====================================================
+   MAIN CARD
+===================================================== */
 
-            text-transform: uppercase;
-        }
+.main-card {
+    position: relative;
 
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9,19,14,.98),
+            rgba(4,10,7,.98)
+        );
 
-        .online-dot {
-            display: inline-block;
+    border: 1px solid var(--border-soft);
 
-            width: 7px;
-            height: 7px;
+    border-radius: 14px;
 
-            margin-right: 5px;
+    padding: clamp(16px, 4vw, 21px);
 
-            border-radius: 50%;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.35);
+}
 
-            background: var(--green);
 
-            box-shadow:
-                0 0 10px var(--green);
-        }
+/* =====================================================
+   BADGE
+===================================================== */
 
+.edition-badge {
+    display: inline-flex;
 
-        /* =====================================================
-           MAIN CARD
-        ===================================================== */
+    align-items: center;
+    justify-content: center;
 
-        .main-card {
-            position: relative;
+    padding: 5px 9px;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(10, 20, 15, 0.98),
-                    rgba(5, 11, 8, 0.98)
-                );
+    margin-bottom: 11px;
 
-            border: 1px solid var(--border);
+    border-radius: 6px;
 
-            border-radius: 22px;
+    background:
+        rgba(245,158,11,.06);
 
-            padding: 22px 18px;
+    border:
+        1px solid rgba(245,158,11,.22);
 
-            box-shadow:
-                0 20px 50px rgba(0,0,0,0.55);
-        }
+    color: var(--gold);
 
+    font-family: 'JetBrains Mono', monospace;
 
-        /* =====================================================
-           BADGE
-        ===================================================== */
+    font-size: 9px;
 
-        .edition-badge {
-            display: inline-flex;
+    font-weight: 700;
 
-            align-items: center;
-            justify-content: center;
+    letter-spacing: .8px;
+}
 
-            padding: 6px 11px;
 
-            margin-bottom: 14px;
+/* =====================================================
+   TITLE
+===================================================== */
 
-            border-radius: 8px;
+.card-title {
+    font-size: clamp(22px, 6vw, 27px);
 
-            background:
-                rgba(245, 158, 11, 0.08);
+    line-height: 1.15;
 
-            border:
-                1px solid rgba(245, 158, 11, 0.30);
+    font-weight: 700;
 
-            color: var(--gold);
+    margin-bottom: 6px;
+}
 
-            font-family: 'JetBrains Mono', monospace;
+.card-desc {
+    color: var(--muted);
 
-            font-size: 10px;
+    font-size: 12px;
 
-            font-weight: 700;
+    line-height: 1.5;
 
-            letter-spacing: 1px;
+    margin-bottom: 18px;
 
-            box-shadow:
-                0 0 15px rgba(245,158,11,0.05);
-        }
+    max-width: 390px;
+}
 
 
-        /* =====================================================
-           TITLE
-        ===================================================== */
+/* =====================================================
+   INPUT
+===================================================== */
 
-        .card-title {
-            font-size: 27px;
+.input-group {
+    margin-bottom: 11px;
+}
 
-            line-height: 1.15;
+.input-label {
+    display: flex;
 
-            font-weight: 700;
+    align-items: center;
 
-            margin-bottom: 8px;
+    gap: 6px;
 
-            color: var(--text);
-        }
+    margin-bottom: 6px;
 
+    color: var(--muted);
 
-        .card-desc {
-            color: var(--muted);
+    font-size: 9px;
 
-            font-size: 13px;
+    font-weight: 700;
 
-            line-height: 1.6;
+    letter-spacing: 1.2px;
 
-            margin-bottom: 23px;
+    text-transform: uppercase;
+}
 
-            max-width: 350px;
-        }
+.input-label::before {
+    content: "☎";
 
+    color: var(--gold);
 
-        /* =====================================================
-           INPUT
-        ===================================================== */
+    font-size: 12px;
+}
 
-        .input-group {
-            margin-bottom: 14px;
-        }
+input {
+    width: 100%;
 
+    height: 50px;
 
-        .input-label {
-            display: flex;
+    padding: 0 13px;
 
-            align-items: center;
+    border-radius: 10px;
 
-            gap: 7px;
+    border:
+        1px solid var(--border);
 
-            margin-bottom: 8px;
+    background:
+        var(--input);
 
-            color: var(--muted);
+    color: #fff;
 
-            font-size: 10px;
+    font-family:
+        'JetBrains Mono',
+        monospace;
 
-            font-weight: 700;
+    font-size: clamp(14px, 4vw, 17px);
 
-            letter-spacing: 1.4px;
+    font-weight: 600;
 
-            text-transform: uppercase;
-        }
+    text-align: center;
 
+    outline: none;
 
-        .input-label::before {
-            content: "☎";
+    transition:
+        border-color .2s,
+        box-shadow .2s;
+}
 
-            color: var(--gold);
+input::placeholder {
+    color: #4f6058;
 
-            font-size: 13px;
-        }
+    font-size: 12px;
+}
 
+input:focus {
+    border-color: var(--gold);
 
-        input {
-            width: 100%;
+    box-shadow:
+        0 0 0 2px rgba(245,158,11,.06),
+        0 0 14px var(--gold-glow);
+}
 
-            height: 56px;
 
-            padding: 0 16px;
+/* =====================================================
+   BUTTONS
+===================================================== */
 
-            border-radius: 14px;
+button {
+    font-family:
+        'Space Grotesk',
+        sans-serif;
+}
 
-            border: 1px solid var(--border);
+.btn-connect {
+    width: 100%;
 
-            background:
-                rgba(2, 6, 4, 0.95);
+    height: 50px;
 
-            color: #fff;
+    border: none;
 
-            font-family: 'JetBrains Mono', monospace;
+    border-radius: 10px;
 
-            font-size: 17px;
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold-light),
+            var(--gold-dark)
+        );
 
-            font-weight: 600;
+    color: #050505;
 
-            text-align: center;
+    font-size: 14px;
 
-            outline: none;
+    font-weight: 800;
 
-            transition:
-                border-color 0.2s,
-                box-shadow 0.2s,
-                transform 0.2s;
-        }
+    letter-spacing: .4px;
 
+    cursor: pointer;
 
-        input::placeholder {
-            color: #53645b;
+    box-shadow:
+        0 5px 17px var(--gold-glow);
 
-            font-size: 13px;
-        }
+    transition:
+        transform .15s,
+        filter .15s;
+}
 
+.btn-connect:hover {
+    filter: brightness(1.05);
 
-        input:focus {
-            border-color: var(--gold);
+    transform: translateY(-1px);
+}
 
-            box-shadow:
-                0 0 0 3px rgba(245,158,11,0.08),
-                0 0 20px var(--gold-glow);
+.btn-connect:active {
+    transform: scale(.985);
+}
 
-            transform: translateY(-1px);
-        }
+.btn-connect:disabled {
+    cursor: wait;
+}
 
 
-        /* =====================================================
-           BUTTONS
-        ===================================================== */
+.btn-refresh {
+    width: 100%;
 
-        button {
-            font-family: 'Space Grotesk', sans-serif;
-        }
+    height: 43px;
 
+    margin-top: 7px;
 
-        .btn-connect {
-            width: 100%;
+    border-radius: 9px;
 
-            height: 56px;
+    border:
+        1px solid var(--border);
 
-            border: none;
+    background:
+        rgba(13,25,19,.75);
 
-            border-radius: 14px;
+    color: var(--muted);
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #fbbf24,
-                    var(--gold-dark)
-                );
+    font-size: 11px;
 
-            color: #080808;
+    font-weight: 700;
 
-            font-size: 15px;
+    letter-spacing: .4px;
 
-            font-weight: 800;
+    cursor: pointer;
 
-            letter-spacing: 0.5px;
+    transition: .2s;
+}
 
-            cursor: pointer;
+.btn-refresh:hover {
+    background: var(--card2);
 
-            box-shadow:
-                0 8px 25px var(--gold-glow);
+    color: var(--text);
+}
 
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s,
-                filter 0.2s;
-        }
 
+/* =====================================================
+   LOADER
+===================================================== */
 
-        .btn-connect:hover {
-            transform: translateY(-2px);
+.loader {
+    width: 27px;
+    height: 27px;
 
-            box-shadow:
-                0 12px 30px rgba(245,158,11,0.35);
+    margin: 15px auto 2px;
 
-            filter: brightness(1.05);
-        }
+    display: none;
 
+    border-radius: 50%;
 
-        .btn-connect:active {
-            transform: scale(0.98);
-        }
+    border:
+        3px solid #122019;
 
+    border-top-color:
+        var(--gold);
 
-        .btn-refresh {
-            width: 100%;
+    animation:
+        spin .8s linear infinite;
+}
 
-            height: 48px;
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-            margin-top: 10px;
 
-            border-radius: 13px;
+/* =====================================================
+   RESULT
+===================================================== */
 
-            border: 1px solid var(--border);
+#result {
+    margin-top: 13px;
 
-            background:
-                rgba(16, 28, 23, 0.8);
+    text-align: center;
+}
 
-            color: var(--muted);
 
-            font-size: 12px;
+/* =====================================================
+   PAIRING CODE
+===================================================== */
 
-            font-weight: 700;
+.code-wrapper {
+    padding:
+        13px
+        10px
+        10px;
 
-            letter-spacing: 0.5px;
+    border-radius: 10px;
 
-            cursor: pointer;
+    border:
+        1px solid rgba(74,222,128,.10);
 
-            transition: 0.2s;
-        }
+    background:
+        linear-gradient(
+            145deg,
+            rgba(2,7,4,.98),
+            rgba(5,12,8,.98)
+        );
+}
 
+.code-title {
+    margin-bottom: 10px;
 
-        .btn-refresh:hover {
-            background: var(--card-light);
+    font-size: 9px;
 
-            color: var(--text);
+    font-weight: 700;
 
-            border-color: #20372b;
-        }
+    letter-spacing: 1.7px;
 
+    color: var(--muted);
 
-        /* =====================================================
-           LOADER
-        ===================================================== */
+    text-transform: uppercase;
+}
 
-        .loader {
-            width: 30px;
-            height: 30px;
+.code-container {
+    width: 100%;
 
-            margin: 20px auto 5px;
+    display: flex;
 
-            display: none;
+    justify-content: center;
 
-            border-radius: 50%;
+    align-items: center;
 
-            border: 3px solid #14221b;
+    gap: clamp(2px, 1.2vw, 5px);
 
-            border-top-color: var(--gold);
+    margin-bottom: 11px;
 
-            animation: spin 0.8s linear infinite;
-        }
+    overflow: hidden;
+}
 
+.code-char {
+    width: clamp(25px, 7vw, 30px);
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+    height: clamp(33px, 9vw, 38px);
 
+    display: flex;
 
-        /* =====================================================
-           RESULT
-        ===================================================== */
+    align-items: center;
+    justify-content: center;
 
-        #result {
-            margin-top: 17px;
+    flex-shrink: 1;
 
-            text-align: center;
-        }
+    border-radius: 5px;
 
+    border:
+        1px solid rgba(74,222,128,.28);
 
-        /* =====================================================
-           PAIRING CODE
-        ===================================================== */
+    background:
+        rgba(8,20,13,.95);
 
-        .code-wrapper {
-            padding: 17px 12px 13px;
+    color: var(--green);
 
-            border-radius: 16px;
+    font-family:
+        'JetBrains Mono',
+        monospace;
 
-            border: 1px solid rgba(74,222,128,0.12);
+    font-size: clamp(13px, 4vw, 16px);
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(2,7,4,0.95),
-                    rgba(5,13,9,0.95)
-                );
+    font-weight: 700;
+}
 
-            box-shadow:
-                inset 0 1px rgba(255,255,255,0.02);
-        }
+.code-char.dash {
+    width: clamp(7px, 2vw, 10px);
 
+    border: none;
 
-        .code-title {
-            margin-bottom: 13px;
+    background: transparent;
 
-            font-size: 10px;
+    color: var(--gold);
 
-            font-weight: 700;
+    font-size: 17px;
+}
 
-            letter-spacing: 2px;
 
-            color: var(--muted);
+.btn-copy {
+    width: 100%;
 
-            text-transform: uppercase;
-        }
+    height: 39px;
 
+    border-radius: 8px;
 
-        .code-container {
-            display: flex;
+    border:
+        1px solid rgba(74,222,128,.28);
 
-            justify-content: center;
+    background:
+        rgba(74,222,128,.08);
 
-            align-items: center;
+    color: var(--green);
 
-            gap: 5px;
+    font-size: 11px;
 
-            margin-bottom: 14px;
+    font-weight: 800;
 
-            overflow: hidden;
-        }
+    cursor: pointer;
 
+    transition: .2s;
+}
 
-        .code-char {
-            width: 30px;
-            height: 39px;
+.btn-copy:hover {
+    background:
+        rgba(74,222,128,.15);
+}
 
-            display: flex;
 
-            align-items: center;
-            justify-content: center;
+/* =====================================================
+   ERROR
+===================================================== */
 
-            flex-shrink: 0;
+.error-message {
+    color: var(--red);
 
-            border-radius: 7px;
+    font-size: 11px;
 
-            border:
-                1px solid rgba(74,222,128,0.35);
+    font-weight: 700;
 
-            background:
-                rgba(8,20,13,0.95);
+    padding: 7px;
+}
 
-            color: var(--green);
 
-            font-family: 'JetBrains Mono', monospace;
+/* =====================================================
+   LOGS
+===================================================== */
 
-            font-size: 16px;
+.logs-card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(9,19,14,.98),
+            rgba(4,10,7,.98)
+        );
 
-            font-weight: 700;
+    border:
+        1px solid var(--border-soft);
 
-            box-shadow:
-                0 0 10px rgba(74,222,128,0.06);
-        }
+    border-radius: 12px;
 
+    padding: 12px;
+}
 
-        .code-char.dash {
-            width: 10px;
+.logs-header {
+    display: flex;
 
-            border: none;
+    align-items: center;
 
-            background: transparent;
+    justify-content: space-between;
 
-            color: var(--gold);
+    margin-bottom: 7px;
+}
 
-            font-size: 19px;
+.logs-title {
+    color: var(--muted);
 
-            box-shadow: none;
-        }
+    font-size: 9px;
 
+    font-weight: 700;
 
-        .btn-copy {
-            width: 100%;
+    letter-spacing: 1.3px;
 
-            height: 43px;
+    text-transform: uppercase;
+}
 
-            border-radius: 10px;
+.live {
+    display: flex;
 
-            border:
-                1px solid rgba(74,222,128,0.35);
+    align-items: center;
 
-            background:
-                rgba(74,222,128,0.10);
+    gap: 4px;
 
-            color: var(--green);
+    font-size: 8px;
 
-            font-size: 12px;
+    font-weight: 700;
 
-            font-weight: 800;
+    color: var(--green);
 
-            letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
 
-            cursor: pointer;
+.live::before {
+    content: "";
 
-            transition: 0.2s;
-        }
+    width: 5px;
+    height: 5px;
 
+    border-radius: 50%;
 
-        .btn-copy:hover {
-            background:
-                rgba(74,222,128,0.18);
+    background: var(--green);
 
-            box-shadow:
-                0 0 18px rgba(74,222,128,0.10);
-        }
+    box-shadow:
+        0 0 6px var(--green);
+}
 
+.logs-terminal {
+    padding: 9px;
 
-        /* =====================================================
-           LOGS
-        ===================================================== */
+    min-height: 58px;
 
-        .logs-card {
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(10,20,15,0.98),
-                    rgba(5,11,8,0.98)
-                );
+    border-radius: 8px;
 
-            border: 1px solid var(--border);
+    background:
+        #020604;
 
-            border-radius: 19px;
+    font-family:
+        'JetBrains Mono',
+        monospace;
 
-            padding: 16px;
-        }
+    font-size: 9px;
 
+    line-height: 1.8;
 
-        .logs-header {
-            display: flex;
+    overflow-x: auto;
+}
 
-            align-items: center;
+.log-item {
+    color: var(--green);
 
-            justify-content: space-between;
+    opacity: .8;
 
-            margin-bottom: 10px;
-        }
+    white-space: nowrap;
+}
 
+.log-item.system {
+    color: var(--gold);
 
-        .logs-title {
-            color: var(--muted);
+    opacity: .9;
+}
 
-            font-size: 10px;
 
-            font-weight: 700;
+/* =====================================================
+   CHANNELS
+===================================================== */
 
-            letter-spacing: 1.5px;
+.channels-footer {
+    display: grid;
 
-            text-transform: uppercase;
-        }
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
 
+    gap: 8px;
+}
 
-        .live {
-            display: flex;
+.channel-btn {
+    min-height: 43px;
 
-            align-items: center;
+    display: flex;
 
-            gap: 5px;
+    align-items: center;
 
-            font-size: 9px;
+    justify-content: center;
 
-            font-weight: 700;
+    gap: 6px;
 
-            color: var(--green);
+    border-radius: 9px;
 
-            text-transform: uppercase;
-        }
+    text-decoration: none;
 
+    font-size: 11px;
 
-        .live::before {
-            content: "";
+    font-weight: 800;
 
-            width: 6px;
-            height: 6px;
+    color: white;
 
-            border-radius: 50%;
+    transition:
+        transform .15s,
+        opacity .15s;
+}
 
-            background: var(--green);
+.channel-btn:hover {
+    transform: translateY(-1px);
 
-            box-shadow:
-                0 0 8px var(--green);
-        }
+    opacity: .9;
+}
 
+.whatsapp-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #25d366,
+            #128c7e
+        );
+}
 
-        .logs-terminal {
-            padding: 12px;
+.telegram-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #229ed9,
+            #1a73a9
+        );
+}
 
-            min-height: 67px;
 
-            border-radius: 12px;
+/* =====================================================
+   SMALL PHONES
+===================================================== */
 
-            background:
-                #020604;
+@media (max-width: 350px) {
 
-            font-family: 'JetBrains Mono', monospace;
+    body {
+        padding:
+            9px
+            7px
+            18px;
+    }
 
-            font-size: 10px;
+    .dashboard {
+        gap: 8px;
+    }
 
-            line-height: 1.8;
+    .main-card {
+        padding: 14px 12px;
+    }
 
-            overflow-x: auto;
-        }
+    .card-title {
+        font-size: 21px;
+    }
 
+    .card-desc {
+        font-size: 11px;
+        margin-bottom: 15px;
+    }
 
-        .log-item {
-            color: var(--green);
+    input {
+        height: 47px;
+    }
 
-            opacity: 0.8;
+    .btn-connect {
+        height: 47px;
+    }
 
-            white-space: nowrap;
-        }
+    .code-container {
+        gap: 2px;
+    }
 
+    .code-char {
+        width: 23px;
+        height: 32px;
+    }
 
-        .log-item.system {
-            color: var(--gold);
+    .code-char.dash {
+        width: 6px;
+    }
+}
 
-            opacity: 0.9;
-        }
 
+/* =====================================================
+   TABLETS
+===================================================== */
 
-        /* =====================================================
-           CHANNELS
-        ===================================================== */
+@media (min-width: 600px) {
 
-        .channels-footer {
-            display: grid;
+    body {
+        padding:
+            25px
+            18px
+            35px;
+    }
 
-            grid-template-columns: 1fr 1fr;
+    .dashboard {
+        max-width: 470px;
+        gap: 12px;
+    }
 
-            gap: 10px;
-        }
+    .main-card {
+        padding: 22px;
+    }
 
+    .stat-card {
+        padding: 16px;
+    }
+}
 
-        .channel-btn {
-            min-height: 48px;
 
-            display: flex;
+/* =====================================================
+   DESKTOP
+===================================================== */
 
-            align-items: center;
+@media (min-width: 900px) {
 
-            justify-content: center;
+    body {
+        align-items: flex-start;
 
-            gap: 7px;
+        padding-top: 40px;
+    }
 
-            border-radius: 13px;
+    .dashboard {
+        max-width: 480px;
+    }
 
-            text-decoration: none;
+}
 
-            font-size: 12px;
 
-            font-weight: 800;
+/* =====================================================
+   VERY LARGE SCREENS
+===================================================== */
 
-            color: white;
+@media (min-width: 1400px) {
 
-            box-shadow:
-                0 6px 18px rgba(0,0,0,0.3);
+    .dashboard {
+        max-width: 500px;
+    }
 
-            transition: 0.2s;
-        }
+}
 
-
-        .channel-btn:hover {
-            transform: translateY(-2px);
-
-            opacity: 0.92;
-        }
-
-
-        .whatsapp-btn {
-            background:
-                linear-gradient(
-                    135deg,
-                    #25d366,
-                    #128c7e
-                );
-        }
-
-
-        .telegram-btn {
-            background:
-                linear-gradient(
-                    135deg,
-                    #229ed9,
-                    #1a73a9
-                );
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 380px) {
-
-            body {
-                padding: 12px 10px 25px;
-            }
-
-            .main-card {
-                padding: 19px 14px;
-            }
-
-            .card-title {
-                font-size: 24px;
-            }
-
-            .code-char {
-                width: 27px;
-                height: 36px;
-            }
-
-            .code-container {
-                gap: 3px;
-            }
-
-            .code-char.dash {
-                width: 8px;
-            }
-        }
-
-
-        /* =====================================================
-           DESKTOP
-        ===================================================== */
-
-        @media (min-width: 700px) {
-
-            body {
-                padding-top: 35px;
-            }
-
-            .dashboard {
-                max-width: 470px;
-            }
-        }
-
-    </style>
+</style>
 </head>
 
 
@@ -903,9 +940,7 @@
 <div class="dashboard">
 
 
-    <!-- =====================================================
-         BRAND
-    ====================================================== -->
+    <!-- BRAND -->
 
     <div class="brand">
 
@@ -920,9 +955,7 @@
     </div>
 
 
-    <!-- =====================================================
-         ACTIVE BOTS
-    ====================================================== -->
+    <!-- ACTIVE BOTS -->
 
     <div class="stat-card">
 
@@ -938,19 +971,19 @@
         </div>
 
         <div class="stat-label">
+
             <span class="online-dot"></span>
+
             Active Bots
+
         </div>
 
     </div>
 
 
-    <!-- =====================================================
-         MAIN CARD
-    ====================================================== -->
+    <!-- MAIN CARD -->
 
     <div class="main-card">
-
 
         <div class="edition-badge">
             ƘƛƳƛ ƁƠƬ
@@ -963,8 +996,7 @@
 
 
         <div class="card-desc">
-            Generate your WhatsApp pairing code instantly
-            without using a QR code.
+            Generate your WhatsApp pairing code instantly without using a QR code.
         </div>
 
 
@@ -1023,9 +1055,7 @@
     </div>
 
 
-    <!-- =====================================================
-         LOGS
-    ====================================================== -->
+    <!-- LOGS -->
 
     <div class="logs-card">
 
@@ -1057,9 +1087,7 @@
     </div>
 
 
-    <!-- =====================================================
-         CHANNELS
-    ====================================================== -->
+    <!-- CHANNELS -->
 
     <div class="channels-footer">
 
@@ -1090,221 +1118,201 @@
 
 <script>
 
-    /* =====================================================
-       RAILWAY BACKEND
-    ===================================================== */
+/* =====================================================
+   RAILWAY BACKEND
+===================================================== */
 
-    const BACKEND_URL =
-        'https://kaya-web-production.up.railway.app';
+const BACKEND_URL =
+    'https://kaya-web-production.up.railway.app';
 
-
-    let currentPairCode = '';
-
-
-    /* =====================================================
-       ACTIVE SESSIONS
-    ===================================================== */
-
-    async function fetchActiveSessions() {
-
-        try {
-
-            const response =
-                await fetch(
-                    `${BACKEND_URL}/api/listpair`
-                );
-
-            if (!response.ok) {
-                throw new Error('Backend unavailable');
-            }
-
-            const data =
-                await response.json();
+let currentPairCode = '';
 
 
-            if (
-                data &&
-                typeof data.total !== 'undefined'
-            ) {
+/* =====================================================
+   ACTIVE SESSIONS
+===================================================== */
 
-                document.getElementById(
-                    'bots-count'
-                ).innerText =
-                    `${data.total}/60`;
+async function fetchActiveSessions() {
 
-            }
+    try {
 
-        } catch (error) {
-
-            console.log(
-                'Railway backend unavailable.'
+        const response =
+            await fetch(
+                `${BACKEND_URL}/api/listpair`
             );
 
+        if (!response.ok) {
+            throw new Error(
+                'Backend unavailable'
+            );
         }
+
+        const data =
+            await response.json();
+
+        if (
+            data &&
+            typeof data.total !== 'undefined'
+        ) {
+
+            document.getElementById(
+                'bots-count'
+            ).innerText =
+                `${data.total}/60`;
+
+        }
+
+    } catch (error) {
+
+        console.log(
+            'Railway backend unavailable.'
+        );
 
     }
 
-
-    fetchActiveSessions();
-
-
-    /* =====================================================
-       GENERATE PAIRING CODE
-    ===================================================== */
-
-    async function getPairingCode() {
-
-        const phoneInput =
-            document.getElementById('phone');
-
-        const resultDiv =
-            document.getElementById('result');
-
-        const loader =
-            document.getElementById('loader');
-
-        const connectBtn =
-            document.getElementById('connectBtn');
+}
 
 
-        const phone =
-            phoneInput.value
-                .trim()
-                .replace(/\s+/g, '');
+fetchActiveSessions();
 
 
-        /* ================================================
-           VALIDATION
-        ================================================= */
+/* =====================================================
+   GENERATE PAIRING CODE
+===================================================== */
 
-        if (
-            !phone ||
-            phone.length < 9 ||
-            !/^[0-9]+$/.test(phone)
-        ) {
+async function getPairingCode() {
 
-            resultDiv.innerHTML = `
+    const phoneInput =
+        document.getElementById('phone');
 
-                <div style="
-                    color: var(--red);
-                    font-size: 12px;
-                    font-weight: 700;
-                    padding: 10px;
-                ">
-                    ❌ Please enter a valid phone number.
-                </div>
+    const resultDiv =
+        document.getElementById('result');
 
-            `;
+    const loader =
+        document.getElementById('loader');
 
-            return;
-        }
+    const connectBtn =
+        document.getElementById('connectBtn');
 
 
-        /* ================================================
-           LOADING
-        ================================================= */
+    const phone =
+        phoneInput.value
+            .trim()
+            .replace(/\s+/g, '');
 
-        resultDiv.innerHTML = '';
 
-        loader.style.display = 'block';
+    /* VALIDATION */
 
-        connectBtn.disabled = true;
+    if (
+        !phone ||
+        phone.length < 9 ||
+        !/^[0-9]+$/.test(phone)
+    ) {
 
-        connectBtn.style.opacity = '0.6';
+        resultDiv.innerHTML = `
+
+            <div class="error-message">
+                ❌ Please enter a valid phone number.
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    /* LOADING */
+
+    resultDiv.innerHTML = '';
+
+    loader.style.display = 'block';
+
+    connectBtn.disabled = true;
+
+    connectBtn.style.opacity = '.6';
+
+    connectBtn.innerText =
+        '⏳ GENERATING CODE...';
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/api/connect`,
+                {
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type':
+                            'application/json'
+                    },
+
+                    body: JSON.stringify({
+                        phone: phone
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        loader.style.display = 'none';
+
+        connectBtn.disabled = false;
+
+        connectBtn.style.opacity = '1';
 
         connectBtn.innerText =
-            '⏳ GENERATING CODE...';
+            '⚡ CONNECT BOT';
 
 
-        try {
+        /* SUCCESS */
 
-            const response =
-                await fetch(
-                    `${BACKEND_URL}/api/connect`,
-                    {
-                        method: 'POST',
+        if (
+            data.success &&
+            data.code
+        ) {
 
-                        headers: {
-                            'Content-Type':
-                                'application/json'
-                        },
-
-                        body: JSON.stringify({
-                            phone: phone
-                        })
-                    }
-                );
+            currentPairCode =
+                data.code;
 
 
-            const data =
-                await response.json();
-
-
-            loader.style.display = 'none';
-
-            connectBtn.disabled = false;
-
-            connectBtn.style.opacity = '1';
-
-            connectBtn.innerText =
-                '⚡ CONNECT BOT';
-
-
-            /* ==========================================
-               SUCCESS
-            ========================================== */
-
-            if (
-                data.success &&
+            const cleanCode =
                 data.code
+                    .replace(/-/g, '')
+                    .trim();
+
+
+            let codeHtml = `
+
+                <div class="code-wrapper">
+
+                    <div class="code-title">
+                        Your Pairing Code
+                    </div>
+
+                    <div class="code-container">
+            `;
+
+
+            for (
+                let i = 0;
+                i < cleanCode.length;
+                i++
             ) {
 
-                currentPairCode =
-                    data.code;
-
-
-                const cleanCode =
-                    data.code
-                        .replace(/-/g, '')
-                        .trim();
-
-
-                let codeHtml = `
-
-                    <div class="code-wrapper">
-
-                        <div class="code-title">
-                            Your Pairing Code
-                        </div>
-
-                        <div class="code-container">
-                `;
-
-
-                for (
-                    let i = 0;
-                    i < cleanCode.length;
-                    i++
+                if (
+                    i > 0 &&
+                    i % 4 === 0
                 ) {
-
-                    if (
-                        i > 0 &&
-                        i % 4 === 0
-                    ) {
-
-                        codeHtml += `
-                            <div class="code-char dash">
-                                -
-                            </div>
-                        `;
-
-                    }
-
 
                     codeHtml += `
 
-                        <div class="code-char">
-                            ${cleanCode[i]}
+                        <div class="code-char dash">
+                            -
                         </div>
 
                     `;
@@ -1314,85 +1322,48 @@
 
                 codeHtml += `
 
-                        </div>
-
-                        <button
-                            class="btn-copy"
-                            onclick="copyCode()"
-                        >
-                            📋 COPY PAIRING CODE
-                        </button>
-
-                    </div>
-
-                `;
-
-
-                resultDiv.innerHTML =
-                    codeHtml;
-
-            }
-
-
-            /* ==========================================
-               ERROR
-            ========================================== */
-
-            else {
-
-                resultDiv.innerHTML = `
-
-                    <div style="
-                        color: var(--red);
-                        font-size: 12px;
-                        font-weight: 700;
-                        padding: 10px;
-                    ">
-                        ❌ ${
-                            data.message ||
-                            'Failed to generate pairing code.'
-                        }
+                    <div class="code-char">
+                        ${cleanCode[i]}
                     </div>
 
                 `;
 
             }
+
+
+            codeHtml += `
+
+                    </div>
+
+                    <button
+                        class="btn-copy"
+                        onclick="copyCode()"
+                    >
+                        📋 COPY PAIRING CODE
+                    </button>
+
+                </div>
+
+            `;
+
+
+            resultDiv.innerHTML =
+                codeHtml;
 
         }
 
 
-        /* ================================================
-           CONNECTION ERROR
-        ================================================= */
+        /* ERROR */
 
-        catch (error) {
-
-            console.error(
-                'Railway error:',
-                error
-            );
-
-
-            loader.style.display = 'none';
-
-            connectBtn.disabled = false;
-
-            connectBtn.style.opacity = '1';
-
-            connectBtn.innerText =
-                '⚡ CONNECT BOT';
-
+        else {
 
             resultDiv.innerHTML = `
 
-                <div style="
-                    color: var(--red);
-                    font-size: 12px;
-                    font-weight: 700;
-                    padding: 10px;
-                ">
-                    ❌ Server connection error.
-                    Please try again.
+                <div class="error-message">
+                    ❌ ${
+                        data.message ||
+                        'Failed to generate pairing code.'
+                    }
                 </div>
 
             `;
@@ -1402,104 +1373,138 @@
     }
 
 
-    /* =====================================================
-       COPY CODE
-    ===================================================== */
+    catch (error) {
 
-    async function copyCode() {
-
-        if (!currentPairCode)
-            return;
+        console.error(
+            'Railway error:',
+            error
+        );
 
 
-        const btn =
-            document.querySelector('.btn-copy');
+        loader.style.display = 'none';
+
+        connectBtn.disabled = false;
+
+        connectBtn.style.opacity = '1';
+
+        connectBtn.innerText =
+            '⚡ CONNECT BOT';
 
 
-        try {
+        resultDiv.innerHTML = `
 
-            await navigator.clipboard
-                .writeText(currentPairCode);
+            <div class="error-message">
+                ❌ Server connection error.
+                Please try again.
+            </div>
 
-
-            btn.innerText =
-                '✅ CODE COPIED!';
-
-
-            btn.style.background =
-                'rgba(74,222,128,0.25)';
-
-
-            setTimeout(() => {
-
-                btn.innerText =
-                    '📋 COPY PAIRING CODE';
-
-                btn.style.background =
-                    'rgba(74,222,128,0.10)';
-
-            }, 2000);
-
-
-        } catch (error) {
-
-            /* Fallback */
-
-            const textarea =
-                document.createElement('textarea');
-
-            textarea.value =
-                currentPairCode;
-
-            document.body.appendChild(
-                textarea
-            );
-
-            textarea.select();
-
-            document.execCommand(
-                'copy'
-            );
-
-            textarea.remove();
-
-
-            btn.innerText =
-                '✅ CODE COPIED!';
-
-
-            setTimeout(() => {
-
-                btn.innerText =
-                    '📋 COPY PAIRING CODE';
-
-            }, 2000);
-
-        }
+        `;
 
     }
 
+}
 
-    /* =====================================================
-       ENTER = CONNECT
-    ===================================================== */
 
-    document
-        .getElementById('phone')
-        .addEventListener(
-            'keydown',
-            function(event) {
+/* =====================================================
+   COPY CODE
+===================================================== */
 
-                if (
-                    event.key === 'Enter'
-                ) {
+async function copyCode() {
 
-                    getPairingCode();
+    if (!currentPairCode)
+        return;
 
-                }
+
+    const btn =
+        document.querySelector('.btn-copy');
+
+
+    try {
+
+        await navigator.clipboard
+            .writeText(currentPairCode);
+
+
+        btn.innerText =
+            '✅ CODE COPIED!';
+
+
+        btn.style.background =
+            'rgba(74,222,128,.22)';
+
+
+        setTimeout(() => {
+
+            btn.innerText =
+                '📋 COPY PAIRING CODE';
+
+            btn.style.background =
+                'rgba(74,222,128,.08)';
+
+        }, 2000);
+
+
+    }
+
+    catch (error) {
+
+        const textarea =
+            document.createElement(
+                'textarea'
+            );
+
+        textarea.value =
+            currentPairCode;
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.select();
+
+        document.execCommand(
+            'copy'
+        );
+
+        textarea.remove();
+
+
+        btn.innerText =
+            '✅ CODE COPIED!';
+
+
+        setTimeout(() => {
+
+            btn.innerText =
+                '📋 COPY PAIRING CODE';
+
+        }, 2000);
+
+    }
+
+}
+
+
+/* =====================================================
+   ENTER = CONNECT
+===================================================== */
+
+document
+    .getElementById('phone')
+    .addEventListener(
+        'keydown',
+        function(event) {
+
+            if (
+                event.key === 'Enter'
+            ) {
+
+                getPairingCode();
 
             }
-        );
+
+        }
+    );
 
 </script>
 
