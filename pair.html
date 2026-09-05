@@ -123,82 +123,6 @@ body {
 
 
 /* =====================================================
-   ACTIVE BOTS
-===================================================== */
-
-.stat-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(10,20,15,.98),
-            rgba(5,11,8,.98)
-        );
-
-    border: 1px solid var(--border-soft);
-
-    border-radius: 12px;
-
-    padding: 13px 15px;
-
-    text-align: center;
-
-    box-shadow:
-        0 6px 18px rgba(0,0,0,.28);
-}
-
-.stat-icon {
-    font-size: 15px;
-    line-height: 1;
-    margin-bottom: 3px;
-}
-
-.stat-value {
-    font-family: 'JetBrains Mono', monospace;
-
-    font-size: clamp(27px, 8vw, 36px);
-
-    line-height: 1;
-
-    font-weight: 700;
-
-    color: var(--gold);
-
-    text-shadow:
-        0 0 15px var(--gold-glow);
-}
-
-.stat-label {
-    margin-top: 5px;
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
-    color: var(--muted);
-
-    text-transform: uppercase;
-}
-
-.online-dot {
-    display: inline-block;
-
-    width: 6px;
-    height: 6px;
-
-    margin-right: 4px;
-
-    border-radius: 50%;
-
-    background: var(--green);
-
-    box-shadow:
-        0 0 7px var(--green);
-}
-
-
-/* =====================================================
    MAIN CARD
 ===================================================== */
 
@@ -893,10 +817,6 @@ button {
     .main-card {
         padding: 22px;
     }
-
-    .stat-card {
-        padding: 16px;
-    }
 }
 
 
@@ -950,32 +870,6 @@ button {
 
         <div class="brand-subtitle">
             Advanced WhatsApp Pairing System
-        </div>
-
-    </div>
-
-
-    <!-- ACTIVE BOTS -->
-
-    <div class="stat-card">
-
-        <div class="stat-icon">
-            🤖
-        </div>
-
-        <div
-            class="stat-value"
-            id="bots-count"
-        >
-            0
-        </div>
-
-        <div class="stat-label">
-
-            <span class="online-dot"></span>
-
-            Active Bots (Max: 60)
-
         </div>
 
     </div>
@@ -1126,54 +1020,6 @@ const BACKEND_URL =
     'https://kaya-web-production.up.railway.app';
 
 let currentPairCode = '';
-
-
-/* =====================================================
-   ACTIVE SESSIONS
-===================================================== */
-
-async function fetchActiveSessions() {
-
-    try {
-
-        const response =
-            await fetch(
-                `${BACKEND_URL}/api/listpair`
-            );
-
-        if (!response.ok) {
-            throw new Error(
-                'Backend unavailable'
-            );
-        }
-
-        const data =
-            await response.json();
-
-        if (
-            data &&
-            typeof data.total !== 'undefined'
-        ) {
-
-            document.getElementById(
-                'bots-count'
-            ).innerText =
-                data.total;
-
-        }
-
-    } catch (error) {
-
-        console.log(
-            'Railway backend unavailable.'
-        );
-
-    }
-
-}
-
-
-fetchActiveSessions();
 
 
 /* =====================================================
