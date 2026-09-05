@@ -967,14 +967,14 @@ button {
             class="stat-value"
             id="bots-count"
         >
-            0/60
+            0
         </div>
 
         <div class="stat-label">
 
             <span class="online-dot"></span>
 
-            Active Bots
+            Active Bots (Max: 60)
 
         </div>
 
@@ -1158,7 +1158,7 @@ async function fetchActiveSessions() {
             document.getElementById(
                 'bots-count'
             ).innerText =
-                `${data.total}/60`;
+                data.total;
 
         }
 
