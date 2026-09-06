@@ -28,17 +28,13 @@
     --card2: #0a1511;
     --input: #020604;
 
-    --border: rgba(42, 68, 55, 0.55);
+    --border: rgba(74, 222, 128, 0.25);
+    --border-hover: rgba(74, 222, 128, 0.5);
     --border-soft: rgba(42, 68, 55, 0.35);
 
     --gold: #f59e0b;
-    --gold-light: #fbbf24;
-    --gold-dark: #d97706;
-    --gold-glow: rgba(245,158,11,.18);
-
     --green: #4ade80;
-    --green-glow: rgba(74,222,128,.12);
-
+    --green-glow: rgba(74,222,128,.15);
     --red: #ef4444;
 
     --text: #f8fafc;
@@ -60,19 +56,20 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at 50% -15%, rgba(245,158,11,.07), transparent 40%),
+        radial-gradient(circle at 50% -15%, rgba(74,222,128,.08), transparent 45%),
         var(--bg);
-    padding: 14px;
+    padding: 16px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .dashboard {
     width: 100%;
-    max-width: 460px;
+    max-width: 440px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 /* =====================================================
@@ -81,11 +78,11 @@ body {
 
 .brand {
     text-align: center;
-    padding: 3px 0 4px;
+    padding: 2px 0;
 }
 
 .brand-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 3px;
     color: var(--gold);
@@ -93,31 +90,31 @@ body {
 }
 
 .brand-subtitle {
-    margin-top: 3px;
+    margin-top: 2px;
     font-size: 9px;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.5px;
     color: var(--muted);
     text-transform: uppercase;
 }
 
 .main-card {
     position: relative;
-    background: linear-gradient(145deg, rgba(9,19,14,.98), rgba(4,10,7,.98));
-    border: 1px solid var(--border-soft);
-    border-radius: 14px;
-    padding: clamp(16px, 4vw, 21px);
-    box-shadow: 0 8px 25px rgba(0,0,0,.35);
+    background: linear-gradient(145deg, rgba(8,18,13,0.95), rgba(3,8,5,0.98));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(74,222,128,0.1);
 }
 
 /* Logo Box / Avatar */
 .bot-logo-box {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
     margin: 0 auto 12px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgba(8,24,16,0.9), rgba(2,8,5,0.9));
-    border: 1px solid rgba(74,222,128,0.25);
-    box-shadow: 0 0 20px rgba(74,222,128,0.15);
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(10,30,20,0.9), rgba(2,8,5,0.9));
+    border: 1px solid var(--border);
+    box-shadow: 0 0 20px var(--green-glow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,24 +128,25 @@ body {
 }
 
 .card-title {
-    font-size: clamp(22px, 6vw, 26px);
+    font-size: 24px;
     text-align: center;
     line-height: 1.15;
     font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
+    letter-spacing: .5px;
 }
 
 .card-desc {
     color: var(--muted);
     text-align: center;
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 11px;
+    letter-spacing: .5px;
     margin-bottom: 18px;
 }
 
 
 /* =====================================================
-   CUSTOM SEARCHABLE DROPDOWN (PRO SELECTOR)
+   CUSTOM SEARCHABLE DROPDOWN
 ===================================================== */
 
 .input-group {
@@ -159,7 +157,7 @@ body {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     color: var(--muted);
     font-size: 9px;
     font-weight: 700;
@@ -173,7 +171,7 @@ body {
 }
 
 .dropdown-selected {
-    height: 50px;
+    height: 48px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--input);
@@ -182,19 +180,19 @@ body {
     justify-content: space-between;
     padding: 0 14px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: #fff;
-    transition: border-color .2s, box-shadow .2s;
+    transition: all .2s ease;
 }
 
 .dropdown-selected:hover {
-    border-color: rgba(74,222,128,0.4);
+    border-color: var(--border-hover);
 }
 
 .dropdown-selected.active {
     border-color: var(--green);
-    box-shadow: 0 0 0 2px rgba(74,222,128,.06), 0 0 14px var(--green-glow);
+    box-shadow: 0 0 0 2px rgba(74,222,128,.1), 0 0 12px var(--green-glow);
 }
 
 .dropdown-list-container {
@@ -202,11 +200,11 @@ body {
     top: calc(100% + 6px);
     left: 0;
     width: 100%;
-    max-height: 250px;
+    max-height: 240px;
     background: #06100b;
     border: 1px solid var(--border);
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
     z-index: 99;
     display: none;
     flex-direction: column;
@@ -215,26 +213,26 @@ body {
 }
 
 @keyframes fadeInDrop {
-    from { opacity: 0; transform: translateY(-5px); }
+    from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-search-box {
-    padding: 10px;
+    padding: 8px;
     border-bottom: 1px solid var(--border-soft);
     background: #040c08;
 }
 
 .dropdown-search-box input {
     width: 100%;
-    height: 38px;
-    padding: 0 12px;
+    height: 36px;
+    padding: 0 10px;
     border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--input);
     color: #fff;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     outline: none;
 }
 
@@ -244,15 +242,15 @@ body {
 
 .dropdown-options {
     overflow-y: auto;
-    max-height: 180px;
+    max-height: 175px;
     padding: 4px;
 }
 
 .dropdown-option {
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 9px 10px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     color: #cbd5e1;
     display: flex;
@@ -262,7 +260,7 @@ body {
 }
 
 .dropdown-option:hover {
-    background: rgba(74,222,128,0.1);
+    background: rgba(74,222,128,0.12);
     color: #fff;
 }
 
@@ -270,62 +268,62 @@ body {
     font-family: 'JetBrains Mono', monospace;
     color: var(--green);
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 
 /* =====================================================
-   PHONE ROW (EDITABLE PREFIX + NUMBER INPUT)
+   PHONE ROW
 ===================================================== */
 
 .phone-row {
     display: grid;
-    grid-template-columns: 95px 1fr;
+    grid-template-columns: 88px 1fr;
     gap: 8px;
 }
 
 .country-code-input {
-    height: 50px;
+    height: 48px;
     background: var(--input);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--green);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     text-align: center;
     outline: none;
-    transition: border-color .2s, box-shadow .2s;
+    transition: all .2s ease;
 }
 
 .country-code-input:focus {
     border-color: var(--green);
-    box-shadow: 0 0 0 2px rgba(74,222,128,.06), 0 0 14px var(--green-glow);
+    box-shadow: 0 0 0 2px rgba(74,222,128,.1), 0 0 12px var(--green-glow);
 }
 
 input[type="tel"] {
     width: 100%;
-    height: 50px;
-    padding: 0 13px;
+    height: 48px;
+    padding: 0 12px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--input);
     color: #fff;
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(14px, 4vw, 16px);
+    font-size: 14px;
     font-weight: 600;
     outline: none;
-    transition: border-color .2s, box-shadow .2s;
+    transition: all .2s ease;
 }
 
 input::placeholder {
-    color: #4f6058;
-    font-size: 13px;
+    color: #3b4d44;
+    font-size: 12px;
 }
 
 input:focus {
     border-color: var(--green);
-    box-shadow: 0 0 0 2px rgba(74,222,128,.06), 0 0 14px var(--green-glow);
+    box-shadow: 0 0 0 2px rgba(74,222,128,.1), 0 0 12px var(--green-glow);
 }
 
 
@@ -339,23 +337,24 @@ button {
 
 .btn-connect {
     width: 100%;
-    height: 50px;
+    height: 48px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(135deg, #10b981, #047857);
+    background: linear-gradient(135deg, #10b981, #059669);
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
-    letter-spacing: .5px;
+    letter-spacing: .8px;
     cursor: pointer;
-    box-shadow: 0 5px 17px rgba(16, 185, 129, 0.2);
-    transition: transform .15s, filter .15s;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+    transition: all .2s ease;
     margin-top: 4px;
 }
 
 .btn-connect:hover {
     filter: brightness(1.1);
     transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
 }
 
 .btn-connect:active {
@@ -364,25 +363,27 @@ button {
 
 .btn-connect:disabled {
     cursor: wait;
+    opacity: .6;
 }
 
 .btn-refresh {
     width: 100%;
-    height: 43px;
-    margin-top: 7px;
+    height: 40px;
+    margin-top: 8px;
     border-radius: 9px;
-    border: 1px solid var(--border);
-    background: rgba(13,25,19,.75);
+    border: 1px solid var(--border-soft);
+    background: rgba(6,14,10,0.6);
     color: var(--muted);
     font-size: 11px;
     font-weight: 700;
     cursor: pointer;
-    transition: .2s;
+    transition: all .2s ease;
 }
 
 .btn-refresh:hover {
     background: var(--card2);
     color: var(--text);
+    border-color: var(--border);
 }
 
 
@@ -391,12 +392,12 @@ button {
 ===================================================== */
 
 .loader {
-    width: 27px;
-    height: 27px;
-    margin: 15px auto 2px;
+    width: 24px;
+    height: 24px;
+    margin: 14px auto 2px;
     display: none;
     border-radius: 50%;
-    border: 3px solid #122019;
+    border: 3px solid rgba(74,222,128,0.1);
     border-top-color: var(--green);
     animation: spin .8s linear infinite;
 }
@@ -406,22 +407,22 @@ button {
 }
 
 #result {
-    margin-top: 13px;
+    margin-top: 12px;
     text-align: center;
 }
 
 .code-wrapper {
-    padding: 13px 10px 10px;
+    padding: 12px 10px 10px;
     border-radius: 10px;
-    border: 1px solid rgba(74,222,128,.10);
-    background: linear-gradient(145deg, rgba(2,7,4,.98), rgba(5,12,8,.98));
+    border: 1px solid rgba(74,222,128,.2);
+    background: linear-gradient(145deg, rgba(2,7,4,0.98), rgba(5,12,8,0.98));
 }
 
 .code-title {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 9px;
     font-weight: 700;
-    letter-spacing: 1.7px;
+    letter-spacing: 1.5px;
     color: var(--muted);
     text-transform: uppercase;
 }
@@ -431,56 +432,56 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(2px, 1.2vw, 5px);
-    margin-bottom: 11px;
+    gap: 4px;
+    margin-bottom: 10px;
     overflow: hidden;
 }
 
 .code-char {
-    width: clamp(25px, 7vw, 30px);
-    height: clamp(33px, 9vw, 38px);
+    width: 28px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
-    border: 1px solid rgba(74,222,128,.28);
-    background: rgba(8,20,13,.95);
+    border-radius: 6px;
+    border: 1px solid rgba(74,222,128,.3);
+    background: rgba(8,20,13,0.95);
     color: var(--green);
     font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(13px, 4vw, 16px);
+    font-size: 15px;
     font-weight: 700;
 }
 
 .code-char.dash {
-    width: clamp(7px, 2vw, 10px);
+    width: 8px;
     border: none;
     background: transparent;
     color: var(--gold);
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .btn-copy {
     width: 100%;
-    height: 39px;
+    height: 38px;
     border-radius: 8px;
-    border: 1px solid rgba(74,222,128,.28);
-    background: rgba(74,222,128,.08);
+    border: 1px solid rgba(74,222,128,.3);
+    background: rgba(74,222,128,.1);
     color: var(--green);
     font-size: 11px;
     font-weight: 800;
     cursor: pointer;
-    transition: .2s;
+    transition: all .2s ease;
 }
 
 .btn-copy:hover {
-    background: rgba(74,222,128,.15);
+    background: rgba(74,222,128,.2);
 }
 
 .error-message {
     color: var(--red);
     font-size: 11px;
     font-weight: 700;
-    padding: 7px;
+    padding: 6px;
 }
 
 
@@ -489,25 +490,24 @@ button {
 ===================================================== */
 
 .logs-card {
-    background: linear-gradient(145deg, rgba(9,19,14,.98), rgba(4,10,7,.98));
-    border: 1px solid var(--border-soft);
+    background: linear-gradient(145deg, rgba(8,18,13,0.95), rgba(3,8,5,0.98));
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 12px;
-}
-
-.clickable-counter {
+    text-align: center;
     cursor: pointer;
-    transition: filter 0.2s, transform 0.1s;
+    transition: all .2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.clickable-counter:hover {
-    filter: brightness(1.15);
+.logs-card:hover {
+    border-color: var(--border-hover);
     transform: translateY(-1px);
 }
 
 
 /* =====================================================
-   MODAL (POPUP LISTE DES NUMÉROS)
+   MODAL
 ===================================================== */
 
 .modal-overlay {
@@ -517,12 +517,12 @@ button {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    padding: 15px;
+    padding: 16px;
 }
 
 .modal-content {
@@ -530,22 +530,22 @@ button {
     border: 1px solid var(--border);
     border-radius: 16px;
     width: 100%;
-    max-width: 440px;
+    max-width: 420px;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
     overflow: hidden;
-    animation: modalScale 0.25s ease-out;
+    animation: modalScale 0.2s ease-out;
 }
 
 @keyframes modalScale {
-    from { transform: scale(0.9); opacity: 0; }
+    from { transform: scale(0.92); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
 .modal-header {
-    padding: 16px 20px;
+    padding: 14px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -553,24 +553,24 @@ button {
 }
 
 .modal-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--text);
 }
 
 .modal-close {
-    background: rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.05);
     border: 1px solid var(--border-soft);
     color: var(--text);
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all .2s ease;
 }
 
 .modal-close:hover {
@@ -580,7 +580,7 @@ button {
 }
 
 .modal-body {
-    padding: 15px 20px;
+    padding: 14px 18px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -589,33 +589,33 @@ button {
 
 .number-item {
     background: rgba(4, 12, 8, 0.9);
-    border: 1px solid rgba(42, 68, 55, 0.4);
-    border-radius: 10px;
-    padding: 12px 15px;
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .number-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     color: var(--text);
 }
 
 .number-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--green);
-    box-shadow: 0 0 8px var(--green);
+    box-shadow: 0 0 6px var(--green);
 }
 
 .number-status {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     color: var(--green);
     text-transform: uppercase;
@@ -633,7 +633,7 @@ button {
 }
 
 .channel-btn {
-    min-height: 43px;
+    min-height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -643,12 +643,13 @@ button {
     font-size: 11px;
     font-weight: 800;
     color: white;
-    transition: transform .15s, opacity .15s;
+    transition: all .2s ease;
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .channel-btn:hover {
     transform: translateY(-1px);
-    opacity: .9;
+    filter: brightness(1.08);
 }
 
 .whatsapp-btn {
@@ -677,32 +678,34 @@ button {
         
         <!-- LOGO ICON AESTHETIC -->
         <div class="bot-logo-box">
-            <img src="https://i.ibb.co/3mB740L/avatar.jpg" alt="KAYA BOT" onerror="this.src='https://via.placeholder.com/72?text=KB'">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
         </div>
 
         <div class="card-title">KAYA BOT</div>
         <div class="card-desc">Multi Device WhatsApp Bot</div>
 
-        <!-- SELECTEUR DE PAYS PERSONNALISÉ (AVEC RECHERCHE INTÉGRÉE) -->
+        <!-- SELECTEUR DE PAYS PERSONNALISÉ -->
         <div class="input-group">
             <label class="input-label">Country</label>
             <div class="custom-dropdown" id="countryDropdown">
                 <div class="dropdown-selected" id="dropdownSelected" onclick="toggleDropdown()">
                     <span id="selectedCountryText">🇨🇩 Democratic Republic of the Congo (+243)</span>
-                    <span style="font-size: 10px; color: var(--muted);">▼</span>
+                    <span style="font-size: 9px; color: var(--muted);">▼</span>
                 </div>
                 <div class="dropdown-list-container" id="dropdownList">
                     <div class="dropdown-search-box">
                         <input type="text" id="countrySearch" placeholder="🔍 Search country or code..." oninput="filterCountries()">
                     </div>
                     <div class="dropdown-options" id="dropdownOptions">
-                        <!-- Les pays seront injectés dynamiquement ici -->
+                        <!-- Injection dynamique -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- WHATSAPP NUMBER (INDICATIF MODIFIABLE DIRECTEMENT + NUMÉRO) -->
+        <!-- WHATSAPP NUMBER -->
         <div class="input-group">
             <label class="input-label">WhatsApp Number</label>
             <div class="phone-row">
@@ -712,6 +715,7 @@ button {
                     class="country-code-input"
                     value="+243"
                     autocomplete="off"
+                    oninput="syncCountryFromPrefix()"
                 >
                 <input
                     type="tel"
@@ -743,11 +747,11 @@ button {
 
 
     <!-- ACTIVE SESSIONS COUNTER CARD -->
-    <div class="logs-card clickable-counter" style="text-align: center;" onclick="openConnectedModal()">
-        <div id="activeCount" style="font-size: 13px; font-weight: bold; color: var(--green);">
+    <div class="logs-card" onclick="openConnectedModal()">
+        <div id="activeCount" style="font-size: 12px; font-weight: bold; color: var(--green);">
             🟢 Loading connected bots...
         </div>
-        <div style="font-size: 9px; color: var(--muted); margin-top: 3px;">👆 Tap to view connected numbers</div>
+        <div style="font-size: 9px; color: var(--muted); margin-top: 2px;">👆 Tap to view connected numbers</div>
     </div>
 
 
@@ -764,7 +768,7 @@ button {
 </div>
 
 
-<!-- MODAL LISTE DES NUMÉROS CONNECTÉS -->
+<!-- MODAL -->
 <div class="modal-overlay" id="connectedModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -1004,7 +1008,18 @@ function filterCountries() {
     renderCountries(filtered);
 }
 
-// Fermer le dropdown si on clique en dehors
+// Synchronisation bidirectionnelle : si l'utilisateur tape l'indicatif directement
+function syncCountryFromPrefix() {
+    let val = document.getElementById('prefixInput').value.trim();
+    if (!val.startsWith('+')) val = '+' + val;
+    
+    const matched = countries.find(c => c.code === val);
+    if (matched) {
+        document.getElementById('selectedCountryText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
+    }
+}
+
+// Fermeture du dropdown au clic extérieur
 window.addEventListener('click', function(e) {
     const dropdown = document.getElementById('countryDropdown');
     if (!dropdown.contains(e.target)) {
@@ -1013,13 +1028,12 @@ window.addEventListener('click', function(e) {
     }
 });
 
-// Initialisation
 renderCountries(countries);
 fetchActiveSessions();
 
 
 /* =====================================================
-   GESTION DES SESSIONS ACTIVES & MODALE
+   GESTION DES SESSIONS & MODALE
 ===================================================== */
 
 async function fetchActiveSessions() {
@@ -1028,12 +1042,12 @@ async function fetchActiveSessions() {
         const data = await response.json();
         
         if (data.success) {
-            document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} connected`;
+            document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} connected bots`;
         } else {
-            document.getElementById('activeCount').innerText = '🟢 - connected';
+            document.getElementById('activeCount').innerText = '🟢 Active sessions online';
         }
     } catch (e) {
-        document.getElementById('activeCount').innerText = '🟢 - connected';
+        document.getElementById('activeCount').innerText = '🟢 Active sessions online';
     }
 }
 
@@ -1098,15 +1112,10 @@ async function getPairingCode() {
     const loader = document.getElementById('loader');
     const connectBtn = document.getElementById('connectBtn');
 
-    if (!prefix.startsWith('+')) {
-        prefix = '+' + prefix;
-    }
+    if (!prefix.startsWith('+')) prefix = '+' + prefix;
 
     let rawNumber = phoneInput.value.trim().replace(/\s+/g, '');
-    
-    if (rawNumber.startsWith('0')) {
-        rawNumber = rawNumber.slice(1);
-    }
+    if (rawNumber.startsWith('0')) rawNumber = rawNumber.slice(1);
 
     const fullPhone = prefix + rawNumber;
 
@@ -1118,7 +1127,6 @@ async function getPairingCode() {
     resultDiv.innerHTML = '';
     loader.style.display = 'block';
     connectBtn.disabled = true;
-    connectBtn.style.opacity = '.6';
     connectBtn.innerText = '⏳ GENERATING CODE...';
 
     try {
@@ -1132,7 +1140,6 @@ async function getPairingCode() {
 
         loader.style.display = 'none';
         connectBtn.disabled = false;
-        connectBtn.style.opacity = '1';
         connectBtn.innerText = 'Connect WhatsApp';
 
         if (data.success && data.code) {
@@ -1164,10 +1171,8 @@ async function getPairingCode() {
             resultDiv.innerHTML = `<div class="error-message">❌ ${data.message || 'Failed to generate pairing code.'}</div>`;
         }
     } catch (error) {
-        console.error('Railway error:', error);
         loader.style.display = 'none';
         connectBtn.disabled = false;
-        connectBtn.style.opacity = '1';
         connectBtn.innerText = 'Connect WhatsApp';
         resultDiv.innerHTML = `<div class="error-message">❌ Server connection error. Please try again.</div>`;
     }
@@ -1185,11 +1190,11 @@ async function copyCode() {
     try {
         await navigator.clipboard.writeText(currentPairCode);
         btn.innerText = '✅ CODE COPIED!';
-        btn.style.background = 'rgba(74,222,128,.22)';
+        btn.style.background = 'rgba(74,222,128,.25)';
 
         setTimeout(() => {
             btn.innerText = '📋 COPY PAIRING CODE';
-            btn.style.background = 'rgba(74,222,128,.08)';
+            btn.style.background = 'rgba(74,222,128,.1)';
         }, 2000);
     } catch (error) {
         const textarea = document.createElement('textarea');
