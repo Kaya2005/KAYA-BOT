@@ -145,39 +145,6 @@ body {
     padding: 0 10px;
 }
 
-/* =====================================================
-   FEATURES GRID (AS IMAGE)
-===================================================== */
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.feature-pill {
-    background: rgba(4, 12, 8, 0.7);
-    border: 1px solid var(--border-soft);
-    border-radius: 12px;
-    padding: 10px 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #cbd5e1;
-    transition: border-color .2s;
-}
-
-.feature-pill:hover {
-    border-color: var(--border);
-}
-
-.feature-icon {
-    font-size: 14px;
-}
-
 
 /* =====================================================
    CUSTOM SEARCHABLE DROPDOWN
@@ -363,7 +330,7 @@ input:focus {
 
 
 /* =====================================================
-   BUTTONS (ORANGE GLOW CONNECT AS IMAGE)
+   BUTTONS
 ===================================================== */
 
 button {
@@ -659,7 +626,7 @@ button {
 
 
 /* =====================================================
-   CHANNELS FOOTER (AS IMAGE)
+   CHANNELS FOOTER
 ===================================================== */
 
 .channels-footer {
@@ -716,26 +683,6 @@ button {
             Experience the ultimate lightning-fast WhatsApp Multi-Device pairing system.
         </div>
 
-        <!-- FEATURES GRID (AS YOUR IMAGE) -->
-        <div class="features-grid">
-            <div class="feature-pill">
-                <span class="feature-icon">⚡</span>
-                <span>Instant Pairing</span>
-            </div>
-            <div class="feature-pill">
-                <span class="feature-icon">🔒</span>
-                <span>100% Secure</span>
-            </div>
-            <div class="feature-pill">
-                <span class="feature-icon">🤖</span>
-                <span>Multi-Session</span>
-            </div>
-            <div class="feature-pill">
-                <span class="feature-icon">🚀</span>
-                <span>24/7 Uptime</span>
-            </div>
-        </div>
-
         <!-- SELECTEUR DE PAYS PERSONNALISÉ -->
         <div class="input-group">
             <label class="input-label">Select Country</label>
@@ -764,6 +711,7 @@ button {
                     id="prefixInput"
                     class="country-code-input"
                     value="+243"
+                    maxlength="4"
                     autocomplete="off"
                     oninput="syncCountryFromPrefix()"
                 >
@@ -1059,19 +1007,31 @@ function filterCountries() {
 }
 
 function syncCountryFromPrefix() {
-    let val = document.getElementById('prefixInput').value.trim();
+    let input = document.getElementById('prefixInput');
+    let val = input.value;
+
+    // S'assurer que ça commence toujours par + et garder uniquement les chiffres ensuite
     if (!val.startsWith('+')) {
-        val = '+' + val;
+        val = '+' + val.replace(/[^0-9]/g, '');
+    } else {
+        val = '+' + val.slice(1).replace(/[^0-9]/g, '');
     }
+
+    // Bloquer strictement à 4 caractères maximum (+ et 3 chiffres max)
+    if (val.length > 4) {
+        val = val.slice(0, 4);
+    }
+
+    input.value = val;
+
+    // Recherche exacte ou par correspondance de préfixe triée par longueur décroissante
+    const sortedCountries = [...countries].sort((a, b) => b.code.length - a.code.length);
+    const matched = sortedCountries.find(c => c.code === val || val.startsWith(c.code));
     
-    const matched = countries.find(c => c.code === val);
     if (matched) {
         document.getElementById('selectedCountryText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
     } else {
-        const partialMatch = countries.find(c => val.startsWith(c.code));
-        if (partialMatch) {
-            document.getElementById('selectedCountryText').innerText = `${partialMatch.flag} ${partialMatch.name} (${partialMatch.code})`;
-        }
+        document.getElementById('selectedCountryText').innerText = `🌐 Custom Code (${val})`;
     }
 }
 
@@ -1171,17 +1131,6 @@ async function getPairingCode() {
 
     let rawNumber = phoneInput.value.trim().replace(/\s+/g, '');
     if (rawNumber.startsWith('0')) rawNumber = rawNumber.slice(1);
-
-    if (prefix.length > 5) {
-        let matchedCountry = countries.find(c => prefix.startsWith(c.code));
-        if (matchedCountry) {
-            let extraDigits = prefix.replace(matchedCountry.code, '');
-            prefix = matchedCountry.code;
-            rawNumber = extraDigits + rawNumber;
-            document.getElementById('prefixInput').value = prefix;
-            phoneInput.value = rawNumber;
-        }
-    }
 
     const fullPhone = prefix + rawNumber;
 
