@@ -23,16 +23,18 @@
 ===================================================== */
 
 :root {
-    --bg: #010403;
-    --card: #050d09;
-    --card2: #08140f;
-    --input: #010302;
+    --bg: #030705;
+    --card: #06110a;
+    --card2: #0a1b12;
+    --input: #020503;
 
-    --border: rgba(74, 222, 128, 0.35);
-    --border-hover: rgba(74, 222, 128, 0.7);
-    --border-soft: rgba(30, 60, 45, 0.5);
+    --border: rgba(74, 222, 128, 0.25);
+    --border-hover: rgba(74, 222, 128, 0.6);
+    --border-soft: rgba(30, 60, 45, 0.4);
 
     --gold: #fbbf24;
+    --orange: #f97316;
+    --orange-glow: rgba(249, 115, 22, 0.3);
     --green: #22c55e;
     --green-glow: rgba(34,197,94,0.25);
     --red: #f87171;
@@ -56,7 +58,8 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at 50% -20%, rgba(34,197,94,0.12), transparent 50%),
+        radial-gradient(circle at 50% -10%, rgba(249,115,22,0.08), transparent 45%),
+        radial-gradient(circle at 50% 110%, rgba(34,197,94,0.1), transparent 50%),
         var(--bg);
     padding: 16px;
     display: flex;
@@ -73,83 +76,106 @@ body {
 }
 
 /* =====================================================
-   HEADER & LOGO ICON
+   MAIN CARD & STYLING AS IMAGE
 ===================================================== */
-
-.brand {
-    text-align: center;
-    padding: 2px 0;
-}
-
-.brand-title {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3.5px;
-    color: var(--gold);
-    text-transform: uppercase;
-}
-
-.brand-subtitle {
-    margin-top: 3px;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--muted);
-    text-transform: uppercase;
-}
 
 .main-card {
     position: relative;
-    background: linear-gradient(150deg, rgba(6,16,11,0.98), rgba(2,6,4,0.99));
+    background: linear-gradient(150deg, rgba(8,20,14,0.98), rgba(3,8,5,0.99));
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 22px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 1px 0 rgba(74,222,128,0.15);
+    border-radius: 22px;
+    padding: 24px 20px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.7), inset 0 1px 0 rgba(74,222,128,0.2);
+    overflow: hidden;
 }
 
-/* Logo Box / Avatar stylisé */
-.bot-logo-box {
-    width: 68px;
-    height: 68px;
-    margin: 0 auto 14px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, rgba(16,45,30,0.9), rgba(2,8,5,0.9));
-    border: 1.5px solid var(--border);
-    box-shadow: 0 0 25px var(--green-glow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.bot-logo-box::after {
+/* Top Glow Effect */
+.main-card::before {
     content: '';
     position: absolute;
-    inset: -2px;
-    border-radius: 18px;
-    background: linear-gradient(45deg, var(--green), transparent, var(--gold));
-    z-index: -1;
-    opacity: 0.4;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    border-radius: 3px;
 }
 
-.card-title {
-    font-size: 26px;
-    text-align: center;
-    line-height: 1.15;
+/* Next-Gen Badge */
+.next-gen-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 auto 14px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(251, 191, 36, 0.08);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: var(--gold);
+    font-size: 10px;
     font-weight: 700;
-    margin-bottom: 2px;
-    letter-spacing: .5px;
-    background: linear-gradient(to right, #fff, #cbd5e1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.brand-title-box {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.brand-title {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.brand-title span.gold-txt {
+    color: var(--gold);
 }
 
 .card-desc {
     color: var(--muted);
     text-align: center;
-    font-size: 11px;
-    letter-spacing: .8px;
+    font-size: 12px;
+    line-height: 1.5;
     margin-bottom: 20px;
-    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+/* =====================================================
+   FEATURES GRID (AS IMAGE)
+===================================================== */
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.feature-pill {
+    background: rgba(4, 12, 8, 0.7);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #cbd5e1;
+    transition: border-color .2s;
+}
+
+.feature-pill:hover {
+    border-color: var(--border);
+}
+
+.feature-icon {
+    font-size: 14px;
 }
 
 
@@ -159,6 +185,7 @@ body {
 
 .input-group {
     margin-bottom: 14px;
+    text-align: left;
 }
 
 .input-label {
@@ -167,9 +194,9 @@ body {
     gap: 6px;
     margin-bottom: 6px;
     color: var(--muted);
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
 }
 
@@ -179,7 +206,7 @@ body {
 }
 
 .dropdown-selected {
-    height: 50px;
+    height: 48px;
     border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--input);
@@ -188,7 +215,7 @@ body {
     justify-content: space-between;
     padding: 0 14px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: #fff;
     transition: all .25s ease;
@@ -286,12 +313,12 @@ body {
 
 .phone-row {
     display: grid;
-    grid-template-columns: 92px 1fr;
+    grid-template-columns: 85px 1fr;
     gap: 8px;
 }
 
 .country-code-input {
-    height: 50px;
+    height: 48px;
     background: var(--input);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -311,14 +338,14 @@ body {
 
 input[type="tel"] {
     width: 100%;
-    height: 50px;
+    height: 48px;
     padding: 0 14px;
     border-radius: 12px;
     border: 1px solid var(--border);
     background: var(--input);
     color: #fff;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     outline: none;
     transition: all .25s ease;
@@ -326,7 +353,7 @@ input[type="tel"] {
 
 input::placeholder {
     color: #3b5244;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 input:focus {
@@ -336,7 +363,7 @@ input:focus {
 
 
 /* =====================================================
-   BUTTONS
+   BUTTONS (ORANGE GLOW CONNECT AS IMAGE)
 ===================================================== */
 
 button {
@@ -345,24 +372,25 @@ button {
 
 .btn-connect {
     width: 100%;
-    height: 50px;
+    height: 52px;
     border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #22c55e, #15803d);
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
     color: #fff;
     font-size: 13px;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.35);
     transition: all .2s ease;
-    margin-top: 6px;
+    margin-top: 8px;
 }
 
 .btn-connect:hover {
     filter: brightness(1.1);
     transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.45);
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.5);
 }
 
 .btn-connect:active {
@@ -376,7 +404,7 @@ button {
 
 .btn-refresh {
     width: 100%;
-    height: 42px;
+    height: 40px;
     margin-top: 10px;
     border-radius: 10px;
     border: 1px solid var(--border-soft);
@@ -405,8 +433,8 @@ button {
     margin: 14px auto 2px;
     display: none;
     border-radius: 50%;
-    border: 3px solid rgba(34,197,94,0.15);
-    border-top-color: var(--green);
+    border: 3px solid rgba(249,115,22,0.15);
+    border-top-color: var(--orange);
     animation: spin .8s linear infinite;
 }
 
@@ -420,10 +448,10 @@ button {
 }
 
 .code-wrapper {
-    padding: 14px 10px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(34,197,94,0.3);
-    background: linear-gradient(150deg, rgba(2,6,4,0.99), rgba(6,16,11,0.99));
+    padding: 16px 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(249,115,22,0.3);
+    background: linear-gradient(150deg, rgba(3,8,5,0.99), rgba(8,20,14,0.99));
 }
 
 .code-title {
@@ -452,9 +480,9 @@ button {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    border: 1px solid rgba(34,197,94,0.35);
+    border: 1px solid rgba(249,115,22,0.35);
     background: rgba(6,16,11,0.95);
-    color: var(--green);
+    color: var(--orange);
     font-family: 'JetBrains Mono', monospace;
     font-size: 15px;
     font-weight: 700;
@@ -472,9 +500,9 @@ button {
     width: 100%;
     height: 40px;
     border-radius: 10px;
-    border: 1px solid rgba(34,197,94,0.4);
-    background: rgba(34,197,94,0.12);
-    color: var(--green);
+    border: 1px solid rgba(249,115,22,0.4);
+    background: rgba(249,115,22,0.15);
+    color: var(--orange);
     font-size: 11px;
     font-weight: 800;
     cursor: pointer;
@@ -482,7 +510,7 @@ button {
 }
 
 .btn-copy:hover {
-    background: rgba(34,197,94,0.25);
+    background: rgba(249,115,22,0.25);
 }
 
 .error-message {
@@ -501,7 +529,7 @@ button {
     background: linear-gradient(150deg, rgba(6,16,11,0.95), rgba(2,6,4,0.98));
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 14px;
+    padding: 12px;
     text-align: center;
     cursor: pointer;
     transition: all .2s ease;
@@ -631,7 +659,7 @@ button {
 
 
 /* =====================================================
-   CHANNELS FOOTER
+   CHANNELS FOOTER (AS IMAGE)
 ===================================================== */
 
 .channels-footer {
@@ -641,31 +669,25 @@ button {
 }
 
 .channel-btn {
-    min-height: 44px;
+    min-height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border-radius: 10px;
+    border-radius: 12px;
     text-decoration: none;
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 700;
     color: white;
     transition: all .2s ease;
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(6, 16, 11, 0.8);
 }
 
 .channel-btn:hover {
     transform: translateY(-1px);
-    filter: brightness(1.08);
-}
-
-.whatsapp-btn {
-    background: linear-gradient(135deg, #22c55e, #15803d);
-}
-
-.telegram-btn {
-    background: linear-gradient(135deg, #0284c7, #0369a1);
+    border-color: var(--border);
+    background: rgba(10, 27, 18, 0.9);
 }
 
 </style>
@@ -675,29 +697,48 @@ button {
 
 <div class="dashboard">
 
-    <!-- BRAND -->
-    <div class="brand">
-        <div class="brand-title">KAYA-BOT</div>
-        <div class="brand-subtitle">Advanced WhatsApp Pairing System</div>
-    </div>
-
     <!-- MAIN CARD -->
     <div class="main-card">
         
-        <!-- LOGO ICON AESTHETIC (REMPLACEMENT PROPRE DE L'IMAGE CASSÉE) -->
-        <div class="bot-logo-box">
-            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a10 10 0 0 1 7.54 16.6l1.22 3.66-3.66-1.22A10 10 0 1 1 12 2z"></path>
-                <path d="M9.5 9.5l5 5m0-5l-5 5" stroke-width="1.5"></path>
-            </svg>
+        <!-- NEXT-GEN BADGE -->
+        <div style="text-align: center;">
+            <div class="next-gen-badge">
+                ✨ Next-Gen Edition
+            </div>
         </div>
 
-        <div class="card-title">KAYA BOT</div>
-        <div class="card-desc">Multi Device WhatsApp Bot</div>
+        <!-- BRAND TITLE -->
+        <div class="brand-title-box">
+            <div class="brand-title">KΛYΛ-<span class="gold-txt">BØT</span></div>
+        </div>
+
+        <div class="card-desc">
+            Experience the ultimate lightning-fast WhatsApp Multi-Device pairing system.
+        </div>
+
+        <!-- FEATURES GRID (AS YOUR IMAGE) -->
+        <div class="features-grid">
+            <div class="feature-pill">
+                <span class="feature-icon">⚡</span>
+                <span>Instant Pairing</span>
+            </div>
+            <div class="feature-pill">
+                <span class="feature-icon">🔒</span>
+                <span>100% Secure</span>
+            </div>
+            <div class="feature-pill">
+                <span class="feature-icon">🤖</span>
+                <span>Multi-Session</span>
+            </div>
+            <div class="feature-pill">
+                <span class="feature-icon">🚀</span>
+                <span>24/7 Uptime</span>
+            </div>
+        </div>
 
         <!-- SELECTEUR DE PAYS PERSONNALISÉ -->
         <div class="input-group">
-            <label class="input-label">Country</label>
+            <label class="input-label">Select Country</label>
             <div class="custom-dropdown" id="countryDropdown">
                 <div class="dropdown-selected" id="dropdownSelected" onclick="toggleDropdown()">
                     <span id="selectedCountryText">🇨🇩 Democratic Republic of the Congo (+243)</span>
@@ -736,9 +777,9 @@ button {
             </div>
         </div>
 
-        <!-- CONNECT -->
+        <!-- CONNECT BUTTON -->
         <button class="btn-connect" id="connectBtn" onclick="getPairingCode()">
-            Connect WhatsApp
+            Connect Bot Now 🚀
         </button>
 
         <!-- REFRESH -->
@@ -766,10 +807,10 @@ button {
 
     <!-- CHANNELS FOOTER -->
     <div class="channels-footer">
-        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="channel-btn whatsapp-btn">
+        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="channel-btn">
             📢 WhatsApp
         </a>
-        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="channel-btn telegram-btn">
+        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="channel-btn">
             ✈️ Telegram
         </a>
     </div>
@@ -1017,7 +1058,6 @@ function filterCountries() {
     renderCountries(filtered);
 }
 
-// Synchronisation bidirectionnelle corrigée (gère le '+' et met à jour le texte du menu)
 function syncCountryFromPrefix() {
     let val = document.getElementById('prefixInput').value.trim();
     if (!val.startsWith('+')) {
@@ -1027,10 +1067,14 @@ function syncCountryFromPrefix() {
     const matched = countries.find(c => c.code === val);
     if (matched) {
         document.getElementById('selectedCountryText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
+    } else {
+        const partialMatch = countries.find(c => val.startsWith(c.code));
+        if (partialMatch) {
+            document.getElementById('selectedCountryText').innerText = `${partialMatch.flag} ${partialMatch.name} (${partialMatch.code})`;
+        }
     }
 }
 
-// Fermeture du dropdown au clic extérieur
 window.addEventListener('click', function(e) {
     const dropdown = document.getElementById('countryDropdown');
     if (!dropdown.contains(e.target)) {
@@ -1128,6 +1172,17 @@ async function getPairingCode() {
     let rawNumber = phoneInput.value.trim().replace(/\s+/g, '');
     if (rawNumber.startsWith('0')) rawNumber = rawNumber.slice(1);
 
+    if (prefix.length > 5) {
+        let matchedCountry = countries.find(c => prefix.startsWith(c.code));
+        if (matchedCountry) {
+            let extraDigits = prefix.replace(matchedCountry.code, '');
+            prefix = matchedCountry.code;
+            rawNumber = extraDigits + rawNumber;
+            document.getElementById('prefixInput').value = prefix;
+            phoneInput.value = rawNumber;
+        }
+    }
+
     const fullPhone = prefix + rawNumber;
 
     if (!rawNumber || rawNumber.length < 8 || !/^[0-9]+$/.test(rawNumber)) {
@@ -1151,7 +1206,7 @@ async function getPairingCode() {
 
         loader.style.display = 'none';
         connectBtn.disabled = false;
-        connectBtn.innerText = 'Connect WhatsApp';
+        connectBtn.innerText = 'Connect Bot Now 🚀';
 
         if (data.success && data.code) {
             currentPairCode = data.code;
@@ -1184,7 +1239,7 @@ async function getPairingCode() {
     } catch (error) {
         loader.style.display = 'none';
         connectBtn.disabled = false;
-        connectBtn.innerText = 'Connect WhatsApp';
+        connectBtn.innerText = 'Connect Bot Now 🚀';
         resultDiv.innerHTML = `<div class="error-message">❌ Server connection error. Please try again.</div>`;
     }
 }
@@ -1201,11 +1256,11 @@ async function copyCode() {
     try {
         await navigator.clipboard.writeText(currentPairCode);
         btn.innerText = '✅ CODE COPIED!';
-        btn.style.background = 'rgba(34,197,94,.3)';
+        btn.style.background = 'rgba(249,115,22,.3)';
 
         setTimeout(() => {
             btn.innerText = '📋 COPY PAIRING CODE';
-            btn.style.background = 'rgba(34,197,94,.12)';
+            btn.style.background = 'rgba(249,115,22,.15)';
         }, 2000);
     } catch (error) {
         const textarea = document.createElement('textarea');
