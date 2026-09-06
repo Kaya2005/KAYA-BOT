@@ -6,10 +6,8 @@
 
 <title>KAYA-BOT | Pairing Dashboard</title>
 
-<!-- ADCASE LIBRARY (Étape 1 : placé aussi haut que possible dans le head) -->
+<!-- ADCASE LIBRARY -->
 <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-
-<!-- ADCASE AUTO TAG (Étape 2 : placé sous le premier script de bibliothèque) -->
 <script type="text/javascript">
     aclib.runAutoTag({
         zoneId: 'kmqkkqhdoj',
@@ -21,7 +19,7 @@
 <style>
 
 /* =====================================================
-   VARIABLES
+   VARIABLES & THEMING
 ===================================================== */
 
 :root {
@@ -45,15 +43,7 @@
 
     --text: #f8fafc;
     --muted: #94a3b8;
-
-    --whatsapp: #25d366;
-    --telegram: #229ed9;
 }
-
-
-/* =====================================================
-   RESET
-===================================================== */
 
 * {
     margin: 0;
@@ -67,42 +57,26 @@ html {
 
 body {
     min-height: 100vh;
-
     font-family: 'Space Grotesk', sans-serif;
     color: var(--text);
-
     background:
-        radial-gradient(
-            circle at 50% -15%,
-            rgba(245,158,11,.07),
-            transparent 40%
-        ),
+        radial-gradient(circle at 50% -15%, rgba(245,158,11,.07), transparent 40%),
         var(--bg);
-
     padding: 14px;
-
     display: flex;
     justify-content: center;
 }
 
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
 .dashboard {
     width: 100%;
     max-width: 460px;
-
     display: flex;
     flex-direction: column;
-
     gap: 10px;
 }
 
-
 /* =====================================================
-   BRAND
+   HEADER & LOGO ICON
 ===================================================== */
 
 .brand {
@@ -113,193 +87,177 @@ body {
 .brand-title {
     font-size: 13px;
     font-weight: 700;
-
     letter-spacing: 3px;
     color: var(--gold);
-
     text-transform: uppercase;
 }
 
 .brand-subtitle {
     margin-top: 3px;
-
     font-size: 9px;
     letter-spacing: 1.2px;
-
     color: var(--muted);
-
     text-transform: uppercase;
 }
 
-
-/* =====================================================
-   MAIN CARD
-===================================================== */
-
 .main-card {
     position: relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9,19,14,.98),
-            rgba(4,10,7,.98)
-        );
-
+    background: linear-gradient(145deg, rgba(9,19,14,.98), rgba(4,10,7,.98));
     border: 1px solid var(--border-soft);
-
     border-radius: 14px;
-
     padding: clamp(16px, 4vw, 21px);
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.35);
+    box-shadow: 0 8px 25px rgba(0,0,0,.35);
 }
 
-
-/* =====================================================
-   BADGE
-===================================================== */
-
-.edition-badge {
-    display: inline-flex;
-
+/* Logo Box / Avatar */
+.bot-logo-box {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 12px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(8,24,16,0.9), rgba(2,8,5,0.9));
+    border: 1px solid rgba(74,222,128,0.25);
+    box-shadow: 0 0 20px rgba(74,222,128,0.15);
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    padding: 5px 9px;
-
-    margin-bottom: 11px;
-
-    border-radius: 6px;
-
-    background:
-        rgba(245,158,11,.06);
-
-    border:
-        1px solid rgba(245,158,11,.22);
-
-    color: var(--gold);
-
-    font-family: 'JetBrains Mono', monospace;
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    letter-spacing: .8px;
+    overflow: hidden;
 }
 
-
-/* =====================================================
-   TITLE
-===================================================== */
+.bot-logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .card-title {
-    font-size: clamp(22px, 6vw, 27px);
-
+    font-size: clamp(22px, 6vw, 26px);
+    text-align: center;
     line-height: 1.15;
-
     font-weight: 700;
-
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .card-desc {
     color: var(--muted);
-
+    text-align: center;
     font-size: 12px;
-
     line-height: 1.5;
-
     margin-bottom: 18px;
-
-    max-width: 390px;
 }
 
 
 /* =====================================================
-   INPUT
+   COUNTRY & NUMBER INPUT DESIGN (STYLE INSPIRÉ)
 ===================================================== */
 
 .input-group {
-    margin-bottom: 11px;
+    margin-bottom: 12px;
 }
 
 .input-label {
     display: flex;
-
     align-items: center;
-
     gap: 6px;
-
     margin-bottom: 6px;
-
     color: var(--muted);
-
     font-size: 9px;
-
     font-weight: 700;
-
     letter-spacing: 1.2px;
-
     text-transform: uppercase;
 }
 
-.input-label::before {
-    content: "☎";
+/* Custom Styled Select (Country) */
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--input);
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+}
 
-    color: var(--gold);
+.custom-select-wrapper:hover {
+    border-color: rgba(74,222,128,0.4);
+}
 
+.custom-select-wrapper select {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.custom-select-wrapper select option {
+    background: #08120d;
+    color: #fff;
+    padding: 10px;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    color: var(--muted);
+    pointer-events: none;
     font-size: 12px;
 }
 
-input {
-    width: 100%;
+/* Phone Layout container (Prefix + Number input combined look) */
+.phone-row {
+    display: grid;
+    grid-template-columns: 95px 1fr;
+    gap: 8px;
+}
 
+.country-code-display {
     height: 50px;
-
-    padding: 0 13px;
-
+    background: var(--input);
+    border: 1px solid var(--border);
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+}
 
-    border:
-        1px solid var(--border);
-
-    background:
-        var(--input);
-
+input[type="tel"] {
+    width: 100%;
+    height: 50px;
+    padding: 0 13px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--input);
     color: #fff;
-
-    font-family:
-        'JetBrains Mono',
-        monospace;
-
-    font-size: clamp(14px, 4vw, 17px);
-
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(14px, 4vw, 16px);
     font-weight: 600;
-
-    text-align: center;
-
     outline: none;
-
-    transition:
-        border-color .2s,
-        box-shadow .2s;
+    transition: border-color .2s, box-shadow .2s;
 }
 
 input::placeholder {
     color: #4f6058;
-
-    font-size: 12px;
+    font-size: 13px;
 }
 
-input:focus {
-    border-color: var(--gold);
-
-    box-shadow:
-        0 0 0 2px rgba(245,158,11,.06),
-        0 0 14px var(--gold-glow);
+input:focus, .custom-select-wrapper:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px rgba(74,222,128,.06), 0 0 14px var(--green-glow);
 }
 
 
@@ -308,48 +266,27 @@ input:focus {
 ===================================================== */
 
 button {
-    font-family:
-        'Space Grotesk',
-        sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .btn-connect {
     width: 100%;
-
     height: 50px;
-
     border: none;
-
     border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--gold-light),
-            var(--gold-dark)
-        );
-
-    color: #050505;
-
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: #fff;
     font-size: 14px;
-
     font-weight: 800;
-
-    letter-spacing: .4px;
-
+    letter-spacing: .5px;
     cursor: pointer;
-
-    box-shadow:
-        0 5px 17px var(--gold-glow);
-
-    transition:
-        transform .15s,
-        filter .15s;
+    box-shadow: 0 5px 17px rgba(16, 185, 129, 0.2);
+    transition: transform .15s, filter .15s;
+    margin-top: 4px;
 }
 
 .btn-connect:hover {
-    filter: brightness(1.05);
-
+    filter: brightness(1.1);
     transform: translateY(-1px);
 }
 
@@ -361,1039 +298,643 @@ button {
     cursor: wait;
 }
 
-
 .btn-refresh {
     width: 100%;
-
     height: 43px;
-
     margin-top: 7px;
-
     border-radius: 9px;
-
-    border:
-        1px solid var(--border);
-
-    background:
-        rgba(13,25,19,.75);
-
+    border: 1px solid var(--border);
+    background: rgba(13,25,19,.75);
     color: var(--muted);
-
     font-size: 11px;
-
     font-weight: 700;
-
-    letter-spacing: .4px;
-
     cursor: pointer;
-
     transition: .2s;
 }
 
 .btn-refresh:hover {
     background: var(--card2);
-
     color: var(--text);
 }
 
 
 /* =====================================================
-   LOADER
+   LOADER & RESULT
 ===================================================== */
 
 .loader {
     width: 27px;
     height: 27px;
-
     margin: 15px auto 2px;
-
     display: none;
-
     border-radius: 50%;
-
-    border:
-        3px solid #122019;
-
-    border-top-color:
-        var(--gold);
-
-    animation:
-        spin .8s linear infinite;
+    border: 3px solid #122019;
+    border-top-color: var(--green);
+    animation: spin .8s linear infinite;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
-
-
-/* =====================================================
-   RESULT
-===================================================== */
 
 #result {
     margin-top: 13px;
-
     text-align: center;
 }
 
-
-/* =====================================================
-   PAIRING CODE
-===================================================== */
-
 .code-wrapper {
-    padding:
-        13px
-        10px
-        10px;
-
+    padding: 13px 10px 10px;
     border-radius: 10px;
-
-    border:
-        1px solid rgba(74,222,128,.10);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(2,7,4,.98),
-            rgba(5,12,8,.98)
-        );
+    border: 1px solid rgba(74,222,128,.10);
+    background: linear-gradient(145deg, rgba(2,7,4,.98), rgba(5,12,8,.98));
 }
 
 .code-title {
     margin-bottom: 10px;
-
     font-size: 9px;
-
     font-weight: 700;
-
     letter-spacing: 1.7px;
-
     color: var(--muted);
-
     text-transform: uppercase;
 }
 
 .code-container {
     width: 100%;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     gap: clamp(2px, 1.2vw, 5px);
-
     margin-bottom: 11px;
-
     overflow: hidden;
 }
 
 .code-char {
     width: clamp(25px, 7vw, 30px);
-
     height: clamp(33px, 9vw, 38px);
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    flex-shrink: 1;
-
     border-radius: 5px;
-
-    border:
-        1px solid rgba(74,222,128,.28);
-
-    background:
-        rgba(8,20,13,.95);
-
+    border: 1px solid rgba(74,222,128,.28);
+    background: rgba(8,20,13,.95);
     color: var(--green);
-
-    font-family:
-        'JetBrains Mono',
-        monospace;
-
+    font-family: 'JetBrains Mono', monospace;
     font-size: clamp(13px, 4vw, 16px);
-
     font-weight: 700;
 }
 
 .code-char.dash {
     width: clamp(7px, 2vw, 10px);
-
     border: none;
-
     background: transparent;
-
     color: var(--gold);
-
     font-size: 17px;
 }
 
-
 .btn-copy {
     width: 100%;
-
     height: 39px;
-
     border-radius: 8px;
-
-    border:
-        1px solid rgba(74,222,128,.28);
-
-    background:
-        rgba(74,222,128,.08);
-
+    border: 1px solid rgba(74,222,128,.28);
+    background: rgba(74,222,128,.08);
     color: var(--green);
-
     font-size: 11px;
-
     font-weight: 800;
-
     cursor: pointer;
-
     transition: .2s;
 }
 
 .btn-copy:hover {
-    background:
-        rgba(74,222,128,.15);
+    background: rgba(74,222,128,.15);
 }
-
-
-/* =====================================================
-   ERROR
-===================================================== */
 
 .error-message {
     color: var(--red);
-
     font-size: 11px;
-
     font-weight: 700;
-
     padding: 7px;
 }
 
 
 /* =====================================================
-   LOGS / ACTIVE SESSIONS COUNTER
+   COUNTER / SESSIONS CARD
 ===================================================== */
 
 .logs-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9,19,14,.98),
-            rgba(4,10,7,.98)
-        );
-
-    border:
-        1px solid var(--border-soft);
-
+    background: linear-gradient(145deg, rgba(9,19,14,.98), rgba(4,10,7,.98));
+    border: 1px solid var(--border-soft);
     border-radius: 12px;
-
     padding: 12px;
 }
 
-.logs-header {
-    display: flex;
+.clickable-counter {
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.1s;
+}
 
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 7px;
+.clickable-counter:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
 }
 
 .logs-title {
     color: var(--muted);
-
     font-size: 9px;
-
     font-weight: 700;
-
     letter-spacing: 1.3px;
-
     text-transform: uppercase;
-}
-
-.live {
-    display: flex;
-
-    align-items: center;
-
-    gap: 4px;
-
-    font-size: 8px;
-
-    font-weight: 700;
-
-    color: var(--green);
-
-    text-transform: uppercase;
-}
-
-.live::before {
-    content: "";
-
-    width: 5px;
-    height: 5px;
-
-    border-radius: 50%;
-
-    background: var(--green);
-
-    box-shadow:
-        0 0 6px var(--green);
-}
-
-.logs-terminal {
-    padding: 9px;
-
-    min-height: 58px;
-
-    border-radius: 8px;
-
-    background:
-        #020604;
-
-    font-family:
-        'JetBrains Mono',
-        monospace;
-
-    font-size: 9px;
-
-    line-height: 1.8;
-
-    overflow-x: auto;
-}
-
-.log-item {
-    color: var(--green);
-
-    opacity: .8;
-
-    white-space: nowrap;
-}
-
-.log-item.system {
-    color: var(--gold);
-
-    opacity: .9;
 }
 
 
 /* =====================================================
-   CHANNELS
+   MODAL (POPUP LISTE DES NUMÉROS)
+===================================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 15px;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, rgba(8,18,13,0.99), rgba(3,8,5,0.99));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 440px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    overflow: hidden;
+    animation: modalScale 0.25s ease-out;
+}
+
+@keyframes modalScale {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.modal-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.modal-close {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-soft);
+    color: var(--text);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--red);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.modal-body {
+    padding: 15px 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.number-item {
+    background: rgba(4, 12, 8, 0.9);
+    border: 1px solid rgba(42, 68, 55, 0.4);
+    border-radius: 10px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+}
+
+.number-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+}
+
+.number-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+}
+
+.number-status {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   CHANNELS FOOTER
 ===================================================== */
 
 .channels-footer {
     display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0,1fr));
-
+    grid-template-columns: repeat(2, minmax(0,1fr));
     gap: 8px;
 }
 
 .channel-btn {
     min-height: 43px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 6px;
-
     border-radius: 9px;
-
     text-decoration: none;
-
     font-size: 11px;
-
     font-weight: 800;
-
     color: white;
-
-    transition:
-        transform .15s,
-        opacity .15s;
+    transition: transform .15s, opacity .15s;
 }
 
 .channel-btn:hover {
     transform: translateY(-1px);
-
     opacity: .9;
 }
 
 .whatsapp-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #25d366,
-            #128c7e
-        );
+    background: linear-gradient(135deg, #25d366, #128c7e);
 }
 
 .telegram-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #229ed9,
-            #1a73a9
-        );
-}
-
-
-/* =====================================================
-   SMALL PHONES
-===================================================== */
-
-@media (max-width: 350px) {
-
-    body {
-        padding:
-            9px
-            7px
-            18px;
-    }
-
-    .dashboard {
-        gap: 8px;
-    }
-
-    .main-card {
-        padding: 14px 12px;
-    }
-
-    .card-title {
-        font-size: 21px;
-    }
-
-    .card-desc {
-        font-size: 11px;
-        margin-bottom: 15px;
-    }
-
-    input {
-        height: 47px;
-    }
-
-    .btn-connect {
-        height: 47px;
-    }
-
-    .code-container {
-        gap: 2px;
-    }
-
-    .code-char {
-        width: 23px;
-        height: 32px;
-    }
-
-    .code-char.dash {
-        width: 6px;
-    }
-}
-
-
-/* =====================================================
-   TABLETS
-===================================================== */
-
-@media (min-width: 600px) {
-
-    body {
-        padding:
-            25px
-            18px
-            35px;
-    }
-
-    .dashboard {
-        max-width: 470px;
-        gap: 12px;
-    }
-
-    .main-card {
-        padding: 22px;
-    }
-}
-
-
-/* =====================================================
-   DESKTOP
-===================================================== */
-
-@media (min-width: 900px) {
-
-    body {
-        align-items: flex-start;
-
-        padding-top: 40px;
-    }
-
-    .dashboard {
-        max-width: 480px;
-    }
-
-}
-
-
-/* =====================================================
-   VERY LARGE SCREENS
-===================================================== */
-
-@media (min-width: 1400px) {
-
-    .dashboard {
-        max-width: 500px;
-    }
-
+    background: linear-gradient(135deg, #229ed9, #1a73a9);
 }
 
 </style>
 </head>
 
-
 <body>
 
 <div class="dashboard">
 
-
     <!-- BRAND -->
-
     <div class="brand">
-
-        <div class="brand-title">
-            KAYA-BOT
-        </div>
-
-        <div class="brand-subtitle">
-            Advanced WhatsApp Pairing System
-        </div>
-
+        <div class="brand-title">KAYA-BOT</div>
+        <div class="brand-subtitle">Advanced WhatsApp Pairing System</div>
     </div>
 
-
     <!-- MAIN CARD -->
-
     <div class="main-card">
-
-        <div class="edition-badge">
-             
+        
+        <!-- LOGO ICON AESTHETIC -->
+        <div class="bot-logo-box">
+            <!-- Remplace l'image par ton logo si tu veux -->
+            <img src="https://i.ibb.co/3mB740L/avatar.jpg" alt="KAYA BOT" onerror="this.src='https://via.placeholder.com/72?text=KB'">
         </div>
 
+        <div class="card-title">KAYA BOT</div>
+        <div class="card-desc">Multi Device WhatsApp Bot</div>
 
-        <div class="card-title">
-            Connect KAYA BOT
-        </div>
-
-
-        <div class="card-desc">
-            Generate your WhatsApp pairing code instantly without using a QR code.
-        </div>
-
-
-        <!-- PHONE -->
-
+        <!-- SELECTEUR DE PAYS -->
         <div class="input-group">
-
-            <label class="input-label">
-                Phone Number
-            </label>
-
-            <input
-                type="tel"
-                id="phone"
-                placeholder="243999999999"
-                autocomplete="off"
-                inputmode="numeric"
-            >
-
+            <label class="input-label">Country</label>
+            <div class="custom-select-wrapper">
+                <select id="countrySelect" onchange="updateCountryCode()">
+                    <option value="+243" data-code="+243">🇨🇩 Democratic Republic of the Congo (+243)</option>
+                    <option value="+233" data-code="+233">🇬🇭 Ghana (+233)</option>
+                    <option value="+234" data-code="+234">🇳🇬 Nigeria (+234)</option>
+                    <option value="+225" data-code="+225">🇨🇮 Ivory Coast (+225)</option>
+                    <option value="+254" data-code="+254">🇰🇪 Kenya (+254)</option>
+                    <option value="+27" data-code="+27">🇿🇦 South Africa (+27)</option>
+                    <option value="+1" data-code="+1">🇺🇸 United States (+1)</option>
+                    <option value="+33" data-code="+33">🇫🇷 France (+33)</option>
+                    <option value="+44" data-code="+44">🇬🇧 United Kingdom (+44)</option>
+                </select>
+                <div class="select-arrow">▼</div>
+            </div>
         </div>
 
+        <!-- WHATSAPP NUMBER AVEC INDICATIF AUTOMATIQUE -->
+        <div class="input-group">
+            <label class="input-label">WhatsApp Number</label>
+            <div class="phone-row">
+                <div class="country-code-display" id="prefixDisplay">+243</div>
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="9999585890"
+                    autocomplete="off"
+                    inputmode="numeric"
+                >
+            </div>
+        </div>
 
         <!-- CONNECT -->
-
-        <button
-            class="btn-connect"
-            id="connectBtn"
-            onclick="getPairingCode()"
-        >
-            ⚡ CONNECT BOT
+        <button class="btn-connect" id="connectBtn" onclick="getPairingCode()">
+            Connect WhatsApp
         </button>
-
 
         <!-- REFRESH -->
-
-        <button
-            class="btn-refresh"
-            onclick="window.location.reload()"
-        >
-            ↻ REFRESH DASHBOARD
+        <button class="btn-refresh" onclick="window.location.reload()">
+            ↻ Refresh Dashboard
         </button>
 
-
         <!-- LOADER -->
-
-        <div
-            class="loader"
-            id="loader"
-        ></div>
-
+        <div class="loader" id="loader"></div>
 
         <!-- RESULT -->
-
         <div id="result"></div>
 
     </div>
 
 
-    <!-- ACTIVE SESSIONS COUNTER CARD -->
-
-    <div class="logs-card" style="text-align: center;">
-        <div class="logs-title">🤖 Active Bot Sessions</div>
-        <div id="activeCount" style="font-size: 16px; font-weight: bold; color: var(--green); margin-top: 6px;">Loading...</div>
+    <!-- ACTIVE SESSIONS COUNTER CARD (CLICABLE POUR OUVRIR LA LISTE) -->
+    <div class="logs-card clickable-counter" style="text-align: center;" onclick="openConnectedModal()">
+        <div id="activeCount" style="font-size: 13px; font-weight: bold; color: var(--green);">
+            🟢 Loading connected bots...
+        </div>
+        <div style="font-size: 9px; color: var(--muted); margin-top: 3px;">👆 Tap to view connected numbers</div>
     </div>
 
 
-    <!-- LOGS -->
-
-    <div class="logs-card">
-
-        <div class="logs-header">
-
-            <div class="logs-title">
-                📋 Live Logs
-            </div>
-
-            <div class="live">
-                Online
-            </div>
-
-        </div>
-
-
-        <div class="logs-terminal">
-
-            <div class="log-item">
-                [SYSTEM] 🟢 Dashboard online & ready
-            </div>
-
-            <div class="log-item system">
-                [RAILWAY] Backend connection established
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- CHANNELS -->
-
+    <!-- CHANNELS FOOTER -->
     <div class="channels-footer">
-
-        <a
-            href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j"
-            target="_blank"
-            rel="noopener"
-            class="channel-btn whatsapp-btn"
-        >
+        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="channel-btn whatsapp-btn">
             📢 WhatsApp
         </a>
-
-
-        <a
-            href="https://t.me/kayatech2"
-            target="_blank"
-            rel="noopener"
-            class="channel-btn telegram-btn"
-        >
+        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="channel-btn telegram-btn">
             ✈️ Telegram
         </a>
-
     </div>
 
+</div>
 
+
+<!-- MODAL LISTE DES NUMÉROS CONNECTÉS -->
+<div class="modal-overlay" id="connectedModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">Connected Numbers</div>
+            <button class="modal-close" onclick="closeConnectedModal()">✕</button>
+        </div>
+        <div class="modal-body" id="modalBodyList">
+            <div style="text-align: center; color: var(--muted); padding: 20px;">Loading numbers...</div>
+        </div>
+    </div>
 </div>
 
 
 <script>
 
 /* =====================================================
-   RAILWAY BACKEND
+   CONFIGURATION & SYNCHRONISATION INDICATIF
 ===================================================== */
 
-const BACKEND_URL =
-    'https://kaya-web-production.up.railway.app';
-
+const BACKEND_URL = 'https://kaya-web-production.up.railway.app';
 let currentPairCode = '';
 
+function updateCountryCode() {
+    const select = document.getElementById('countrySelect');
+    const selectedOption = select.options[select.selectedIndex];
+    const code = selectedOption.getAttribute('data-code');
+    document.getElementById('prefixDisplay').innerText = code;
+}
 
-/* =====================================================
-   FETCH ACTIVE SESSIONS COUNT
-===================================================== */
-
+// Charger le compteur au démarrage
 async function fetchActiveSessions() {
     try {
         const response = await fetch(`${BACKEND_URL}/api/online-count`);
         const data = await response.json();
         
         if (data.success) {
-            document.getElementById('activeCount').innerText = `${data.totalConnected} Connected Bot(s)`;
+            document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} connected`;
         } else {
-            document.getElementById('activeCount').innerText = '0 Connected Bot(s)';
+            document.getElementById('activeCount').innerText = '🟢 - connected';
         }
     } catch (e) {
-        document.getElementById('activeCount').innerText = 'Unavailable';
+        document.getElementById('activeCount').innerText = '🟢 - connected';
     }
 }
 
-// Fetch on page load
 fetchActiveSessions();
 
 
 /* =====================================================
-   GENERATE PAIRING CODE
+   OUVERTURE / FERMETURE DE LA MODALE DES NUMÉROS
+===================================================== */
+
+async function openConnectedModal() {
+    const modal = document.getElementById('connectedModal');
+    const modalBody = document.getElementById('modalBodyList');
+    
+    modal.style.display = 'flex';
+    modalBody.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">Loading numbers...</div>`;
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/connected-list`);
+        const data = await response.json();
+
+        if (data.success && data.numbers && data.numbers.length > 0) {
+            let html = '';
+            data.numbers.forEach(num => {
+                let maskedNum = maskPhoneNumber(num);
+                html += `
+                    <div class="number-item">
+                        <div class="number-left">
+                            <div class="number-dot"></div>
+                            <span>${maskedNum}</span>
+                        </div>
+                        <div class="number-status">Connected</div>
+                    </div>
+                `;
+            });
+            modalBody.innerHTML = html;
+        } else {
+            modalBody.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">No numbers currently connected.</div>`;
+        }
+    } catch (error) {
+        modalBody.innerHTML = `<div style="text-align: center; color: var(--red); padding: 20px;">Failed to load connected numbers.</div>`;
+    }
+}
+
+function closeConnectedModal() {
+    document.getElementById('connectedModal').style.display = 'none';
+}
+
+function maskPhoneNumber(phone) {
+    let clean = phone.toString().trim();
+    if (!clean.startsWith('+')) clean = '+' + clean;
+    if (clean.length > 8) {
+        let start = clean.slice(0, 5);
+        let end = clean.slice(-2);
+        return `${start}****${end}`;
+    }
+    return clean;
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('connectedModal');
+    if (event.target === modal) {
+        closeConnectedModal();
+    }
+}
+
+
+/* =====================================================
+   GÉNÉRATION DU CODE DE PAIRAGE (AVEC INDICATIF COLLÉ)
 ===================================================== */
 
 async function getPairingCode() {
+    const prefix = document.getElementById('prefixDisplay').innerText.trim();
+    const phoneInput = document.getElementById('phone');
+    const resultDiv = document.getElementById('result');
+    const loader = document.getElementById('loader');
+    const connectBtn = document.getElementById('connectBtn');
 
-    const phoneInput =
-        document.getElementById('phone');
+    let rawNumber = phoneInput.value.trim().replace(/\s+/g, '');
+    
+    // Si l'utilisateur tape le numéro en commençant par 0, on l'enlève pour coller avec l'indicatif
+    if (rawNumber.startsWith('0')) {
+        rawNumber = rawNumber.slice(1);
+    }
 
-    const resultDiv =
-        document.getElementById('result');
+    const fullPhone = prefix + rawNumber;
 
-    const loader =
-        document.getElementById('loader');
-
-    const connectBtn =
-        document.getElementById('connectBtn');
-
-
-    const phone =
-        phoneInput.value
-            .trim()
-            .replace(/\s+/g, '');
-
-
-    /* VALIDATION */
-
-    if (
-        !phone ||
-        phone.length < 9 ||
-        !/^[0-9]+$/.test(phone)
-    ) {
-
-        resultDiv.innerHTML = `
-
-            <div class="error-message">
-                ❌ Please enter a valid phone number.
-            </div>
-
-        `;
-
+    if (!rawNumber || rawNumber.length < 8 || !/^[0-9]+$/.test(rawNumber)) {
+        resultDiv.innerHTML = `<div class="error-message">❌ Please enter a valid WhatsApp number.</div>`;
         return;
     }
 
-
-    /* LOADING */
-
     resultDiv.innerHTML = '';
-
     loader.style.display = 'block';
-
     connectBtn.disabled = true;
-
     connectBtn.style.opacity = '.6';
-
-    connectBtn.innerText =
-        '⏳ GENERATING CODE...';
-
+    connectBtn.innerText = '⏳ GENERATING CODE...';
 
     try {
+        const response = await fetch(`${BACKEND_URL}/api/connect`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone: fullPhone })
+        });
 
-        const response =
-            await fetch(
-                `${BACKEND_URL}/api/connect`,
-                {
-                    method: 'POST',
-
-                    headers: {
-                        'Content-Type':
-                            'application/json'
-                    },
-
-                    body: JSON.stringify({
-                        phone: phone
-                    })
-                }
-            );
-
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         loader.style.display = 'none';
-
         connectBtn.disabled = false;
-
         connectBtn.style.opacity = '1';
+        connectBtn.innerText = 'Connect WhatsApp';
 
-        connectBtn.innerText =
-            '⚡ CONNECT BOT';
-
-
-        /* SUCCESS */
-
-        if (
-            data.success &&
-            data.code
-        ) {
-
-            currentPairCode =
-                data.code;
-
-
-            const cleanCode =
-                data.code
-                    .replace(/-/g, '')
-                    .trim();
-
+        if (data.success && data.code) {
+            currentPairCode = data.code;
+            const cleanCode = data.code.replace(/-/g, '').trim();
 
             let codeHtml = `
-
                 <div class="code-wrapper">
-
-                    <div class="code-title">
-                        Your Pairing Code
-                    </div>
-
+                    <div class="code-title">Your Pairing Code</div>
                     <div class="code-container">
             `;
 
-
-            for (
-                let i = 0;
-                i < cleanCode.length;
-                i++
-            ) {
-
-                if (
-                    i > 0 &&
-                    i % 4 === 0
-                ) {
-
-                    codeHtml += `
-
-                        <div class="code-char dash">
-                            -
-                        </div>
-
-                    `;
-
+            for (let i = 0; i < cleanCode.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    codeHtml += `<div class="code-char dash">-</div>`;
                 }
-
-
-                codeHtml += `
-
-                    <div class="code-char">
-                        ${cleanCode[i]}
-                    </div>
-
-                `;
-
+                codeHtml += `<div class="code-char">${cleanCode[i]}</div>`;
             }
 
-
             codeHtml += `
-
                     </div>
-
-                    <button
-                        class="btn-copy"
-                        onclick="copyCode()"
-                    >
-                        📋 COPY PAIRING CODE
-                    </button>
-
+                    <button class="btn-copy" onclick="copyCode()">📋 COPY PAIRING CODE</button>
                 </div>
-
             `;
 
-
-            resultDiv.innerHTML =
-                codeHtml;
-
-            // Refresh count after successful connection request
+            resultDiv.innerHTML = codeHtml;
             fetchActiveSessions();
+        } else {
+            resultDiv.innerHTML = `<div class="error-message">❌ ${data.message || 'Failed to generate pairing code.'}</div>`;
         }
-
-
-        /* ERROR */
-
-        else {
-
-            resultDiv.innerHTML = `
-
-                <div class="error-message">
-                    ❌ ${
-                        data.message ||
-                        'Failed to generate pairing code.'
-                    }
-                </div>
-
-            `;
-
-        }
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            'Railway error:',
-            error
-        );
-
-
+    } catch (error) {
+        console.error('Railway error:', error);
         loader.style.display = 'none';
-
         connectBtn.disabled = false;
-
         connectBtn.style.opacity = '1';
-
-        connectBtn.innerText =
-            '⚡ CONNECT BOT';
-
-
-        resultDiv.innerHTML = `
-
-            <div class="error-message">
-                ❌ Server connection error.
-                Please try again.
-            </div>
-
-        `;
-
+        connectBtn.innerText = 'Connect WhatsApp';
+        resultDiv.innerHTML = `<div class="error-message">❌ Server connection error. Please try again.</div>`;
     }
-
 }
 
 
 /* =====================================================
-   COPY CODE
+   COPIER LE CODE
 ===================================================== */
 
 async function copyCode() {
-
-    if (!currentPairCode)
-        return;
-
-
-    const btn =
-        document.querySelector('.btn-copy');
-
+    if (!currentPairCode) return;
+    const btn = document.querySelector('.btn-copy');
 
     try {
-
-        await navigator.clipboard
-            .writeText(currentPairCode);
-
-
-        btn.innerText =
-            '✅ CODE COPIED!';
-
-
-        btn.style.background =
-            'rgba(74,222,128,.22)';
-
+        await navigator.clipboard.writeText(currentPairCode);
+        btn.innerText = '✅ CODE COPIED!';
+        btn.style.background = 'rgba(74,222,128,.22)';
 
         setTimeout(() => {
-
-            btn.innerText =
-                '📋 COPY PAIRING CODE';
-
-            btn.style.background =
-                'rgba(74,222,128,.08)';
-
+            btn.innerText = '📋 COPY PAIRING CODE';
+            btn.style.background = 'rgba(74,222,128,.08)';
         }, 2000);
-
-
-    }
-
-    catch (error) {
-
-        const textarea =
-            document.createElement(
-                'textarea'
-            );
-
-        textarea.value =
-            currentPairCode;
-
-        document.body.appendChild(
-            textarea
-        );
-
+    } catch (error) {
+        const textarea = document.createElement('textarea');
+        textarea.value = currentPairCode;
+        document.body.appendChild(textarea);
         textarea.select();
-
-        document.execCommand(
-            'copy'
-        );
-
+        document.execCommand('copy');
         textarea.remove();
 
-
-        btn.innerText =
-            '✅ CODE COPIED!';
-
-
+        btn.innerText = '✅ CODE COPIED!';
         setTimeout(() => {
-
-            btn.innerText =
-                '📋 COPY PAIRING CODE';
-
+            btn.innerText = '📋 COPY PAIRING CODE';
         }, 2000);
-
     }
-
 }
 
 
 /* =====================================================
-   ENTER = CONNECT
+   ACTION TOUCHE ENTRÉE
 ===================================================== */
 
-document
-    .getElementById('phone')
-    .addEventListener(
-        'keydown',
-        function(event) {
-
-            if (
-                event.key === 'Enter'
-            ) {
-
-                getPairingCode();
-
-            }
-
-        }
-    );
+document.getElementById('phone').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        getParserCode = getPairingCode();
+    }
+});
 
 </script>
 
