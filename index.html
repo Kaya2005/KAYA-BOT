@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAYA-BOT | WhatsApp Pairing Dashboard</title>
+    <title>KAYA-BOT | Developer Dashboard</title>
     
     <!-- ADCASE LIBRARY -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
@@ -13,35 +13,28 @@
         });
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #030704;
-            --card-bg: #07130c;
-            --input: #040a07;
-            --border: rgba(34, 197, 94, 0.2);
-            --border-hover: rgba(34, 197, 94, 0.6);
-            --gold: #fbbf24;
-            --orange: #f97316;
-            --orange-glow: rgba(249, 115, 22, 0.45);
-            --green: #22c55e;
-            --green-glow: rgba(34, 197, 94, 0.35);
-            --red: #f87171;
-            --text: #f8fafc;
-            --muted: #94a3b8;
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --border-hover: #8b949e;
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --green: #238636;
+            --green-hover: #2ea043;
+            --accent-blue: #58a6ff;
+            --orange-btn: #f0883e;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
+        
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: 
-                radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 50%),
-                radial-gradient(circle at 50% 110%, rgba(34,197,94,0.15), transparent 50%),
-                var(--bg);
-            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -49,432 +42,426 @@
             padding: 16px;
         }
 
-        .dashboard {
+        .gh-wrapper {
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            animation: fadeIn 0.3s ease-out;
+            gap: 12px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- CARTE PRINCIPALE ÉPURÉE (SANS DOUBLE CADRE) --- */
-        .main-card {
-            background: var(--card-bg);
+        /* --- EN-TÊTE DE TYPE REPO --- */
+        .repo-header {
+            background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 24px 20px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .badge {
-            display: inline-flex;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            color: var(--gold);
-            font-size: 10px;
+            justify-content: space-between;
+        }
+
+        .repo-title-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .repo-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7ee787, #238636);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 700;
-            padding: 5px 12px;
+            color: #0d1117;
+            font-size: 14px;
+        }
+
+        .repo-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .repo-badge {
+            font-size: 11px;
+            padding: 2px 8px;
             border-radius: 20px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
-        .brand-title {
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            color: #fff;
+        /* --- CARTE PRINCIPALE --- */
+        .gh-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 16px;
         }
 
-        .brand-title span { color: var(--gold); }
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-        .card-desc {
-            color: var(--muted);
+        .section-desc {
             font-size: 12px;
-            line-height: 1.5;
-            margin-bottom: 22px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.4;
         }
 
-        /* --- CHAMPS DE FORMULAIRE --- */
+        /* --- FORMULAIRE & INPUTS --- */
         .input-group {
             margin-bottom: 14px;
             text-align: left;
         }
 
-        .input-label {
-            display: block;
-            margin-bottom: 6px;
-            color: var(--muted);
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
+        .gh-select-box {
+            position: relative;
+            width: 100%;
         }
 
-        .custom-dropdown { position: relative; width: 100%; }
-
-        .dropdown-selected {
-            height: 48px;
-            border-radius: 12px;
+        .gh-dropdown-toggle {
+            height: 36px;
+            background: var(--bg);
             border: 1px solid var(--border);
-            background: var(--input);
+            border-radius: 6px;
+            padding: 0 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 14px;
-            cursor: pointer;
             font-size: 12px;
-            font-weight: 600;
-            color: #fff;
-            transition: all 0.2s;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: border-color 0.2s;
         }
 
-        .dropdown-selected:hover { border-color: var(--border-hover); }
-        .dropdown-selected.active { border-color: var(--green); box-shadow: 0 0 12px var(--green-glow); }
+        .gh-dropdown-toggle:hover { border-color: var(--border-hover); }
 
-        .dropdown-list-container {
+        .gh-dropdown-menu {
             position: absolute;
-            top: calc(100% + 6px);
+            top: calc(100% + 4px);
             left: 0;
             width: 100%;
-            max-height: 240px;
-            background: #050f09;
+            max-height: 220px;
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            z-index: 99;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
             display: none;
             flex-direction: column;
+            z-index: 50;
             overflow: hidden;
         }
 
-        .dropdown-search-box {
+        .gh-search-input-wrap {
             padding: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            background: #030805;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg);
         }
 
-        .dropdown-search-box input {
+        .gh-search-input-wrap input {
             width: 100%;
-            height: 36px;
-            padding: 0 10px;
-            border-radius: 8px;
+            height: 30px;
+            background: var(--surface);
             border: 1px solid var(--border);
-            background: var(--input);
-            color: #fff;
+            border-radius: 4px;
+            padding: 0 8px;
+            color: var(--text-main);
             font-size: 12px;
             outline: none;
         }
 
-        .dropdown-options { overflow-y: auto; max-height: 180px; padding: 4px; }
+        .gh-options-list {
+            overflow-y: auto;
+            max-height: 160px;
+            padding: 4px;
+        }
 
-        .dropdown-option {
-            padding: 9px 12px;
-            border-radius: 8px;
-            cursor: pointer;
+        .gh-option-item {
+            padding: 6px 10px;
             font-size: 12px;
-            color: #cbd5e1;
+            color: var(--text-main);
+            border-radius: 4px;
+            cursor: pointer;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            transition: background 0.15s;
-        }
-
-        .dropdown-option:hover { background: rgba(34,197,94,0.15); color: #fff; }
-        .dropdown-option .opt-code { font-family: 'JetBrains Mono', monospace; color: var(--green); font-weight: 700; }
-
-        .phone-row { display: grid; grid-template-columns: 80px 1fr; gap: 8px; }
-
-        .country-code-input, input[type="tel"] {
-            height: 48px;
-            background: var(--input);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: #fff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .country-code-input { text-align: center; color: var(--green); }
-        input[type="tel"] { padding: 0 14px; }
-        input::placeholder { color: #3b5244; font-size: 11px; }
-
-        .country-code-input:focus, input[type="tel"]:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 12px var(--green-glow);
-        }
-
-        /* --- GROS BOUTON D'ACTION PROFESSIONNEL & LUMINEUX --- */
-        .btn-action-main {
-            background: linear-gradient(135deg, #f97316, #ea580c);
-            color: #ffffff;
-            width: 100%;
-            height: 52px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            box-shadow: 0 6px 22px var(--orange-glow);
-            transition: all 0.25s ease;
-            margin-top: 8px;
-            margin-bottom: 10px;
         }
 
-        .btn-action-main:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.6);
+        .gh-option-item:hover { background-color: rgba(56, 139, 253, 0.15); color: var(--accent-blue); }
+        .gh-option-item span.code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+        .phone-layout {
+            display: grid;
+            grid-template-columns: 75px 1fr;
+            gap: 6px;
         }
 
-        .btn-action-main:active { transform: scale(0.98); }
-        .btn-action-main:disabled { cursor: wait; opacity: 0.6; transform: none; }
+        .gh-input {
+            height: 36px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0 10px;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
 
-        .btn-refresh {
+        .gh-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15); }
+        .gh-input.prefix { text-align: center; color: #7ee787; font-weight: 600; }
+        .gh-input::placeholder { color: #484f58; }
+
+        /* --- BOUTON D'ACTION PRINCIPAL (STYLE GITHUB / GREEN ACCENT) --- */
+        .btn-gh-primary {
             width: 100%;
             height: 38px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: transparent;
-            color: var(--muted);
-            font-size: 11px;
+            background-color: var(--green);
+            color: #ffffff;
+            border: 1px solid rgba(240,246,252,0.1);
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+            margin-top: 4px;
         }
 
-        .btn-refresh:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .btn-gh-primary:hover { background-color: var(--green-hover); }
+        .btn-gh-primary:disabled { opacity: 0.6; cursor: wait; }
+
+        .btn-gh-secondary {
+            width: 100%;
+            height: 34px;
+            background-color: var(--bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background-color 0.2s;
+        }
+        .btn-gh-secondary:hover { background-color: rgba(255,255,255,0.04); border-color: var(--border-hover); }
 
         .loader {
-            width: 26px; height: 26px;
-            margin: 12px auto 2px;
+            width: 22px; height: 22px;
+            margin: 12px auto 0;
             display: none;
             border-radius: 50%;
-            border: 3px solid rgba(249,115,22,0.15);
-            border-top-color: var(--orange);
-            animation: spin 0.8s linear infinite;
+            border: 2px solid rgba(88,166,255,0.2);
+            border-top-color: var(--accent-blue);
+            animation: spin 0.7s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
         #result { margin-top: 12px; text-align: center; }
 
-        .code-wrapper {
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(249,115,22,0.3);
-            background: #040906;
+        .gh-code-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
         }
 
-        .code-title {
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            color: var(--muted);
+        .gh-code-title {
+            font-size: 10px;
+            color: var(--text-muted);
             text-transform: uppercase;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .code-container {
+        .code-flex {
             display: flex;
             justify-content: center;
-            align-items: center;
             gap: 4px;
             margin-bottom: 10px;
         }
 
         .code-char {
-            width: 26px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 6px;
-            border: 1px solid rgba(249,115,22,0.3);
-            background: #06110a;
-            color: var(--orange);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .code-char.dash { width: 6px; border: none; background: transparent; color: var(--gold); }
-
-        .btn-copy {
-            width: 100%;
-            height: 38px;
-            border-radius: 8px;
-            border: 1px solid rgba(249,115,22,0.4);
-            background: rgba(249,115,22,0.15);
-            color: var(--orange);
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-copy:hover { background: rgba(249,115,22,0.25); }
-        .error-message { color: var(--red); font-size: 11px; font-weight: 700; }
-
-        /* --- WIDGET SESSIONS ACTIVES --- */
-        .logs-card {
-            background: var(--card-bg);
+            width: 24px; height: 32px;
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #7ee787;
+            font-weight: 600;
+        }
+        .code-char.dash { width: 6px; border: none; background: transparent; color: var(--text-muted); }
+
+        .btn-gh-copy {
+            width: 100%;
+            height: 32px;
+            background: rgba(56, 139, 253, 0.15);
+            border: 1px solid rgba(56, 139, 253, 0.4);
+            color: var(--accent-blue);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-gh-copy:hover { background: rgba(56, 139, 253, 0.25); }
+        .error-txt { color: #f85149; font-size: 11px; font-weight: 500; }
+
+        /* --- STATS / WIDGET --- */
+        .gh-stats-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             padding: 12px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: border-color 0.2s;
         }
-        .logs-card:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+        .gh-stats-card:hover { border-color: var(--border-hover); }
 
         /* --- MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(6px);
+            background: rgba(1, 4, 9, 0.8);
             display: none; justify-content: center; align-items: center;
-            z-index: 9999; padding: 16px;
+            z-index: 999; padding: 16px;
         }
-
-        .modal-content {
-            background: #07130c;
+        .modal-box {
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 18px;
-            width: 100%; max-width: 400px; max-height: 80vh;
+            border-radius: 8px;
+            width: 100%; max-width: 380px; max-height: 80vh;
             display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
-
-        .modal-header {
-            padding: 16px 18px;
+        .modal-head {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; font-weight: 600;
+        }
+        .modal-close-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; }
+        .modal-content { padding: 14px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+        .gh-number-row {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 6px; padding: 8px 12px;
             display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-family: 'JetBrains Mono', monospace; font-size: 11px;
         }
-        .modal-title { font-size: 13px; font-weight: 700; }
-        .modal-close {
-            background: rgba(255,255,255,0.05); border: none; color: #fff;
-            width: 28px; height: 28px; border-radius: 50%;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-        }
-        .modal-body { padding: 16px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        
-        .number-item {
-            background: var(--input); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 10px; padding: 10px 12px;
-            display: flex; align-items: center; justify-content: space-between;
-            font-family: 'JetBrains Mono', monospace; font-size: 12px;
-        }
-        .number-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
-        .number-status { font-size: 10px; font-weight: 700; color: var(--green); text-transform: uppercase; }
+        .gh-dot { width: 6px; height: 6px; border-radius: 50%; background: #238636; box-shadow: 0 0 6px #238636; }
 
-        /* --- FOOTER CANAUX --- */
-        .channels-footer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .channel-btn {
-            height: 42px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            border-radius: 12px; text-decoration: none; font-size: 11px; font-weight: 700;
-            color: #fff; border: 1px solid rgba(255,255,255,0.08);
-            background: var(--card-bg); transition: all 0.2s;
+        /* --- FOOTER LIENS --- */
+        .gh-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .gh-link-btn {
+            height: 36px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 6px; text-decoration: none; color: var(--text-main);
+            font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: background 0.2s;
         }
-        .channel-btn:hover { border-color: var(--border-hover); background: #0a1b12; }
+        .gh-link-btn:hover { background: rgba(255,255,255,0.04); border-color: var(--border-hover); }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
+<div class="gh-wrapper">
+
+    <!-- EN-TÊTE TYPE PROFIL -->
+    <div class="repo-header">
+        <div class="repo-title-area">
+            <div class="repo-avatar">K</div>
+            <div class="repo-name">KAYA-BOT / Pair</div>
+        </div>
+        <div class="repo-badge">Public</div>
+    </div>
 
     <!-- CARTE PRINCIPALE -->
-    <div class="main-card">
-        <div class="badge">✨ Next-Gen Edition</div>
-        
-        <div class="brand-title">KΛYΛ-<span>BØT</span></div>
-        
-        <div class="card-desc">
-            Connect your WhatsApp multi-device bot instantly by generating a secure pairing code.
+    <div class="gh-card">
+        <div class="section-title">
+            <span>Authentication Session</span>
+            <span style="font-size: 10px; color: var(--text-muted);">v2.6</span>
         </div>
+        <div class="section-desc">Select your region code and link your WhatsApp device securely.</div>
 
         <!-- SÉLECTEUR DE PAYS -->
         <div class="input-group">
-            <label class="input-label">Select Country</label>
-            <div class="custom-dropdown" id="countryDropdown">
-                <div class="dropdown-selected" id="dropdownSelected" onclick="toggleDropdown()">
-                    <span id="selectedCountryText">🇨🇩 Democratic Republic of the Congo (+243)</span>
-                    <span style="font-size: 9px; color: var(--muted);">▼</span>
+            <span style="display:block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Country Region</span>
+            <div class="gh-select-box" id="ghDropdown">
+                <div class="gh-dropdown-toggle" id="ghToggle" onclick="toggleDropdown()">
+                    <span id="ghSelectedText">🇨🇩 Congo, Democratic Republic (+243)</span>
+                    <span style="font-size: 9px; color: var(--text-muted);">▼</span>
                 </div>
-                <div class="dropdown-list-container" id="dropdownList">
-                    <div class="dropdown-search-box">
-                        <input type="text" id="countrySearch" placeholder="🔍 Search country..." oninput="filterCountries()">
+                <div class="gh-dropdown-menu" id="ghMenu">
+                    <div class="gh-search-input-wrap">
+                        <input type="text" id="ghSearch" placeholder="Filter countries..." oninput="filterCountries()">
                     </div>
-                    <div class="dropdown-options" id="dropdownOptions"></div>
+                    <div class="gh-options-list" id="ghOptions"></div>
                 </div>
             </div>
         </div>
 
-        <!-- NUMÉRO WHATSAPP -->
+        <!-- NUMÉRO -->
         <div class="input-group">
-            <label class="input-label">WhatsApp Number</label>
-            <div class="phone-row">
-                <input type="text" id="prefixInput" class="country-code-input" value="+243" maxlength="4" autocomplete="off" oninput="syncCountryFromPrefix()">
-                <input type="tel" id="phone" placeholder="9999585890" autocomplete="off" inputmode="numeric">
+            <span style="display:block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Phone Number</span>
+            <div class="phone-layout">
+                <input type="text" id="prefixInput" class="gh-input prefix" value="+243" maxlength="4" oninput="syncCountryFromPrefix()">
+                <input type="tel" id="phone" class="gh-input" placeholder="9999585890" inputmode="numeric">
             </div>
         </div>
 
-        <!-- GROS BOUTON D'ACTION PRINCIPAL -->
-        <button class="btn-action-main" id="connectBtn" onclick="getPairingCode()">
-            <span>Connect Bot Now</span>
-            <span style="font-size: 16px;">🚀</span>
+        <!-- BOUTON DE CONNEXION PRINCIPAL -->
+        <button class="btn-gh-primary" id="connectBtn" onclick="getPairingCode()">
+            <span>Generate Pairing Code</span>
+            <span style="font-size: 14px;">⚡</span>
         </button>
 
-        <!-- BOUTON REFRESH -->
-        <button class="btn-refresh" onclick="window.location.reload()">↻ Refresh Dashboard</button>
+        <button class="btn-gh-secondary" onclick="window.location.reload()">Reload Interface</button>
 
         <div class="loader" id="loader"></div>
         <div id="result"></div>
     </div>
 
-    <!-- WIDGET SESSIONS ACTIVES -->
-    <div class="logs-card" onclick="openConnectedModal()">
-        <div id="activeCount" style="font-size: 12px; font-weight: bold; color: var(--green);">
-            🟢 Loading connected bots...
+    <!-- WIDGET SESSIONS -->
+    <div class="gh-stats-card" onclick="openConnectedModal()">
+        <div id="activeCount" style="font-size: 12px; font-weight: 600; color: #7ee787;">
+            🟢 Checking active instances...
         </div>
-        <div style="font-size: 9px; color: var(--muted); margin-top: 2px;">👆 Tap to view connected numbers</div>
+        <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Click to inspect connected sessions</div>
     </div>
 
-    <!-- FOOTER CANAUX -->
-    <div class="channels-footer">
-        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="channel-btn">📢 WhatsApp</a>
-        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="channel-btn">✈️ Telegram</a>
+    <!-- FOOTER -->
+    <div class="gh-footer">
+        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="gh-link-btn">📢 WhatsApp Channel</a>
+        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="gh-link-btn">✈️ Telegram Support</a>
     </div>
 
 </div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="connectedModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="modal-title">Connected Numbers</div>
-            <button class="modal-close" onclick="closeConnectedModal()">✕</button>
+    <div class="modal-box">
+        <div class="modal-head">
+            <span>Active Deployments</span>
+            <button class="modal-close-btn" onclick="closeConnectedModal()">✕</button>
         </div>
-        <div class="modal-body" id="modalBodyList">
-            <div style="text-align: center; color: var(--muted); padding: 20px;">Loading numbers...</div>
+        <div class="modal-content" id="modalBodyList">
+            <div style="text-align: center; color: var(--text-muted); padding: 15px; font-size: 12px;">Loading active sessions...</div>
         </div>
     </div>
 </div>
@@ -485,28 +472,22 @@
 
     const countries = [
         { name: "Afghanistan", code: "+93", flag: "🇦🇫" },
-        { name: "Albania", code: "+355", flag: "🇦🇱" },
         { name: "Algeria", code: "+213", flag: "🇩🇿" },
-        { name: "Angola", code: "+244", flag: "🇦🇴" },
         { name: "Argentina", code: "+54", flag: "🇦🇷" },
         { name: "Australia", code: "+61", flag: "🇦🇺" },
-        { name: "Austria", code: "+43", flag: "🇦🇹" },
         { name: "Belgium", code: "+32", flag: "🇧🇪" },
-        { name: "Benin", code: "+229", flag: "🇧🇯" },
-        { name: "Botswana", code: "+267", flag: "🇧🇼" },
         { name: "Brazil", code: "+55", flag: "🇧🇷" },
         { name: "Cameroon", code: "+237", flag: "🇨🇲" },
         { name: "Canada", code: "+1", flag: "🇨🇦" },
-        { name: "Democratic Republic of the Congo", code: "+243", flag: "🇨🇩" },
-        { name: "Republic of the Congo", code: "+242", flag: "🇨🇬" },
-        { name: "Ivory Coast", code: "+225", flag: "🇨🇮" },
+        { name: "Congo, Democratic Republic", code: "+243", flag: "🇨🇩" },
+        { name: "Congo, Republic", code: "+242", flag: "🇨🇬" },
         { name: "Egypt", code: "+20", flag: "🇪🇬" },
         { name: "France", code: "+33", flag: "🇫🇷" },
-        { name: "Gabon", code: "+241", flag: "🇬🇦" },
         { name: "Germany", code: "+49", flag: "🇩🇪" },
         { name: "Ghana", code: "+233", flag: "🇬🇭" },
         { name: "India", code: "+91", flag: "🇮🇳" },
         { name: "Italy", code: "+39", flag: "🇮🇹" },
+        { name: "Ivory Coast", code: "+225", flag: "🇨🇮" },
         { name: "Kenya", code: "+254", flag: "🇰🇪" },
         { name: "Morocco", code: "+212", flag: "🇲🇦" },
         { name: "Nigeria", code: "+234", flag: "🇳🇬" },
@@ -522,39 +503,32 @@
     ];
 
     function renderCountries(list) {
-        const container = document.getElementById('dropdownOptions');
+        const container = document.getElementById('ghOptions');
         container.innerHTML = '';
         list.forEach(c => {
             const div = document.createElement('div');
-            div.className = 'dropdown-option';
-            div.innerHTML = `<span>${c.flag} ${c.name}</span> <span class="opt-code">${c.code}</span>`;
+            div.className = 'gh-option-item';
+            div.innerHTML = `<span>${c.flag} ${c.name}</span> <span class="code">${c.code}</span>`;
             div.onclick = () => selectCountry(c);
             container.appendChild(div);
         });
     }
 
     function toggleDropdown() {
-        const list = document.getElementById('dropdownList');
-        const selectedBox = document.getElementById('dropdownSelected');
-        const isVisible = list.style.display === 'flex';
-        list.style.display = isVisible ? 'none' : 'flex';
-        if (!isVisible) {
-            selectedBox.classList.add('active');
-            document.getElementById('countrySearch').focus();
-        } else {
-            selectedBox.classList.remove('active');
-        }
+        const menu = document.getElementById('ghMenu');
+        const isVisible = menu.style.display === 'flex';
+        menu.style.display = isVisible ? 'none' : 'flex';
+        if (!isVisible) document.getElementById('ghSearch').focus();
     }
 
-    function selectCountry(country) {
-        document.getElementById('selectedCountryText').innerText = `${country.flag} ${country.name} (${country.code})`;
-        document.getElementById('prefixInput').value = country.code;
-        document.getElementById('dropdownList').style.display = 'none';
-        document.getElementById('dropdownSelected').classList.remove('active');
+    function selectCountry(c) {
+        document.getElementById('ghSelectedText').innerText = `${c.flag} ${c.name} (${c.code})`;
+        document.getElementById('prefixInput').value = c.code;
+        document.getElementById('ghMenu').style.display = 'none';
     }
 
     function filterCountries() {
-        const query = document.getElementById('countrySearch').value.toLowerCase();
+        const query = document.getElementById('ghSearch').value.toLowerCase();
         const filtered = countries.filter(c => c.name.toLowerCase().includes(query) || c.code.toLowerCase().includes(query));
         renderCountries(filtered);
     }
@@ -567,20 +541,19 @@
         if (val.length > 4) val = val.slice(0, 4);
         input.value = val;
 
-        const sortedCountries = [...countries].sort((a, b) => b.code.length - a.code.length);
-        const matched = sortedCountries.find(c => c.code === val || val.startsWith(c.code));
+        const sorted = [...countries].sort((a, b) => b.code.length - a.code.length);
+        const matched = sorted.find(c => c.code === val || val.startsWith(c.code));
         if (matched) {
-            document.getElementById('selectedCountryText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
+            document.getElementById('ghSelectedText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
         } else {
-            document.getElementById('selectedCountryText').innerText = `🌐 Custom Code (${val})`;
+            document.getElementById('ghSelectedText').innerText = `🌐 Custom (${val})`;
         }
     }
 
     window.addEventListener('click', function(e) {
-        const dropdown = document.getElementById('countryDropdown');
-        if (dropdown && !dropdown.contains(e.target)) {
-            document.getElementById('dropdownList').style.display = 'none';
-            document.getElementById('dropdownSelected').classList.remove('active');
+        const drop = document.getElementById('ghDropdown');
+        if (drop && !drop.contains(e.target)) {
+            document.getElementById('ghMenu').style.display = 'none';
         }
     });
 
@@ -592,7 +565,7 @@
             const response = await fetch(`${BACKEND_URL}/api/online-count`);
             const data = await response.json();
             if (data.success) {
-                document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} connected bots`;
+                document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} active sessions online`;
             }
         } catch (e) {
             document.getElementById('activeCount').innerText = '🟢 Active sessions online';
@@ -601,9 +574,9 @@
 
     async function openConnectedModal() {
         const modal = document.getElementById('connectedModal');
-        const modalBody = document.getElementById('modalBodyList');
+        const body = document.getElementById('modalBodyList');
         modal.style.display = 'flex';
-        modalBody.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">Loading numbers...</div>`;
+        body.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 15px; font-size: 12px;">Fetching instances...</div>`;
 
         try {
             const response = await fetch(`${BACKEND_URL}/api/connected-list`);
@@ -614,14 +587,14 @@
                     let clean = num.toString().trim();
                     if (!clean.startsWith('+')) clean = '+' + clean;
                     let masked = clean.length > 8 ? `${clean.slice(0, 5)}****${clean.slice(-2)}` : clean;
-                    html += `<div class="number-item"><div style="display:flex; align-items:center; gap:10px;"><div class="number-dot"></div><span>${masked}</span></div><div class="number-status">Connected</div></div>`;
+                    html += `<div class="gh-number-row"><div style="display:flex; align-items:center; gap:8px;"><div class="gh-dot"></div><span>${masked}</span></div><span style="color:#7ee787; font-size:10px;">ACTIVE</span></div>`;
                 });
-                modalBody.innerHTML = html;
+                body.innerHTML = html;
             } else {
-                modalBody.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">No numbers currently connected.</div>`;
+                body.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 15px; font-size: 12px;">No active sessions found.</div>`;
             }
         } catch (error) {
-            modalBody.innerHTML = `<div style="text-align: center; color: var(--red); padding: 20px;">Failed to load connected numbers.</div>`;
+            body.innerHTML = `<div style="text-align: center; color: #f85149; padding: 15px; font-size: 12px;">Failed to retrieve sessions.</div>`;
         }
     }
 
@@ -642,14 +615,14 @@
         const fullPhone = prefix + rawNumber;
 
         if (!rawNumber || rawNumber.length < 8 || !/^[0-9]+$/.test(rawNumber)) {
-            resultDiv.innerHTML = `<div class="error-message">❌ Please enter a valid WhatsApp number.</div>`;
+            resultDiv.innerHTML = `<span class="error-txt">❌ Enter a valid mobile number.</span>`;
             return;
         }
 
         resultDiv.innerHTML = '';
         loader.style.display = 'block';
         connectBtn.disabled = true;
-        connectBtn.innerHTML = '<span>⏳ Generating Code...</span>';
+        connectBtn.innerHTML = '<span>Processing request...</span>';
 
         try {
             const response = await fetch(`${BACKEND_URL}/api/connect`, {
@@ -661,45 +634,45 @@
 
             loader.style.display = 'none';
             connectBtn.disabled = false;
-            connectBtn.innerHTML = '<span>Connect Bot Now</span><span style="font-size: 16px;">🚀</span>';
+            connectBtn.innerHTML = '<span>Generate Pairing Code</span><span style="font-size: 14px;">⚡</span>';
 
             if (data.success && data.code) {
                 currentPairCode = data.code;
                 const cleanCode = data.code.replace(/-/g, '').trim();
-                let codeHtml = `<div class="code-wrapper"><div class="code-title">Your Pairing Code</div><div class="code-container">`;
+                let html = `<div class="gh-code-box"><div class="gh-code-title">Generated Pairing Code</div><div class="code-flex">`;
                 for (let i = 0; i < cleanCode.length; i++) {
-                    if (i > 0 && i % 4 === 0) codeHtml += `<div class="code-char dash">-</div>`;
-                    codeHtml += `<div class="code-char">${cleanCode[i]}</div>`;
+                    if (i > 0 && i % 4 === 0) html += `<div class="code-char dash">-</div>`;
+                    html += `<div class="code-char">${cleanCode[i]}</div>`;
                 }
-                codeHtml += `</div><button class="btn-copy" onclick="copyCode()">📋 COPY PAIRING CODE</button></div>`;
-                resultDiv.innerHTML = codeHtml;
+                html += `</div><button class="btn-gh-copy" onclick="copyCode()">Copy Code to Clipboard</button></div>`;
+                resultDiv.innerHTML = html;
                 fetchActiveSessions();
             } else {
-                resultDiv.innerHTML = `<div class="error-message">❌ ${data.message || 'Failed to generate pairing code.'}</div>`;
+                resultDiv.innerHTML = `<span class="error-txt">❌ ${data.message || 'Generation failed.'}</span>`;
             }
         } catch (error) {
             loader.style.display = 'none';
             connectBtn.disabled = false;
-            connectBtn.innerHTML = '<span>Connect Bot Now</span><span style="font-size: 16px;">🚀</span>';
-            resultDiv.innerHTML = `<div class="error-message">❌ Server connection error. Please try again.</div>`;
+            connectBtn.innerHTML = '<span>Generate Pairing Code</span><span style="font-size: 14px;">⚡</span>';
+            resultDiv.innerHTML = `<span class="error-txt">❌ Network error. Try again.</span>`;
         }
     }
 
     async function copyCode() {
         if (!currentPairCode) return;
-        const btn = document.querySelector('.btn-copy');
+        const btn = document.querySelector('.btn-gh-copy');
         try {
             await navigator.clipboard.writeText(currentPairCode);
-            btn.innerText = '✅ CODE COPIED!';
-            setTimeout(() => { btn.innerText = '📋 COPY PAIRING CODE'; }, 2000);
+            btn.innerText = '✓ Copied Successfully!';
+            setTimeout(() => { btn.innerText = 'Copy Code to Clipboard'; }, 2000);
         } catch (error) {
-            btn.innerText = '✅ CODE COPIED!';
-            setTimeout(() => { btn.innerText = '📋 COPY PAIRING CODE'; }, 2000);
+            btn.innerText = '✓ Copied Successfully!';
+            setTimeout(() => { btn.innerText = 'Copy Code to Clipboard'; }, 2000);
         }
     }
 
-    document.getElementById('phone').addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') getPairingCode();
+    document.getElementById('phone').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') getPairingCode();
     });
 </script>
 
