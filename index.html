@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAYA-BOT | Developer Dashboard</title>
+    <title>KAYA-BOT | Production Dashboard</title>
     
     <!-- ADCASE LIBRARY -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
@@ -17,16 +17,18 @@
     
     <style>
         :root {
-            --bg: #0d1117;
-            --surface: #161b22;
-            --border: #30363d;
-            --border-hover: #8b949e;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --green: #238636;
-            --green-hover: #2ea043;
-            --accent-blue: #58a6ff;
-            --orange-btn: #f0883e;
+            --bg: #0a0e14;
+            --surface: #121821;
+            --surface-hover: #1a2332;
+            --border: #212d3d;
+            --border-focus: #3b82f6;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.2);
+            --blue: #3b82f6;
+            --orange: #f59e0b;
+            --red: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,7 +44,7 @@
             padding: 16px;
         }
 
-        .gh-wrapper {
+        .railway-wrapper {
             width: 100%;
             max-width: 440px;
             display: flex;
@@ -50,74 +52,86 @@
             gap: 12px;
         }
 
-        /* --- EN-TÊTE DE TYPE REPO --- */
-        .repo-header {
+        /* --- EN-TÊTE TYPE RAILWAY PRODUCTION --- */
+        .railway-header {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .repo-title-area {
+        .service-info {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .repo-avatar {
+        .service-icon {
             width: 32px;
             height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #7ee787, #238636);
+            border-radius: 8px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #fff;
             font-weight: 700;
-            color: #0d1117;
             font-size: 14px;
         }
 
-        .repo-name {
-            font-size: 15px;
+        .service-name {
+            font-size: 14px;
             font-weight: 600;
             color: var(--text-main);
         }
 
-        .repo-badge {
+        .service-status {
             font-size: 11px;
-            padding: 2px 8px;
+            padding: 3px 10px;
             border-radius: 20px;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            font-weight: 500;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--green);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
         }
 
         /* --- CARTE PRINCIPALE --- */
-        .gh-card {
+        .railway-card {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 20px 16px;
         }
 
-        .section-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 6px;
+        .card-header-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
         }
 
-        .section-desc {
-            font-size: 12px;
+        .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: var(--text-muted);
-            margin-bottom: 16px;
-            line-height: 1.4;
         }
 
         /* --- FORMULAIRE & INPUTS --- */
@@ -126,329 +140,352 @@
             text-align: left;
         }
 
-        .gh-select-box {
+        .input-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rw-select-box {
             position: relative;
             width: 100%;
         }
 
-        .gh-dropdown-toggle {
-            height: 36px;
+        .rw-dropdown-toggle {
+            height: 42px;
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0 12px;
+            border-radius: 8px;
+            padding: 0 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 12px;
             color: var(--text-main);
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
 
-        .gh-dropdown-toggle:hover { border-color: var(--border-hover); }
+        .rw-dropdown-toggle:hover { border-color: var(--text-muted); }
+        .rw-dropdown-toggle.active { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
 
-        .gh-dropdown-menu {
+        .rw-dropdown-menu {
             position: absolute;
-            top: calc(100% + 4px);
+            top: calc(100% + 6px);
             left: 0;
             width: 100%;
-            max-height: 220px;
+            max-height: 240px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
             display: none;
             flex-direction: column;
-            z-index: 50;
+            z-index: 100;
             overflow: hidden;
         }
 
-        .gh-search-input-wrap {
+        .rw-search-box {
             padding: 8px;
             border-bottom: 1px solid var(--border);
             background: var(--bg);
         }
 
-        .gh-search-input-wrap input {
+        .rw-search-box input {
             width: 100%;
-            height: 30px;
+            height: 34px;
             background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 0 8px;
-            color: var(--text-main);
-            font-size: 12px;
-            outline: none;
-        }
-
-        .gh-options-list {
-            overflow-y: auto;
-            max-height: 160px;
-            padding: 4px;
-        }
-
-        .gh-option-item {
-            padding: 6px 10px;
-            font-size: 12px;
-            color: var(--text-main);
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .gh-option-item:hover { background-color: rgba(56, 139, 253, 0.15); color: var(--accent-blue); }
-        .gh-option-item span.code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
-
-        .phone-layout {
-            display: grid;
-            grid-template-columns: 75px 1fr;
-            gap: 6px;
-        }
-
-        .gh-input {
-            height: 36px;
-            background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 0 10px;
             color: var(--text-main);
-            font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             outline: none;
-            transition: border-color 0.2s;
         }
 
-        .gh-input:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15); }
-        .gh-input.prefix { text-align: center; color: #7ee787; font-weight: 600; }
-        .gh-input::placeholder { color: #484f58; }
+        .rw-options-list {
+            overflow-y: auto;
+            max-height: 170px;
+            padding: 4px;
+        }
 
-        /* --- BOUTON D'ACTION PRINCIPAL --- */
-        .btn-gh-primary {
-            width: 100%;
-            height: 38px;
-            background-color: var(--green);
-            color: #ffffff;
-            border: 1px solid rgba(240,246,252,0.1);
-            border-radius: 6px;
+        .rw-option-item {
+            padding: 8px 12px;
             font-size: 12px;
-            font-weight: 600;
+            color: var(--text-main);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.15s;
+        }
+
+        .rw-option-item:hover { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .rw-option-item span.code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+        .phone-layout {
+            display: grid;
+            grid-template-columns: 85px 1fr;
+            gap: 8px;
+        }
+
+        .rw-input {
+            height: 42px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0 12px;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .rw-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+        .rw-input.prefix { text-align: center; color: var(--green); font-weight: 700; }
+        .rw-input::placeholder { color: #4b5563; font-size: 11px; }
+
+        /* --- BOUTON DE CONNEXION PRINCIPAL --- */
+        .btn-rw-primary {
+            width: 100%;
+            height: 46px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            transition: background-color 0.2s;
-            margin-top: 4px;
+            gap: 8px;
+            box-shadow: 0 4px 15px var(--green-glow);
+            transition: all 0.2s;
+            margin-top: 6px;
         }
 
-        .btn-gh-primary:hover { background-color: var(--green-hover); }
-        .btn-gh-primary:disabled { opacity: 0.6; cursor: wait; }
+        .btn-rw-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-rw-primary:active { transform: translateY(1px); }
+        .btn-rw-primary:disabled { opacity: 0.6; cursor: wait; transform: none; }
 
-        .btn-gh-secondary {
+        .btn-rw-secondary {
             width: 100%;
-            height: 34px;
-            background-color: var(--bg);
-            color: var(--text-main);
+            height: 38px;
+            background: transparent;
+            color: var(--text-muted);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             margin-top: 8px;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
         }
-        .btn-gh-secondary:hover { background-color: rgba(255,255,255,0.04); border-color: var(--border-hover); }
+        .btn-rw-secondary:hover { background: var(--surface-hover); color: var(--text-main); border-color: var(--text-muted); }
 
         .loader {
-            width: 22px; height: 22px;
-            margin: 12px auto 0;
+            width: 24px; height: 24px;
+            margin: 14px auto 0;
             display: none;
             border-radius: 50%;
-            border: 2px solid rgba(88,166,255,0.2);
-            border-top-color: var(--accent-blue);
+            border: 2px solid rgba(59,130,246,0.2);
+            border-top-color: var(--blue);
             animation: spin 0.7s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        #result { margin-top: 12px; text-align: center; }
+        #result { margin-top: 14px; text-align: center; }
 
-        .gh-code-box {
+        .rw-code-box {
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 12px;
+            border-radius: 8px;
+            padding: 14px;
         }
 
-        .gh-code-title {
+        .rw-code-title {
             font-size: 10px;
             color: var(--text-muted);
             text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
         .code-flex {
             display: flex;
             justify-content: center;
-            gap: 4px;
-            margin-bottom: 10px;
+            gap: 5px;
+            margin-bottom: 12px;
         }
 
         .code-char {
-            width: 24px; height: 32px;
+            width: 28px; height: 38px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: #7ee787;
-            font-weight: 600;
+            font-size: 14px;
+            color: var(--green);
+            font-weight: 700;
         }
-        .code-char.dash { width: 6px; border: none; background: transparent; color: var(--text-muted); }
+        .code-char.dash { width: 8px; border: none; background: transparent; color: var(--text-muted); }
 
-        .btn-gh-copy {
+        .btn-rw-copy {
             width: 100%;
-            height: 32px;
-            background: rgba(56, 139, 253, 0.15);
-            border: 1px solid rgba(56, 139, 253, 0.4);
-            color: var(--accent-blue);
-            border-radius: 4px;
+            height: 36px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: var(--blue);
+            border-radius: 6px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            transition: background 0.2s;
         }
-        .btn-gh-copy:hover { background: rgba(56, 139, 253, 0.25); }
-        .error-txt { color: #f85149; font-size: 11px; font-weight: 500; }
+        .btn-rw-copy:hover { background: rgba(59, 130, 246, 0.25); }
+        .error-txt { color: var(--red); font-size: 11px; font-weight: 600; }
 
-        /* --- STATS / WIDGET --- */
-        .gh-stats-card {
+        /* --- STATS / WIDGET SESSIONS --- */
+        .rw-stats-card {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 14px;
             text-align: center;
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-        .gh-stats-card:hover { border-color: var(--border-hover); }
+        .rw-stats-card:hover { border-color: var(--blue); transform: translateY(-1px); }
 
         /* --- MODAL --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(1, 4, 9, 0.8);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
             display: none; justify-content: center; align-items: center;
             z-index: 999; padding: 16px;
         }
         .modal-box {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            width: 100%; max-width: 380px; max-height: 80vh;
+            border-radius: 12px;
+            width: 100%; max-width: 400px; max-height: 80vh;
             display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .modal-head {
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
-            font-size: 13px; font-weight: 600;
+            font-size: 13px; font-weight: 700;
         }
         .modal-close-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; }
-        .modal-content { padding: 14px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-        .gh-number-row {
+        .modal-content { padding: 16px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        
+        .rw-number-row {
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: 6px; padding: 8px 12px;
+            border-radius: 8px; padding: 10px 14px;
             display: flex; align-items: center; justify-content: space-between;
-            font-family: 'JetBrains Mono', monospace; font-size: 11px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
         }
-        .gh-dot { width: 6px; height: 6px; border-radius: 50%; background: #238636; box-shadow: 0 0 6px #238636; }
+        .rw-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
 
         /* --- FOOTER LIENS --- */
-        .gh-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .gh-link-btn {
-            height: 36px; background: var(--surface); border: 1px solid var(--border);
-            border-radius: 6px; text-decoration: none; color: var(--text-main);
-            font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 6px;
-            transition: background 0.2s;
+        .rw-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .rw-link-btn {
+            height: 40px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 10px; text-decoration: none; color: var(--text-main);
+            font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;
+            transition: all 0.2s;
         }
-        .gh-link-btn:hover { background: rgba(255,255,255,0.04); border-color: var(--border-hover); }
+        .rw-link-btn:hover { background: var(--surface-hover); border-color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-<div class="gh-wrapper">
+<div class="railway-wrapper">
 
-    <!-- EN-TÊTE TYPE PROFIL -->
-    <div class="repo-header">
-        <div class="repo-title-area">
-            <div class="repo-avatar">K</div>
-            <div class="repo-name">KAYA-BOT / Pair</div>
+    <!-- EN-TÊTE RAILWAY -->
+    <div class="railway-header">
+        <div class="service-info">
+            <div class="service-icon">K</div>
+            <div class="service-name">KAYA-BOT</div>
         </div>
-        <div class="repo-badge">Public</div>
+        <div class="service-status">
+            <div class="status-dot"></div>
+            <span>Online</span>
+        </div>
     </div>
 
     <!-- CARTE PRINCIPALE -->
-    <div class="gh-card">
-        <div class="section-title">
-            <span>Authentication Session</span>
-            <span style="font-size: 10px; color: var(--text-muted);">v2.6</span>
+    <div class="railway-card">
+        <div class="card-header-bar">
+            <span class="card-title">Authentication Pair</span>
+            <span style="font-size: 10px; color: var(--text-muted); font-family: monospace;">production</span>
         </div>
-        <div class="section-desc">Select your region code and link your WhatsApp device securely.</div>
 
         <!-- SÉLECTEUR DE PAYS -->
         <div class="input-group">
-            <span style="display:block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Country Region</span>
-            <div class="gh-select-box" id="ghDropdown">
-                <div class="gh-dropdown-toggle" id="ghToggle" onclick="toggleDropdown()">
-                    <span id="ghSelectedText">🇨🇩 Congo, Democratic Republic (+243)</span>
+            <label class="input-label">Country Region</label>
+            <div class="rw-select-box" id="rwDropdown">
+                <div class="rw-dropdown-toggle" id="rwToggle" onclick="toggleDropdown()">
+                    <span id="rwSelectedText">🇨🇩 Congo, Democratic Republic (+243)</span>
                     <span style="font-size: 9px; color: var(--text-muted);">▼</span>
                 </div>
-                <div class="gh-dropdown-menu" id="ghMenu">
-                    <div class="gh-search-input-wrap">
-                        <input type="text" id="ghSearch" placeholder="Filter countries..." oninput="filterCountries()">
+                <div class="rw-dropdown-menu" id="rwMenu">
+                    <div class="rw-search-box">
+                        <input type="text" id="rwSearch" placeholder="Search country or code..." oninput="filterCountries()">
                     </div>
-                    <div class="gh-options-list" id="ghOptions"></div>
+                    <div class="rw-options-list" id="rwOptions"></div>
                 </div>
             </div>
         </div>
 
         <!-- NUMÉRO -->
         <div class="input-group">
-            <span style="display:block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-bottom: 4px;">Phone Number</span>
+            <label class="input-label">WhatsApp Number</label>
             <div class="phone-layout">
-                <input type="text" id="prefixInput" class="gh-input prefix" value="+243" maxlength="4" oninput="syncCountryFromPrefix()">
-                <input type="tel" id="phone" class="gh-input" placeholder="9999585890" inputmode="numeric">
+                <input type="text" id="prefixInput" class="rw-input prefix" value="+243" maxlength="4" oninput="syncCountryFromPrefix()">
+                <input type="tel" id="phone" class="rw-input" placeholder="9999585890" inputmode="numeric">
             </div>
         </div>
 
         <!-- BOUTON DE CONNEXION PRINCIPAL -->
-        <button class="btn-gh-primary" id="connectBtn" onclick="getPairingCode()">
-            <span>Generate Pairing Code</span>
-            <span style="font-size: 14px;">⚡</span>
+        <button class="btn-rw-primary" id="connectBtn" onclick="getPairingCode()">
+            <span>Connect Bot Now</span>
+            <span style="font-size: 16px;">🚀</span>
         </button>
 
-        <button class="btn-gh-secondary" onclick="window.location.reload()">Reload Interface</button>
+        <button class="btn-rw-secondary" onclick="window.location.reload()">Reload Service</button>
 
         <div class="loader" id="loader"></div>
         <div id="result"></div>
     </div>
 
     <!-- WIDGET SESSIONS -->
-    <div class="gh-stats-card" onclick="openConnectedModal()">
-        <div id="activeCount" style="font-size: 12px; font-weight: 600; color: #7ee787;">
+    <div class="rw-stats-card" onclick="openConnectedModal()">
+        <div id="activeCount" style="font-size: 12px; font-weight: 700; color: var(--green);">
             🟢 Checking active instances...
         </div>
-        <div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Click to inspect connected sessions</div>
+        <div style="font-size: 10px; color: var(--text-muted); margin-top: 3px;">Tap to view connected numbers</div>
     </div>
 
     <!-- FOOTER -->
-    <div class="gh-footer">
-        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="gh-link-btn">📢 WhatsApp Channel</a>
-        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="gh-link-btn">✈️ Telegram Support</a>
+    <div class="rw-footer">
+        <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="rw-link-btn">📢 WhatsApp</a>
+        <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="rw-link-btn">✈️ Telegram</a>
     </div>
 
 </div>
@@ -457,7 +494,7 @@
 <div class="modal-overlay" id="connectedModal">
     <div class="modal-box">
         <div class="modal-head">
-            <span>Active Deployments</span>
+            <span>Connected Instances</span>
             <button class="modal-close-btn" onclick="closeConnectedModal()">✕</button>
         </div>
         <div class="modal-content" id="modalBodyList">
@@ -470,6 +507,7 @@
     const BACKEND_URL = 'https://kayabot.duckdns.org';
     let currentPairCode = '';
 
+    // Liste complète de tous les pays du monde
     const countries = [
         { name: "Afghanistan", code: "+93", flag: "🇦🇫" },
         { name: "Albania", code: "+355", flag: "🇦🇱" },
@@ -645,11 +683,11 @@
     ];
 
     function renderCountries(list) {
-        const container = document.getElementById('ghOptions');
+        const container = document.getElementById('rwOptions');
         container.innerHTML = '';
         list.forEach(c => {
             const div = document.createElement('div');
-            div.className = 'gh-option-item';
+            div.className = 'rw-option-item';
             div.innerHTML = `<span>${c.flag} ${c.name}</span> <span class="code">${c.code}</span>`;
             div.onclick = () => selectCountry(c);
             container.appendChild(div);
@@ -657,20 +695,27 @@
     }
 
     function toggleDropdown() {
-        const menu = document.getElementById('ghMenu');
+        const menu = document.getElementById('rwMenu');
+        const toggle = document.getElementById('rwToggle');
         const isVisible = menu.style.display === 'flex';
         menu.style.display = isVisible ? 'none' : 'flex';
-        if (!isVisible) document.getElementById('ghSearch').focus();
+        if (!isVisible) {
+            toggle.classList.add('active');
+            document.getElementById('rwSearch').focus();
+        } else {
+            toggle.classList.remove('active');
+        }
     }
 
     function selectCountry(c) {
-        document.getElementById('ghSelectedText').innerText = `${c.flag} ${c.name} (${c.code})`;
+        document.getElementById('rwSelectedText').innerText = `${c.flag} ${c.name} (${c.code})`;
         document.getElementById('prefixInput').value = c.code;
-        document.getElementById('ghMenu').style.display = 'none';
+        document.getElementById('rwMenu').style.display = 'none';
+        document.getElementById('rwToggle').classList.remove('active');
     }
 
     function filterCountries() {
-        const query = document.getElementById('ghSearch').value.toLowerCase();
+        const query = document.getElementById('rwSearch').value.toLowerCase();
         const filtered = countries.filter(c => c.name.toLowerCase().includes(query) || c.code.toLowerCase().includes(query));
         renderCountries(filtered);
     }
@@ -686,16 +731,17 @@
         const sorted = [...countries].sort((a, b) => b.code.length - a.code.length);
         const matched = sorted.find(c => c.code === val || val.startsWith(c.code));
         if (matched) {
-            document.getElementById('ghSelectedText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
+            document.getElementById('rwSelectedText').innerText = `${matched.flag} ${matched.name} (${matched.code})`;
         } else {
-            document.getElementById('ghSelectedText').innerText = `🌐 Custom (${val})`;
+            document.getElementById('rwSelectedText').innerText = `🌐 Custom Code (${val})`;
         }
     }
 
     window.addEventListener('click', function(e) {
-        const drop = document.getElementById('ghDropdown');
+        const drop = document.getElementById('rwDropdown');
         if (drop && !drop.contains(e.target)) {
-            document.getElementById('ghMenu').style.display = 'none';
+            document.getElementById('rwMenu').style.display = 'none';
+            document.getElementById('rwToggle').classList.remove('active');
         }
     });
 
@@ -707,10 +753,10 @@
             const response = await fetch(`${BACKEND_URL}/api/online-count`);
             const data = await response.json();
             if (data.success) {
-                document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} active sessions online`;
+                document.getElementById('activeCount').innerText = `🟢 ${data.totalConnected} active instances online`;
             }
         } catch (e) {
-            document.getElementById('activeCount').innerText = '🟢 Active sessions online';
+            document.getElementById('activeCount').innerText = '🟢 Active instances online';
         }
     }
 
@@ -729,14 +775,14 @@
                     let clean = num.toString().trim();
                     if (!clean.startsWith('+')) clean = '+' + clean;
                     let masked = clean.length > 8 ? `${clean.slice(0, 5)}****${clean.slice(-2)}` : clean;
-                    html += `<div class="gh-number-row"><div style="display:flex; align-items:center; gap:8px;"><div class="gh-dot"></div><span>${masked}</span></div><span style="color:#7ee787; font-size:10px;">ACTIVE</span></div>`;
+                    html += `<div class="rw-number-row"><div style="display:flex; align-items:center; gap:8px;"><div class="rw-dot"></div><span>${masked}</span></div><span style="color:var(--green); font-size:10px; font-weight:700;">CONNECTED</span></div>`;
                 });
                 body.innerHTML = html;
             } else {
-                body.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 15px; font-size: 12px;">No active sessions found.</div>`;
+                body.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 15px; font-size: 12px;">No active instances found.</div>`;
             }
         } catch (error) {
-            body.innerHTML = `<div style="text-align: center; color: #f85149; padding: 15px; font-size: 12px;">Failed to retrieve sessions.</div>`;
+            body.innerHTML = `<div style="text-align: center; color: var(--red); padding: 15px; font-size: 12px;">Failed to retrieve sessions.</div>`;
         }
     }
 
@@ -757,14 +803,14 @@
         const fullPhone = prefix + rawNumber;
 
         if (!rawNumber || rawNumber.length < 8 || !/^[0-9]+$/.test(rawNumber)) {
-            resultDiv.innerHTML = `<span class="error-txt">❌ Enter a valid mobile number.</span>`;
+            resultDiv.innerHTML = `<span class="error-txt">❌ Please enter a valid phone number.</span>`;
             return;
         }
 
         resultDiv.innerHTML = '';
         loader.style.display = 'block';
         connectBtn.disabled = true;
-        connectBtn.innerHTML = '<span>Processing request...</span>';
+        connectBtn.innerHTML = '<span>Processing...</span>';
 
         try {
             const response = await fetch(`${BACKEND_URL}/api/connect`, {
@@ -776,17 +822,17 @@
 
             loader.style.display = 'none';
             connectBtn.disabled = false;
-            connectBtn.innerHTML = '<span>Generate Pairing Code</span><span style="font-size: 14px;">⚡</span>';
+            connectBtn.innerHTML = '<span>Connect Bot Now</span><span style="font-size: 16px;">🚀</span>';
 
             if (data.success && data.code) {
                 currentPairCode = data.code;
                 const cleanCode = data.code.replace(/-/g, '').trim();
-                let html = `<div class="gh-code-box"><div class="gh-code-title">Generated Pairing Code</div><div class="code-flex">`;
+                let html = `<div class="rw-code-box"><div class="rw-code-title">Generated Pairing Code</div><div class="code-flex">`;
                 for (let i = 0; i < cleanCode.length; i++) {
                     if (i > 0 && i % 4 === 0) html += `<div class="code-char dash">-</div>`;
                     html += `<div class="code-char">${cleanCode[i]}</div>`;
                 }
-                html += `</div><button class="btn-gh-copy" onclick="copyCode()">Copy Code to Clipboard</button></div>`;
+                html += `</div><button class="btn-rw-copy" onclick="copyCode()">📋 COPY PAIRING CODE</button></div>`;
                 resultDiv.innerHTML = html;
                 fetchActiveSessions();
             } else {
@@ -795,21 +841,21 @@
         } catch (error) {
             loader.style.display = 'none';
             connectBtn.disabled = false;
-            connectBtn.innerHTML = '<span>Generate Pairing Code</span><span style="font-size: 14px;">⚡</span>';
-            resultDiv.innerHTML = `<span class="error-txt">❌ Network error. Try again.</span>`;
+            connectBtn.innerHTML = '<span>Connect Bot Now</span><span style="font-size: 16px;">🚀</span>';
+            resultDiv.innerHTML = `<span class="error-txt">❌ Network error. Please try again.</span>`;
         }
     }
 
     async function copyCode() {
         if (!currentPairCode) return;
-        const btn = document.querySelector('.btn-gh-copy');
+        const btn = document.querySelector('.btn-rw-copy');
         try {
             await navigator.clipboard.writeText(currentPairCode);
-            btn.innerText = '✓ Copied Successfully!';
-            setTimeout(() => { btn.innerText = 'Copy Code to Clipboard'; }, 2000);
+            btn.innerText = '✅ CODE COPIED!';
+            setTimeout(() => { btn.innerText = '📋 COPY PAIRING CODE'; }, 2000);
         } catch (error) {
-            btn.innerText = '✓ Copied Successfully!';
-            setTimeout(() => { btn.innerText = 'Copy Code to Clipboard'; }, 2000);
+            btn.innerText = '✅ CODE COPIED!';
+            setTimeout(() => { btn.innerText = '📋 COPY PAIRING CODE'; }, 2000);
         }
     }
 
