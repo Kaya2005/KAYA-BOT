@@ -17,22 +17,19 @@
     
     <style>
         :root {
-            --bg: #020503;
-            --card-bg: rgba(6, 18, 11, 0.85);
-            --card2: #0a1b12;
-            --input: #010302;
-            --card-border: rgba(74, 222, 128, 0.25);
-            --border-hover: rgba(74, 222, 128, 0.6);
-            --border-soft: rgba(30, 60, 45, 0.4);
-            --accent-gold: #fbbf24;
-            --accent-gold-hover: #d97706;
+            --bg: #030704;
+            --card-bg: #07130c;
+            --input: #040a07;
+            --border: rgba(34, 197, 94, 0.2);
+            --border-hover: rgba(34, 197, 94, 0.6);
+            --gold: #fbbf24;
             --orange: #f97316;
-            --orange-glow: rgba(249, 115, 22, 0.5);
+            --orange-glow: rgba(249, 115, 22, 0.45);
             --green: #22c55e;
-            --green-glow: rgba(34, 197, 94, 0.3);
+            --green-glow: rgba(34, 197, 94, 0.35);
             --red: #f87171;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text: #f8fafc;
+            --muted: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,10 +38,10 @@
         body {
             font-family: 'Space Grotesk', sans-serif;
             background: 
-                radial-gradient(circle at 50% -15%, rgba(249,115,22,0.1), transparent 50%),
-                radial-gradient(circle at 50% 115%, rgba(34,197,94,0.12), transparent 55%),
+                radial-gradient(circle at 50% -10%, rgba(249,115,22,0.12), transparent 50%),
+                radial-gradient(circle at 50% 110%, rgba(34,197,94,0.15), transparent 50%),
                 var(--bg);
-            color: var(--text-main);
+            color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -54,136 +51,109 @@
 
         .dashboard {
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            animation: fadeInView 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            gap: 16px;
+            animation: fadeIn 0.3s ease-out;
         }
 
-        @keyframes fadeInView {
-            from { opacity: 0; transform: translateY(10px); scale: 0.98; }
-            to { opacity: 1; transform: translateY(0); scale: 1; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- CARTE PRINCIPALE --- */
+        /* --- CARTE PRINCIPALE ÉPURÉE (SANS DOUBLE CADRE) --- */
         .main-card {
-            width: 100%;
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 26px 22px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 20px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(74,222,128,0.25);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
-        .main-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-            border-radius: 3px;
-        }
-
-        .next-gen-badge {
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.35);
-            color: var(--accent-gold);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            color: var(--gold);
             font-size: 10px;
             font-weight: 700;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .brand-title {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            color: var(--text-main);
-            margin-bottom: 8px;
             letter-spacing: 1px;
             text-transform: uppercase;
+            margin-bottom: 8px;
+            color: #fff;
         }
 
-        .brand-title span.gold-txt {
-            color: var(--accent-gold);
-        }
+        .brand-title span { color: var(--gold); }
 
         .card-desc {
-            color: var(--text-muted);
+            color: var(--muted);
             font-size: 12px;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 22px;
-            padding: 0 10px;
         }
 
-        /* --- CHAMPS & FORMULAIRE --- */
+        /* --- CHAMPS DE FORMULAIRE --- */
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             text-align: left;
         }
 
         .input-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            display: block;
             margin-bottom: 6px;
-            color: var(--text-muted);
+            color: var(--muted);
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 1.2px;
             text-transform: uppercase;
         }
 
-        .custom-dropdown {
-            position: relative;
-            width: 100%;
-        }
+        .custom-dropdown { position: relative; width: 100%; }
 
         .dropdown-selected {
-            height: 50px;
-            border-radius: 14px;
-            border: 1px solid var(--card-border);
+            height: 48px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
             background: var(--input);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 0 14px;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
             color: #fff;
-            transition: all .25s ease;
+            transition: all 0.2s;
         }
 
         .dropdown-selected:hover { border-color: var(--border-hover); }
-        .dropdown-selected.active {
-            border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(34,197,94,0.15), 0 0 15px var(--green-glow);
-        }
+        .dropdown-selected.active { border-color: var(--green); box-shadow: 0 0 12px var(--green-glow); }
 
         .dropdown-list-container {
             position: absolute;
             top: calc(100% + 6px);
             left: 0;
             width: 100%;
-            max-height: 250px;
-            background: #040b08;
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            max-height: 240px;
+            background: #050f09;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
             z-index: 99;
             display: none;
             flex-direction: column;
@@ -191,91 +161,72 @@
         }
 
         .dropdown-search-box {
-            padding: 10px;
-            border-bottom: 1px solid var(--border-soft);
-            background: #020705;
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            background: #030805;
         }
 
         .dropdown-search-box input {
             width: 100%;
-            height: 38px;
-            padding: 0 12px;
-            border-radius: 10px;
-            border: 1px solid var(--card-border);
+            height: 36px;
+            padding: 0 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
             background: var(--input);
             color: #fff;
-            font-family: 'Space Grotesk', sans-serif;
             font-size: 12px;
             outline: none;
         }
 
-        .dropdown-options {
-            overflow-y: auto;
-            max-height: 180px;
-            padding: 4px;
-        }
+        .dropdown-options { overflow-y: auto; max-height: 180px; padding: 4px; }
 
         .dropdown-option {
-            padding: 10px 12px;
-            border-radius: 10px;
+            padding: 9px 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 12px;
-            font-weight: 500;
             color: #cbd5e1;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: background 0.15s, color 0.15s;
+            transition: background 0.15s;
         }
 
-        .dropdown-option:hover {
-            background: rgba(34,197,94,0.18);
-            color: #fff;
-        }
+        .dropdown-option:hover { background: rgba(34,197,94,0.15); color: #fff; }
+        .dropdown-option .opt-code { font-family: 'JetBrains Mono', monospace; color: var(--green); font-weight: 700; }
 
-        .dropdown-option .opt-code {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--green);
-            font-weight: 700;
-            font-size: 11px;
-        }
-
-        .phone-row {
-            display: grid;
-            grid-template-columns: 85px 1fr;
-            gap: 8px;
-        }
+        .phone-row { display: grid; grid-template-columns: 80px 1fr; gap: 8px; }
 
         .country-code-input, input[type="tel"] {
-            height: 50px;
+            height: 48px;
             background: var(--input);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            color: var(--green);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: #fff;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             font-weight: 700;
             outline: none;
-            transition: all .25s ease;
+            transition: all 0.2s;
         }
 
-        .country-code-input { text-align: center; }
-        input[type="tel"] { padding: 0 16px; color: #fff; }
+        .country-code-input { text-align: center; color: var(--green); }
+        input[type="tel"] { padding: 0 14px; }
         input::placeholder { color: #3b5244; font-size: 11px; }
 
         .country-code-input:focus, input[type="tel"]:focus {
             border-color: var(--green);
-            box-shadow: 0 0 0 3px rgba(34,197,94,0.15), 0 0 15px var(--green-glow);
+            box-shadow: 0 0 12px var(--green-glow);
         }
 
-        /* --- BOUTON PRINCIPAL (ULTRA VISIBLE & PRO) --- */
+        /* --- GROS BOUTON D'ACTION PROFESSIONNEL & LUMINEUX --- */
         .btn-action-main {
-            background: linear-gradient(135deg, #fb923c, #ea580c);
+            background: linear-gradient(135deg, #f97316, #ea580c);
             color: #ffffff;
-            text-decoration: none;
-            padding: 16px;
             width: 100%;
+            height: 52px;
             border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             font-size: 13px;
             font-weight: 800;
             letter-spacing: 1.5px;
@@ -284,258 +235,200 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
             cursor: pointer;
-            box-shadow: 0 8px 25px var(--orange-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-top: 6px;
+            box-shadow: 0 6px 22px var(--orange-glow);
+            transition: all 0.25s ease;
+            margin-top: 8px;
             margin-bottom: 10px;
         }
 
         .btn-action-main:hover {
-            background: linear-gradient(135deg, #f97316, #c2410c);
+            filter: brightness(1.1);
             transform: translateY(-2px);
-            box-shadow: 0 12px 35px rgba(249, 115, 22, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.45);
-            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.6);
         }
 
-        .btn-action-main:active {
-            transform: translateY(1px);
-            box-shadow: 0 4px 12px var(--orange-glow);
-        }
-
-        .btn-action-main:disabled {
-            cursor: wait;
-            opacity: 0.6;
-            transform: none;
-        }
+        .btn-action-main:active { transform: scale(0.98); }
+        .btn-action-main:disabled { cursor: wait; opacity: 0.6; transform: none; }
 
         .btn-refresh {
             width: 100%;
-            height: 42px;
-            border-radius: 12px;
-            border: 1px solid var(--border-soft);
-            background: rgba(4,12,8,0.7);
-            color: var(--text-muted);
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: transparent;
+            color: var(--muted);
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            transition: all .2s ease;
+            transition: all 0.2s;
         }
 
-        .btn-refresh:hover {
-            background: var(--card2);
-            color: var(--text-main);
-            border-color: var(--card-border);
-        }
+        .btn-refresh:hover { background: rgba(255,255,255,0.05); color: #fff; }
 
         .loader {
-            width: 28px;
-            height: 28px;
-            margin: 14px auto 2px;
+            width: 26px; height: 26px;
+            margin: 12px auto 2px;
             display: none;
             border-radius: 50%;
             border: 3px solid rgba(249,115,22,0.15);
             border-top-color: var(--orange);
-            animation: spin .8s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        #result { margin-top: 14px; text-align: center; }
+        #result { margin-top: 12px; text-align: center; }
 
         .code-wrapper {
-            padding: 16px 12px 14px;
-            border-radius: 14px;
-            border: 1px solid rgba(249,115,22,0.35);
-            background: linear-gradient(150deg, rgba(3,8,5,0.99), rgba(8,20,14,0.99));
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(249,115,22,0.3);
+            background: #040906;
         }
 
         .code-title {
-            margin-bottom: 10px;
             font-size: 9px;
             font-weight: 700;
-            letter-spacing: 1.8px;
-            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            color: var(--muted);
             text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
         .code-container {
-            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 4px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .code-char {
-            width: 28px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            border: 1px solid rgba(249,115,22,0.35);
-            background: rgba(6,16,11,0.95);
+            width: 26px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 6px;
+            border: 1px solid rgba(249,115,22,0.3);
+            background: #06110a;
             color: var(--orange);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
         }
 
-        .code-char.dash {
-            width: 8px;
-            border: none;
-            background: transparent;
-            color: var(--accent-gold);
-            font-size: 16px;
-        }
+        .code-char.dash { width: 6px; border: none; background: transparent; color: var(--gold); }
 
         .btn-copy {
             width: 100%;
-            height: 40px;
-            border-radius: 10px;
+            height: 38px;
+            border-radius: 8px;
             border: 1px solid rgba(249,115,22,0.4);
             background: rgba(249,115,22,0.15);
             color: var(--orange);
             font-size: 11px;
             font-weight: 800;
             cursor: pointer;
-            transition: all .2s ease;
+            transition: background 0.2s;
         }
-
         .btn-copy:hover { background: rgba(249,115,22,0.25); }
-        .error-message { color: var(--red); font-size: 11px; font-weight: 700; padding: 6px; }
+        .error-message { color: var(--red); font-size: 11px; font-weight: 700; }
 
-        /* --- CARTE DES SESSIONS ACTIVES --- */
+        /* --- WIDGET SESSIONS ACTIVES --- */
         .logs-card {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px;
             text-align: center;
-            cursor: pointer;
-            transition: all .2s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        }
-        .logs-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-
-        /* --- MODAL --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 16px;
-        }
-
-        .modal-content {
-            background: linear-gradient(150deg, rgba(6,16,11,0.99), rgba(2,6,4,0.99));
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 420px;
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
-        }
-
-        .modal-header {
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .modal-title { font-size: 14px; font-weight: 700; }
-        .modal-close {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-soft);
-            color: var(--text-main);
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .modal-close:hover { background: rgba(248, 113, 113, 0.2); color: var(--red); }
+        .logs-card:hover { border-color: var(--border-hover); transform: translateY(-1px); }
 
-        .modal-body { padding: 16px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        .number-item {
-            background: rgba(2, 8, 5, 0.9);
-            border: 1px solid var(--border-soft);
-            border-radius: 12px;
-            padding: 12px 14px;
-            display: flex; align-items: center; justify-content: space-between;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 9999; padding: 16px;
         }
-        .number-left { display: flex; align-items: center; gap: 10px; }
-        .number-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+
+        .modal-content {
+            background: #07130c;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            width: 100%; max-width: 400px; max-height: 80vh;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-header {
+            padding: 16px 18px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .modal-title { font-size: 13px; font-weight: 700; }
+        .modal-close {
+            background: rgba(255,255,255,0.05); border: none; color: #fff;
+            width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .modal-body { padding: 16px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        
+        .number-item {
+            background: var(--input); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px; padding: 10px 12px;
+            display: flex; align-items: center; justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+        }
+        .number-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
         .number-status { font-size: 10px; font-weight: 700; color: var(--green); text-transform: uppercase; }
 
-        /* --- FOOTER CHANNELS --- */
-        .channels-footer {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0,1fr));
-            gap: 10px;
-        }
-
+        /* --- FOOTER CANAUX --- */
+        .channels-footer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .channel-btn {
-            min-height: 44px;
+            height: 42px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            border-radius: 14px; text-decoration: none; font-size: 11px; font-weight: 700;
-            color: white; border: 1px solid rgba(255,255,255,0.12);
-            background: var(--card-bg);
-            transition: all .2s ease;
+            border-radius: 12px; text-decoration: none; font-size: 11px; font-weight: 700;
+            color: #fff; border: 1px solid rgba(255,255,255,0.08);
+            background: var(--card-bg); transition: all 0.2s;
         }
-        .channel-btn:hover { border-color: var(--card-border); background: rgba(10, 27, 18, 0.95); transform: translateY(-1px); }
+        .channel-btn:hover { border-color: var(--border-hover); background: #0a1b12; }
     </style>
 </head>
 <body>
 
 <div class="dashboard">
 
-    <!-- CARTE DE CONNEXION PRINCIPALE -->
+    <!-- CARTE PRINCIPALE -->
     <div class="main-card">
+        <div class="badge">✨ Next-Gen Edition</div>
         
-        <div style="text-align: center;">
-            <div class="next-gen-badge">✨ Next-Gen Edition</div>
-        </div>
-
-        <div style="text-align: center; margin-bottom: 6px;">
-            <div class="brand-title">KΛYΛ-<span class="gold-txt">BØT</span></div>
-        </div>
-
+        <div class="brand-title">KΛYΛ-<span>BØT</span></div>
+        
         <div class="card-desc">
             Connect your WhatsApp multi-device bot instantly by generating a secure pairing code.
         </div>
 
-        <!-- SELECTEUR DE PAYS -->
+        <!-- SÉLECTEUR DE PAYS -->
         <div class="input-group">
             <label class="input-label">Select Country</label>
             <div class="custom-dropdown" id="countryDropdown">
                 <div class="dropdown-selected" id="dropdownSelected" onclick="toggleDropdown()">
                     <span id="selectedCountryText">🇨🇩 Democratic Republic of the Congo (+243)</span>
-                    <span style="font-size: 9px; color: var(--text-muted);">▼</span>
+                    <span style="font-size: 9px; color: var(--muted);">▼</span>
                 </div>
                 <div class="dropdown-list-container" id="dropdownList">
                     <div class="dropdown-search-box">
-                        <input type="text" id="countrySearch" placeholder="🔍 Search country or code..." oninput="filterCountries()">
+                        <input type="text" id="countrySearch" placeholder="🔍 Search country..." oninput="filterCountries()">
                     </div>
                     <div class="dropdown-options" id="dropdownOptions"></div>
                 </div>
             </div>
         </div>
 
-        <!-- WHATSAPP NUMBER -->
+        <!-- NUMÉRO WHATSAPP -->
         <div class="input-group">
             <label class="input-label">WhatsApp Number</label>
             <div class="phone-row">
@@ -544,28 +437,28 @@
             </div>
         </div>
 
-        <!-- BOUTON DE CONNEXION DU BOT (PRO & ULTRA VISIBLE) -->
+        <!-- GROS BOUTON D'ACTION PRINCIPAL -->
         <button class="btn-action-main" id="connectBtn" onclick="getPairingCode()">
             <span>Connect Bot Now</span>
             <span style="font-size: 16px;">🚀</span>
         </button>
 
-        <!-- REFRESH -->
+        <!-- BOUTON REFRESH -->
         <button class="btn-refresh" onclick="window.location.reload()">↻ Refresh Dashboard</button>
 
         <div class="loader" id="loader"></div>
         <div id="result"></div>
     </div>
 
-    <!-- ACTIVE SESSIONS COUNTER CARD -->
+    <!-- WIDGET SESSIONS ACTIVES -->
     <div class="logs-card" onclick="openConnectedModal()">
         <div id="activeCount" style="font-size: 12px; font-weight: bold; color: var(--green);">
             🟢 Loading connected bots...
         </div>
-        <div style="font-size: 9px; color: var(--text-muted); margin-top: 3px;">👆 Tap to view connected numbers</div>
+        <div style="font-size: 9px; color: var(--muted); margin-top: 2px;">👆 Tap to view connected numbers</div>
     </div>
 
-    <!-- CHANNELS FOOTER -->
+    <!-- FOOTER CANAUX -->
     <div class="channels-footer">
         <a href="https://whatsapp.com/channel/0029Vb91eHA7Noa7fCn1vp3j" target="_blank" rel="noopener" class="channel-btn">📢 WhatsApp</a>
         <a href="https://t.me/kayatech2" target="_blank" rel="noopener" class="channel-btn">✈️ Telegram</a>
@@ -581,7 +474,7 @@
             <button class="modal-close" onclick="closeConnectedModal()">✕</button>
         </div>
         <div class="modal-body" id="modalBodyList">
-            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading numbers...</div>
+            <div style="text-align: center; color: var(--muted); padding: 20px;">Loading numbers...</div>
         </div>
     </div>
 </div>
@@ -594,16 +487,10 @@
         { name: "Afghanistan", code: "+93", flag: "🇦🇫" },
         { name: "Albania", code: "+355", flag: "🇦🇱" },
         { name: "Algeria", code: "+213", flag: "🇩🇿" },
-        { name: "Andorra", code: "+376", flag: "🇦🇩" },
         { name: "Angola", code: "+244", flag: "🇦🇴" },
         { name: "Argentina", code: "+54", flag: "🇦🇷" },
-        { name: "Armenia", code: "+374", flag: "🇦🇲" },
         { name: "Australia", code: "+61", flag: "🇦🇺" },
         { name: "Austria", code: "+43", flag: "🇦🇹" },
-        { name: "Azerbaijan", code: "+994", flag: "🇦🇿" },
-        { name: "Bahrain", code: "+973", flag: "🇧🇭" },
-        { name: "Bangladesh", code: "+880", flag: "🇧🇩" },
-        { name: "Belarus", code: "+375", flag: "🇧🇾" },
         { name: "Belgium", code: "+32", flag: "🇧🇪" },
         { name: "Benin", code: "+229", flag: "🇧🇯" },
         { name: "Botswana", code: "+267", flag: "🇧🇼" },
@@ -716,7 +603,7 @@
         const modal = document.getElementById('connectedModal');
         const modalBody = document.getElementById('modalBodyList');
         modal.style.display = 'flex';
-        modalBody.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading numbers...</div>`;
+        modalBody.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">Loading numbers...</div>`;
 
         try {
             const response = await fetch(`${BACKEND_URL}/api/connected-list`);
@@ -727,11 +614,11 @@
                     let clean = num.toString().trim();
                     if (!clean.startsWith('+')) clean = '+' + clean;
                     let masked = clean.length > 8 ? `${clean.slice(0, 5)}****${clean.slice(-2)}` : clean;
-                    html += `<div class="number-item"><div class="number-left"><div class="number-dot"></div><span>${masked}</span></div><div class="number-status">Connected</div></div>`;
+                    html += `<div class="number-item"><div style="display:flex; align-items:center; gap:10px;"><div class="number-dot"></div><span>${masked}</span></div><div class="number-status">Connected</div></div>`;
                 });
                 modalBody.innerHTML = html;
             } else {
-                modalBody.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 20px;">No numbers currently connected.</div>`;
+                modalBody.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">No numbers currently connected.</div>`;
             }
         } catch (error) {
             modalBody.innerHTML = `<div style="text-align: center; color: var(--red); padding: 20px;">Failed to load connected numbers.</div>`;
