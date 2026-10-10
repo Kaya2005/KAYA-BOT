@@ -19,7 +19,7 @@
         :root {
             --bg: #07090e;
             --surface: #0d131f;
-            --surface-hover: #131b2e;
+            --surface-hover: #141c2e;
             --border: #1e293b;
             --border-focus: #6366f1;
             --text-main: #f8fafc;
@@ -27,7 +27,9 @@
             --accent: #6366f1;
             --accent-glow: rgba(99, 102, 241, 0.25);
             --green: #10b981;
+            --green-bg: rgba(16, 185, 129, 0.15);
             --red: #ef4444;
+            --red-bg: rgba(239, 68, 68, 0.15);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,6 +43,7 @@
             align-items: center;
             min-height: 100vh;
             padding: 16px;
+            background-image: radial-gradient(circle at 50% 10%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
         }
 
         .app-container {
@@ -48,50 +51,51 @@
             max-width: 420px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        /* --- BARRE DE NAVIGATION SUPÉRIEURE --- */
+        /* --- BARRE DE NAVIGATION SUPÉRIEURE (STYLE KATABUMP) --- */
         .app-navbar {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 16px;
+            border-radius: 16px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
         .brand-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .brand-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #6366f1, #4f46e5);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+            font-size: 16px;
+            box-shadow: 0 0 14px rgba(99, 102, 241, 0.4);
         }
 
         .brand-title {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 700;
             letter-spacing: 0.5px;
             color: var(--text-main);
         }
 
         .status-badge {
-            font-size: 11px;
-            padding: 4px 10px;
+            font-size: 12px;
+            padding: 5px 12px;
             border-radius: 20px;
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
@@ -103,8 +107,8 @@
         }
 
         .status-dot {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: var(--green);
             box-shadow: 0 0 8px var(--green);
@@ -114,9 +118,9 @@
         .main-panel {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 18px;
+            padding: 22px 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
         }
 
         .panel-header {
@@ -130,25 +134,25 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
 
         /* --- BOUTON TOGGLE CONFIG --- */
         .btn-toggle-config {
             width: 100%;
-            height: 38px;
+            height: 42px;
             background: var(--bg);
             border: 1px dashed var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--text-muted);
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
             transition: all 0.2s;
         }
         .btn-toggle-config:hover { border-color: var(--accent); color: var(--text-main); background: var(--surface-hover); }
@@ -158,11 +162,11 @@
             display: none;
             flex-direction: column;
             gap: 12px;
-            background: rgba(7, 9, 14, 0.5);
+            background: rgba(7, 9, 14, 0.6);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 14px;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
         }
 
         /* --- INPUTS & FORMULAIRE --- */
@@ -191,10 +195,10 @@
         }
 
         .select-trigger {
-            height: 44px;
+            height: 46px;
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 0 14px;
             display: flex;
             align-items: center;
@@ -216,8 +220,8 @@
             max-height: 230px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
             display: none;
             flex-direction: column;
             z-index: 100;
@@ -232,7 +236,7 @@
 
         .search-filter-box input {
             width: 100%;
-            height: 36px;
+            height: 38px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -249,10 +253,10 @@
         }
 
         .country-option {
-            padding: 9px 12px;
+            padding: 10px 12px;
             font-size: 12px;
             color: var(--text-main);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -270,10 +274,10 @@
         }
 
         .custom-input {
-            height: 44px;
+            height: 46px;
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 0 12px;
             color: var(--text-main);
             font-family: 'JetBrains Mono', monospace;
@@ -287,14 +291,14 @@
         .custom-input.prefix { text-align: center; color: #34d399; font-weight: 700; }
         .custom-input::placeholder { color: #475569; font-size: 11px; font-family: 'Inter', sans-serif; }
 
-        /* --- BOUTON PRINCIPAL --- */
+        /* --- BOUTON PRINCIPAL STYLE KATABUMP --- */
         .btn-connect {
             width: 100%;
-            height: 46px;
+            height: 48px;
             background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: #ffffff;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -304,9 +308,9 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 6px 20px var(--accent-glow);
+            box-shadow: 0 8px 25px var(--accent-glow);
             transition: all 0.2s;
-            margin-top: 8px;
+            margin-top: 10px;
         }
 
         .btn-connect:hover { filter: brightness(1.1); transform: translateY(-1px); }
@@ -315,15 +319,15 @@
 
         .btn-reload {
             width: 100%;
-            height: 38px;
-            background: transparent;
+            height: 40px;
+            background: var(--bg);
             color: var(--text-muted);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 8px;
+            margin-top: 10px;
             transition: all 0.2s;
         }
         .btn-reload:hover { background: var(--surface-hover); color: var(--text-main); border-color: var(--text-muted); }
@@ -345,8 +349,8 @@
         .code-display-card {
             background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
+            border-radius: 12px;
+            padding: 16px;
         }
 
         .code-header-text {
@@ -361,15 +365,15 @@
         .code-row {
             display: flex;
             justify-content: center;
-            gap: 5px;
-            margin-bottom: 12px;
+            gap: 6px;
+            margin-bottom: 14px;
         }
 
         .char-box {
-            width: 28px; height: 38px;
+            width: 30px; height: 40px;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             font-family: 'JetBrains Mono', monospace;
             font-size: 14px;
@@ -380,11 +384,11 @@
 
         .btn-copy-code {
             width: 100%;
-            height: 36px;
+            height: 38px;
             background: rgba(99, 102, 241, 0.15);
             border: 1px solid rgba(99, 102, 241, 0.4);
             color: #818cf8;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
@@ -393,15 +397,16 @@
         .btn-copy-code:hover { background: rgba(99, 102, 241, 0.25); }
         .error-message { color: var(--red); font-size: 11px; font-weight: 600; }
 
-        /* --- STATS / SESSIONS ACTIVES --- */
+        /* --- STATS / SESSIONS ACTIVES (STYLE PANNEAU) --- */
         .sessions-card {
             background-color: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
+            border-radius: 16px;
+            padding: 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
         .sessions-card:hover { border-color: var(--accent); transform: translateY(-1px); }
 
@@ -416,23 +421,23 @@
         .modal-window {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            border-radius: 16px;
             width: 100%; max-width: 400px; max-height: 80vh;
             display: flex; flex-direction: column; overflow: hidden;
             box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
         .modal-top {
-            padding: 14px 18px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
             font-size: 13px; font-weight: 700;
         }
-        .modal-exit { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; }
-        .modal-inner { padding: 16px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .modal-exit { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; }
+        .modal-inner { padding: 16px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
         
         .session-row {
             background: var(--bg); border: 1px solid var(--border);
-            border-radius: 8px; padding: 10px 14px;
+            border-radius: 10px; padding: 12px 14px;
             display: flex; align-items: center; justify-content: space-between;
             font-family: 'JetBrains Mono', monospace; font-size: 12px;
         }
@@ -441,10 +446,11 @@
         /* --- LIENS SOCIAUX --- */
         .social-footer { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .social-btn {
-            height: 40px; background: var(--surface); border: 1px solid var(--border);
-            border-radius: 10px; text-decoration: none; color: var(--text-main);
-            font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;
+            height: 42px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; text-decoration: none; color: var(--text-main);
+            font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;
             transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .social-btn:hover { background: var(--surface-hover); border-color: var(--text-muted); }
     </style>
@@ -475,7 +481,7 @@
         <!-- BOUTON POUR AFFICHER/MASQUER LA CONFIGURATION AVANCÉE -->
         <button class="btn-toggle-config" onclick="toggleConfigPanel()">
             <span id="configToggleIcon">⚙️</span>
-            <span id="configToggleText">Afficher la configuration du bot</span>
+            <span id="configToggleText">Click here to configure the bot</span>
         </button>
 
         <!-- SECTION CONFIGURATION CACHÉE PAR DÉFAUT -->
@@ -539,7 +545,7 @@
         <div id="activeCount" style="font-size: 12px; font-weight: 700; color: #34d399;">
             🟢 Checking active instances...
         </div>
-        <div style="font-size: 10px; color: var(--text-muted); margin-top: 3px;">Tap to view connected numbers</div>
+        <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Tap to view connected numbers</div>
     </div>
 
     <!-- LIENS -->
@@ -575,11 +581,11 @@
         
         if (panel.style.display === 'flex') {
             panel.style.display = 'none';
-            text.innerText = 'Afficher la configuration du bot';
+            text.innerText = 'Click here to configure the bot';
             icon.innerText = '⚙️';
         } else {
             panel.style.display = 'flex';
-            text.innerText = 'Masquer la configuration du bot';
+            text.innerText = 'Click here to hide bot configuration';
             icon.innerText = '✖️';
         }
     }
@@ -871,7 +877,6 @@
         let prefix = document.getElementById('prefixInput').value.trim();
         const phoneInput = document.getElementById('phone');
         
-        // Récupération optionnelle des champs de configuration
         const botName = document.getElementById('botNameInput').value.trim();
         const botPrefix = document.getElementById('botPrefixInput').value.trim();
         const botImage = document.getElementById('botImageInput').value.trim();
