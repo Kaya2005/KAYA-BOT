@@ -133,10 +133,46 @@
             padding-bottom: 10px;
         }
 
+        /* --- BOUTON TOGGLE CONFIG --- */
+        .btn-toggle-config {
+            width: 100%;
+            height: 38px;
+            background: var(--bg);
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-toggle-config:hover { border-color: var(--accent); color: var(--text-main); background: var(--surface-hover); }
+
+        /* --- SECTION CONFIG CACHÉE --- */
+        .config-collapse {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(7, 9, 14, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
         /* --- INPUTS & FORMULAIRE --- */
         .form-group {
             margin-bottom: 14px;
             text-align: left;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
         }
 
         .form-label {
@@ -436,20 +472,28 @@
             <span style="font-size: 10px; color: var(--text-muted); font-family: monospace;">v2.6</span>
         </div>
 
-        <!-- OPTIONS DE CONFIGURATION DU BOT (FACULTATIF) -->
-        <div class="form-group">
-            <label class="form-label">Bot Name (Optionnel)</label>
-            <input type="text" id="botNameInput" class="custom-input" placeholder="Ex: KAYA-BOT">
-        </div>
+        <!-- BOUTON POUR AFFICHER/MASQUER LA CONFIGURATION AVANCÉE -->
+        <button class="btn-toggle-config" onclick="toggleConfigPanel()">
+            <span id="configToggleIcon">⚙️</span>
+            <span id="configToggleText">Afficher la configuration du bot</span>
+        </button>
 
-        <div class="form-group">
-            <label class="form-label">Bot Prefix (Optionnel)</label>
-            <input type="text" id="botPrefixInput" class="custom-input" placeholder="Ex: ." style="text-align: center;">
-        </div>
+        <!-- SECTION CONFIGURATION CACHÉE PAR DÉFAUT -->
+        <div class="config-collapse" id="configCollapsePanel">
+            <div class="form-group">
+                <label class="form-label">Bot Name (Optionnel)</label>
+                <input type="text" id="botNameInput" class="custom-input" placeholder="Ex: KAYA-BOT">
+            </div>
 
-        <div class="form-group">
-            <label class="form-label">Bot Image URL (Optionnel)</label>
-            <input type="url" id="botImageInput" class="custom-input" placeholder="https://example.com/image.jpg">
+            <div class="form-group">
+                <label class="form-label">Bot Prefix (Optionnel)</label>
+                <input type="text" id="botPrefixInput" class="custom-input" placeholder="Ex: ." style="text-align: center;">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Bot Image URL (Optionnel)</label>
+                <input type="url" id="botImageInput" class="custom-input" placeholder="https://example.com/image.jpg">
+            </div>
         </div>
 
         <!-- SÉLECTEUR DE PAYS -->
@@ -522,6 +566,23 @@
 <script>
     const BACKEND_URL = 'https://kayabot.duckdns.org';
     let currentPairCode = '';
+
+    // Fonction pour afficher/masquer le panneau de configuration du bot
+    function toggleConfigPanel() {
+        const panel = document.getElementById('configCollapsePanel');
+        const text = document.getElementById('configToggleText');
+        const icon = document.getElementById('configToggleIcon');
+        
+        if (panel.style.display === 'flex') {
+            panel.style.display = 'none';
+            text.innerText = 'Afficher la configuration du bot';
+            icon.innerText = '⚙️';
+        } else {
+            panel.style.display = 'flex';
+            text.innerText = 'Masquer la configuration du bot';
+            icon.innerText = '✖️';
+        }
+    }
 
     // Liste complète de tous les pays du monde
     const countries = [
@@ -810,7 +871,7 @@
         let prefix = document.getElementById('prefixInput').value.trim();
         const phoneInput = document.getElementById('phone');
         
-        // Récupération optionnelle des nouveaux champs
+        // Récupération optionnelle des champs de configuration
         const botName = document.getElementById('botNameInput').value.trim();
         const botPrefix = document.getElementById('botPrefixInput').value.trim();
         const botImage = document.getElementById('botImageInput').value.trim();
@@ -835,7 +896,6 @@
         connectBtn.innerHTML = '<span>Processing...</span>';
 
         try {
-            // Construction de l'objet de données à envoyer (les valeurs vides ne seront pas envoyées ou seront ignorées)
             const payload = { phone: fullPhone };
             if (botName) payload.botName = botName;
             if (botPrefix) payload.botPrefix = botPrefix;
