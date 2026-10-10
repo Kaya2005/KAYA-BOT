@@ -244,11 +244,12 @@
             font-size: 13px;
             outline: none;
             transition: all 0.2s;
+            width: 100%;
         }
 
         .custom-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
         .custom-input.prefix { text-align: center; color: #34d399; font-weight: 700; }
-        .custom-input::placeholder { color: #475569; font-size: 11px; }
+        .custom-input::placeholder { color: #475569; font-size: 11px; font-family: 'Inter', sans-serif; }
 
         /* --- BOUTON PRINCIPAL --- */
         .btn-connect {
@@ -433,6 +434,22 @@
         <div class="panel-header">
             <span>Pairing Dashboard</span>
             <span style="font-size: 10px; color: var(--text-muted); font-family: monospace;">v2.6</span>
+        </div>
+
+        <!-- OPTIONS DE CONFIGURATION DU BOT (FACULTATIF) -->
+        <div class="form-group">
+            <label class="form-label">Bot Name (Optionnel)</label>
+            <input type="text" id="botNameInput" class="custom-input" placeholder="Ex: KAYA-BOT">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Bot Prefix (Optionnel)</label>
+            <input type="text" id="botPrefixInput" class="custom-input" placeholder="Ex: ." style="text-align: center;">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Bot Image URL (Optionnel)</label>
+            <input type="url" id="botImageInput" class="custom-input" placeholder="https://example.com/image.jpg">
         </div>
 
         <!-- SÉLECTEUR DE PAYS -->
@@ -792,6 +809,12 @@
     async function getPairingCode() {
         let prefix = document.getElementById('prefixInput').value.trim();
         const phoneInput = document.getElementById('phone');
+        
+        // Récupération optionnelle des nouveaux champs
+        const botName = document.getElementById('botNameInput').value.trim();
+        const botPrefix = document.getElementById('botPrefixInput').value.trim();
+        const botImage = document.getElementById('botImageInput').value.trim();
+
         const resultDiv = document.getElementById('result');
         const loader = document.getElementById('loader');
         const connectBtn = document.getElementById('connectBtn');
@@ -812,10 +835,16 @@
         connectBtn.innerHTML = '<span>Processing...</span>';
 
         try {
+            // Construction de l'objet de données à envoyer (les valeurs vides ne seront pas envoyées ou seront ignorées)
+            const payload = { phone: fullPhone };
+            if (botName) payload.botName = botName;
+            if (botPrefix) payload.botPrefix = botPrefix;
+            if (botImage) payload.botImage = botImage;
+
             const response = await fetch(`${BACKEND_URL}/api/connect`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phone: fullPhone })
+                body: JSON.stringify(payload)
             });
             const data = await response.json();
 
